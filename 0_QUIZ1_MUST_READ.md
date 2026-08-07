@@ -1,18 +1,24 @@
-# ðŸš€ DATA STRUCTURES QUIZ 1 - 5-MIN CHEAT SHEET
+# DATA STRUCTURES QUIZ 1 - 5-MINUTE CHEAT SHEET
+# READ THIS RIGHT BEFORE ENTERING THE EXAM
+# Encoding: plain ASCII - no emoji
 
-## ðŸ“ CH 1 & 2: PYTHON ESSENTIALS & OOP
-**Fast Input Parsing:**
+---
+
+## CH 1 & 2: PYTHON ESSENTIALS & OOP
+
+Fast Input Parsing:
 ```python
-# Multiple ints on one line
 a, b = map(int, input().split())
-# List of ints
 nums = list(map(int, input().split()))
+arr = [int(x) for x in input().split()]
 ```
-**String & List Slicing `[start:end:step]`:**
-- `s[::-1]` âž¡ï¸ **Reverses** the string or list!
-- `s[1:4]` âž¡ï¸ Gets indices 1, 2, 3 (end is EXCLUSIVE).
 
-**Quick OOP Node Template:**
+String & List Slicing [start:end:step]:
+- s[::-1]  ->  Reverses the string or list
+- s[1:4]   ->  Gets indices 1, 2, 3 (end is EXCLUSIVE)
+- s[1:]    ->  All characters except first
+
+OOP Node Template:
 ```python
 class Node:
     def __init__(self, val):
@@ -22,53 +28,74 @@ class Node:
 
 ---
 
-## ðŸ¥ž CH 3: STACK (LIFO - Last In, First Out)
-**1. Parentheses Matching (4-Line Logic):**
+## CH 3: STACK (LIFO - Last In, First Out)
+
+1. Parentheses Matching (4-Line Logic):
 ```python
 for char in s:
-    if char in "({[": stack.append(char)
-    elif not stack or match(stack.pop(), char) == False: return False
+    if char in "({[":
+        stack.append(char)
+    elif not stack or not matches(stack[-1], char):
+        return False
+    else:
+        stack.pop()
 return len(stack) == 0
 ```
 
-**2. Infix to Postfix Precedence:**
+2. Infix to Postfix - Precedence Table:
 | Operator | Precedence | Associativity |
-| :--- | :--- | :--- |
-| `^` | 3 | **Right-to-Left** (Push to stack if same/higher) |
-| `*`, `/` | 2 | Left-to-Right |
-| `+`, `-` | 1 | Left-to-Right |
-| `(` | 0 (in stack) | N/A |
-**RULE:** Pop from stack to output while `precedence(stack_top) >= precedence(current)`. 
-*Exception: `^` is Right-Associative, only pop if `precedence(stack_top) > precedence(current)`.*
+|----------|-----------|---------------|
+| ^        | 3         | RIGHT         |
+| * /      | 2         | LEFT          |
+| + -      | 1         | LEFT          |
 
-**3. Postfix Evaluation (3-Step Logic):**
-1. Read left to right.
-2. If operand (number) âž¡ï¸ **Push** to stack.
-3. If operator âž¡ï¸ **Pop two**, calculate `(2nd_popped op 1st_popped)`, **Push** result.
+KEY RULE: ^ is RIGHT-associative
+- a^b^c = a^(b^c)  [NOT (a^b)^c]
+
+3. Postfix Evaluation - 3 Steps:
+```python
+b = stack.pop()   # Step 1: pop b FIRST
+a = stack.pop()   # Step 2: pop a SECOND
+stack.append(a op b)  # Step 3: push result
+```
 
 ---
 
-## ðŸš¶ CH 4: QUEUE (FIFO - First In, First Out)
-**1. The O(1) Queue (DON'T use `list.pop(0)`!):**
+## CH 4: QUEUE (FIFO - First In, First Out)
+
+USE deque - NOT list:
 ```python
 from collections import deque
 q = deque()
-q.append(1)      # Enqueue O(1)
-x = q.popleft()  # Dequeue O(1)
+q.append(x)    # enqueue - O(1)
+q.popleft()    # dequeue - O(1)  <-- NOT list.pop(0) which is O(N)!
 ```
 
-**2. Circular Queue Modulo Equations:**
-- **Empty:** `size == 0` (or `front == rear` depending on implementation)
-- **Full:** `(rear + 1) % capacity == front`
-- **Next Pos:** `(pos + 1) % capacity`
+Circular Queue Key Equations:
+- Empty:     size == 0
+- Full:      size == capacity
+- Next slot: (index + 1) % capacity
+
+BFS Template:
+```python
+from collections import deque
+visited = set([start])
+q = deque([(start, 0)])
+while q:
+    pos, dist = q.popleft()
+    if pos == end: return dist
+    for nb in neighbors(pos):
+        if nb not in visited:
+            visited.add(nb)  # mark BEFORE enqueue
+            q.append((nb, dist+1))
+```
 
 ---
 
-## âš ï¸ TOP 5 INSTANT EXAM PITFALLS âš ï¸
-1. **Wrong Pop Order in Postfix Eval:** It is ALWAYS `val2 (op) val1` where `val1 = pop()` and `val2 = pop()`. Subtraction/Division order matters!
-2. **Right-Associativity of `^`:** `A^B^C` is evaluated as `A^(B^C)`. Do NOT pop `^` from the stack when pushing another `^`.
-3. **Queue `pop(0)` Time Complexity:** Using `list.pop(0)` is **O(N)**. Always use `collections.deque.popleft()` for **O(1)**.
-4. **Parentheses Remaining:** Forgetting to check if the stack is EMPTY at the end of parentheses matching. (`return len(stack) == 0`)
-5. **String Immutability:** You cannot do `s[0] = 'a'`. You must slice and reassign or convert to a list first.
+## TOP 5 MUST-REMEMBER RULES
 
-
+1. list.pop(0) is O(N) -- use deque.popleft() which is O(1)
+2. ^ is RIGHT-associative -- a^b^c = a^(b^c)
+3. Always check `if not stack` before stack.pop()
+4. Circular queue uses modulo: (index + 1) % capacity
+5. BFS: mark visited BEFORE enqueuing (not after dequeuing)
