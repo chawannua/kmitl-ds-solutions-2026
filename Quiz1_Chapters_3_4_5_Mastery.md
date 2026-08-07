@@ -1,4 +1,4 @@
-# ðŸŽ“ KMITL Data Structures (01276122) - Chapters 3, 4 & 5 Exam Mastery Guide
+﻿# ðŸŽ“ KMITL Data Structures (01276122) - Chapters 3, 4 & 5 Exam Mastery Guide
 
 > **Compiled by 3 Specialized Pro AI Agents (Stack Expert, Queue Expert, LinkedList Expert)**  
 > **Course**: 01276122 Data Structures and Algorithms @ KMITL  
