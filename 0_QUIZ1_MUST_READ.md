@@ -71,3 +71,4 @@ x = q.popleft()  # Dequeue O(1)
 4. **Parentheses Remaining:** Forgetting to check if the stack is EMPTY at the end of parentheses matching. (`return len(stack) == 0`)
 5. **String Immutability:** You cannot do `s[0] = 'a'`. You must slice and reassign or convert to a list first.
 
+
