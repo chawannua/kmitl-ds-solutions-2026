@@ -793,3 +793,47 @@ def swap_pairs(head):
         
     return dummy.next
 ```
+
+
+
+---
+
+# ðŸ‘¨â€ðŸ« 2-Expert Peer Review & Discussion Panel
+
+> **Panelists**:
+> 1. ðŸŽ“ **Senior Data Structures Professor & Exam Setter** (Academic Rigor & Trap Auditing)
+> 2. ðŸ† **Competitive Programming & Algorithms Coach** (CP Tricks, Fast I/O & (1)$ Optimization)
+
+---
+
+### ðŸŽ“ Expert 1 (Senior Professor): Academic Traps & Exam Edge Cases
+1. **Stack Traps**:
+   - IndexError when calling .pop() on empty stack. Always wrap or check if not stack:.
+   - **Operator Associativity**: Exponentiation ^ is **right-associative** (2^3^2 = 2^(3^2) = 512), while +, -, *, / are **left-associative** (10 - 5 - 2 = (10 - 5) - 2 = 3).
+   - Unbalanced brackets: Traps where string ends but stack is not empty, or closing bracket appears with empty stack.
+
+2. **Queue Traps**:
+   - **Circular Queue Ambiguity**: Distinguish between empty queue (ront == -1 or size == 0) vs full queue ((rear + 1) % capacity == front).
+   - Off-by-one error when allocating array size N vs usable capacity N - 1.
+
+3. **Linked List Traps**:
+   - AttributeError: 'NoneType' object has no attribute 'next': Dereferencing curr.next when curr is None.
+   - Failing to update both head and 	ail when inserting/deleting from a 1-element list.
+
+---
+
+### ðŸ† Expert 2 (CP Coach): Algorithmic Optimizations & Fast Exam Execution
+
+1. **Avoid (N)$ list.pop(0)**:
+   - In Python, list.pop(0) shifts all elements in memory ((N)$ time complexity), which will result in **Time Limit Exceeded (TLE)** on large test cases.
+   - **Fix**: Use collections.deque.popleft() or dual-pointer indexing for true (1)$ queue operations.
+
+2. **Fast I/O for Large Inputs**:
+   - When parsing thousands of input tokens in competitive/exam environments, standard input() is slow.
+   - **Fix**: Use import sys; input_data = sys.stdin.read().split() to read all tokens into memory at once.
+
+3. **Event-Driven Simulation vs Time-Stepping**:
+   - For multi-barista/cafe queues with large timestamps (e.g., customer at 	 = 1,000,000), a 	 += 1 loop will TLE.
+   - **Fix**: Event-Driven approach using a Min-Heap / Priority Queue to jump directly to the next customer arrival or barista completion time.
+
+---
