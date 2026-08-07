@@ -1,4 +1,4 @@
-# Masterclass Quiz #1 Preparation Guide (KMITL Data Structure and Algorithms)
+﻿# Masterclass Quiz #1 Preparation Guide (KMITL Data Structure and Algorithms)
 ## Chapters 1 to 4: Python 1, Python 2, Stack, Queue
 
 Welcome to the ultimate preparation guide for your first Data Structure and Algorithms quiz! This guide breaks down every core concept, algorithm, and simulation pattern you need to ace Chapters 1-4.
@@ -9,6 +9,7 @@ Welcome to the ultimate preparation guide for your first Data Structure and Algo
 
 ### Input Parsing
 In Python, reading standard input efficiently is key for programming questions.
+- **Fast I/O:** `import sys; sys.stdin.read().split()` is highly recommended for reading all inputs quickly.
 - `input().split()`: Reads a line, strips trailing/leading whitespaces, and splits by spaces into a list of strings.
 - `list(map(int, input().split()))`: Automatically converts the split strings into integers.
 
@@ -74,7 +75,7 @@ Algorithm:
 1. Operand: Output directly.
 2. `(` : Push to stack.
 3. `)` : Pop to output until `(` is encountered.
-4. Operator: Pop to output all operators with **greater or equal** precedence (if left-associative), then push the new operator.
+4. Operator: Pop to output all operators with **greater or equal** precedence (if left-associative). For right-associative operators like `^`, pop operators with strictly **greater** precedence. Then push the new operator.
 
 ### Postfix Evaluation Algorithm
 1. Read from left to right.
@@ -94,16 +95,17 @@ Queue follows **First In, First Out (FIFO)**. Elements are added at the rear and
 Operations: `enqueue` (add), `dequeue` (remove), `front`, `is_empty`, `size`.
 
 ### Linear vs Circular Queue Implementation
-- **Linear Queue**: Using a list where `enqueue` is `append()` and `dequeue` is `pop(0)`. (Inefficient for large queues).
+- **Linear Queue**: Using a list where `enqueue` is `append()` and `dequeue` is `pop(0)`. (Inefficient for large queues). **Explicit Requirement:** Use `collections.deque.popleft()` for O(1) performance instead of O(N) `list.pop(0)`.
 - **Circular Queue**: Uses a fixed-size array and modulo wrapping to reuse spaces.
   - `rear = (rear + 1) % capacity`
   - `front = (front + 1) % capacity`
+  - **State equations:** Empty when `size == 0` vs Full when `(rear + 1) % capacity == front`.
 
 ### Multi-Barista / Cafe Queue Simulation Pattern
 Simulates multiple servers (baristas) processing a queue of customers.
 - Keep track of each server's busy time.
 - When a server is free, assign the next customer from the queue.
-- Use a clock/timer loop or advance time based on next available server.
+- **Event-driven time-jumping:** Advance time to the next available server's finishing time instead of step-by-step to optimize.
 
 ### Search Portal / BFS Pattern
 Queues are the core data structure for **Breadth-First Search (BFS)**.
@@ -169,6 +171,7 @@ def is_balanced(expr):
 3. **String Formatting:** Remember `.2f` rounds, but some questions might ask for truncation instead of rounding. Read instructions carefully!
 4. **List Modification During Iteration:** Avoid `for item in my_list: my_list.remove(item)`. Iterate over a copy (`my_list[:]`) or use list comprehensions instead.
 5. **Division in Evaluation:** In postfix evaluation, if you pop `A` then `B`, the operation is `B / A`, not `A / B`. Order matters for `-` and `/`.
+6. **Linked List Operations:** Ensure pointer reassignment safety. Always check head/tail single-node boundary handling.
 
 ---
 
@@ -245,3 +248,4 @@ class QueueTwoStacks:
 
 ---
 *Good luck with your Masterclass Quiz #1! Keep calm and trust your data structures!*
+
