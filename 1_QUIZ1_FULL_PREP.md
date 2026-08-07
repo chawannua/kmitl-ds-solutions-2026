@@ -1,4 +1,4 @@
-# ðŸ“˜ KMITL Data Structures & Algorithms (01276122)
+﻿# ðŸ“˜ KMITL Data Structures & Algorithms (01276122)
 ## ðŸš€ Ultimate Quiz #1 Preparation & Quick Study Guide (Chapters 1â€“4)
 **Target Date**: Monday, August 10, 2026  
 **Coverage**: Chapter 1 (Python 1), Chapter 2 (Python 2), Chapter 3 (Stack), Chapter 4 (Queue)  
