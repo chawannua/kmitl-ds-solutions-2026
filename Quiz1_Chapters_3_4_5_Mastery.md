@@ -1,4 +1,4 @@
-﻿# ðŸŽ“ KMITL Data Structures (01276122) - Chapters 3, 4 & 5 Exam Mastery Guide
+# 🎓 KMITL Data Structures (01276122) - Chapters 3, 4 & 5 Exam Mastery Guide
 
 > **Compiled by 3 Specialized Pro AI Agents (Stack Expert, Queue Expert, LinkedList Expert)**  
 > **Course**: 01276122 Data Structures and Algorithms @ KMITL  
@@ -6,7 +6,7 @@
 
 ---
 
-## ðŸ“Œ Table of Contents
+## 📌 Table of Contents
 1. [Chapter 3: Stack Mastery (LIFO, Parentheses, Infix/Postfix, Parking Lot)](#chapter-3-stack-mastery)
 2. [Chapter 4: Queue Mastery (FIFO, Circular Queue, Cafe Simulation, BFS)](#chapter-4-queue-mastery)
 3. [Chapter 5: Linked List Mastery (Singly/Doubly, Pointer Safety, Radix Sort, VIM Editor)](#chapter-5-linked-list-mastery)
@@ -14,7 +14,7 @@
 ---
 
 
-# Chapter 3: Stack - Mastery Guide
+## Chapter 3: Stack - Mastery Guide
 **KMITL Data Structures (01276122)**
 
 ## 1. Core Principles
@@ -192,7 +192,7 @@ Initial Main: `[A, B, C, D]` (D on top) | Aux: `[]`
 **Final State:** Main: `[A, C, D]`, Aux: `[]`
 
 
-# Chapter 4: Queue Mastery Guide
+## Chapter 4: Queue Mastery Guide
 **Course:** KMITL Data Structures (01276122)
 
 ## 1. Core Principles
@@ -410,7 +410,7 @@ W W .
 *   Step 4: Pop `(1,2)`. Neighbors: `(2,2)` (Down) - Target reached! Path length = 4.
 
 
-# Chapter 5: LinkedList - Mastery Guide (01276122)
+## Chapter 5: LinkedList - Mastery Guide (01276122)
 
 ## 1. Core Principles
 
