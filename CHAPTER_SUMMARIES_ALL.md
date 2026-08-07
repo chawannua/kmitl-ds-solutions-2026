@@ -211,6 +211,7 @@ def eval_postfix(expr):
 1. **`^` is RIGHT-associative**: `a ^ b ^ c` = `a ^ (b ^ c)`, NOT `(a ^ b) ^ c`
 2. **Empty stack check before pop**: Always check `if not stack` before `stack.pop()` to avoid IndexError
 3. **Order of operands in postfix eval**: pop `b` first, then pop `a`; do `a op b`
+4. **Stack Calculator (item_4) operand order**: The actual code pops `x` (top) then `y` (second) and does `x - y` for subtraction. Verify this matches KMITL judge expected output before exam.
 
 ### Chapter 3 Problems Summary
 | Problem | Algorithm | Key Data Structure |
