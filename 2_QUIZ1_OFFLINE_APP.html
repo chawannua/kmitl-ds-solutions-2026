@@ -1,376 +1,3049 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz 1 Master Prep Dashboard</title>
+    <title>KMITL Data Structures - Quiz 1 Offline Master App</title>
     <style>
         :root {
-            --bg-color: #121212;
-            --surface-color: #1e1e1e;
-            --primary-color: #bb86fc;
-            --secondary-color: #03dac6;
-            --text-color: #e0e0e0;
-            --text-muted: #a0a0a0;
-            --border-color: #333333;
-            --hover-color: #2a2a2a;
-            --code-bg: #2d2d2d;
-            --code-color: #f8f8f2;
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --border-color: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-cyan: #38bdf8;
+            --accent-indigo: #818cf8;
+            --accent-emerald: #10b981;
+            --accent-rose: #f43f5e;
+            --accent-amber: #f59e0b;
+            --code-bg: #090d16;
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg-main);
+            color: var(--text-main);
             line-height: 1.6;
+            padding-bottom: 50px;
         }
 
+        /* Header */
         header {
-            background-color: var(--surface-color);
-            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
             border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
         }
 
         header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            color: var(--primary-color);
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
         }
 
-        .search-container {
-            position: relative;
+        header h1 span {
+            color: var(--accent-cyan);
         }
 
-        #search-bar {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            width: 300px;
-            outline: none;
-            transition: border-color 0.3s;
+        header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 800px;
+            margin: 0 auto 1.2rem auto;
         }
 
-        #search-bar:focus {
-            border-color: var(--primary-color);
-        }
-
-        .tabs {
+        .badge-bar {
             display: flex;
-            background-color: var(--surface-color);
-            border-bottom: 1px solid var(--border-color);
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-indigo {
+            background: rgba(129, 140, 248, 0.1);
+            color: var(--accent-indigo);
+            border-color: rgba(129, 140, 248, 0.3);
+        }
+
+        .badge-emerald {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-emerald);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Nav Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            background-color: #161e2e;
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
         }
 
         .tab-btn {
-            background: none;
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 18px;
+            background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 1rem 2rem;
-            cursor: pointer;
             font-size: 1rem;
-            font-weight: bold;
-            transition: color 0.3s, border-bottom-color 0.3s;
-            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .tab-btn:hover {
-            color: var(--text-color);
-            background-color: var(--hover-color);
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .tab-btn.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
+            background: var(--accent-cyan);
+            color: #0f172a;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
 
-        main {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        /* Content Sections */
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s;
         }
 
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        /* General Card & Content Styles */
         .card {
-            background-color: var(--surface-color);
-            border-radius: 8px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
         }
 
-        .card h2 {
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin: 2rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title:first-child {
             margin-top: 0;
-            color: var(--secondary-color);
         }
 
-        .code-container {
-            position: relative;
-            margin-top: 1rem;
+        h3 {
+            color: var(--accent-indigo);
+            font-size: 1.2rem;
+            margin: 1.2rem 0 0.6rem 0;
+        }
+
+        p, li {
+            color: #cbd5e1;
+            font-size: 0.98rem;
+            margin-bottom: 0.6rem;
+        }
+
+        ul, ol {
+            padding-left: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        code {
+            background-color: rgba(15, 23, 42, 0.8);
+            color: var(--accent-cyan);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "Consolas", "Fira Code", monospace;
+            font-size: 0.9em;
+            border: 1px solid rgba(56, 189, 248, 0.2);
         }
 
         pre {
             background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             padding: 1rem;
-            border-radius: 6px;
             overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        pre code {
+            background: transparent;
+            color: #e2e8f0;
+            padding: 0;
+            border: none;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: #151d2a;
+            border-radius: 8px;
+            overflow: hidden;
             border: 1px solid var(--border-color);
         }
 
-        code {
-            font-family: 'Consolas', 'Courier New', Courier, monospace;
-            color: var(--code-color);
+        th, td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.92rem;
         }
 
+        th {
+            background-color: #1e293b;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Alert / Callout Boxes */
+        .callout {
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 4px solid var(--accent-amber);
+            padding: 1rem;
+            border-radius: 4px 8px 8px 4px;
+            margin: 1rem 0;
+        }
+
+        .callout-title {
+            color: var(--accent-amber);
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .callout-danger {
+            background: rgba(244, 63, 94, 0.08);
+            border-left-color: var(--accent-rose);
+        }
+        .callout-danger .callout-title {
+            color: var(--accent-rose);
+        }
+
+        .callout-success {
+            background: rgba(16, 185, 129, 0.08);
+            border-left-color: var(--accent-emerald);
+        }
+        .callout-success .callout-title {
+            color: var(--accent-emerald);
+        }
+
+        /* Search & Filter Bar */
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 38px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+
+        .search-box::before {
+            content: "ðŸ”";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            color: #fff;
+            background: var(--bg-card-hover);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-indigo);
+            color: #fff;
+            border-color: var(--accent-indigo);
+        }
+
+        /* Code Copy Button */
         .copy-btn {
             position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background-color: var(--hover-color);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #cbd5e1;
+            padding: 4px 10px;
             border-radius: 4px;
-            padding: 0.25rem 0.5rem;
-            cursor: pointer;
             font-size: 0.8rem;
-            transition: background-color 0.2s;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
         .copy-btn:hover {
-            background-color: var(--border-color);
-        }
-        
-        .keyword { color: #ff7b72; }
-        .string { color: #a5d6ff; }
-        .comment { color: #8b949e; }
-        .function { color: #d2a8ff; }
-
-        .hidden {
-            display: none !important;
+            background: var(--accent-cyan);
+            color: #0f172a;
         }
 
-        .exercise-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
+        /* Q&A Practice Cards */
+        .qa-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s;
+        }
+
+        .qa-card.mastered {
+            border-left: 4px solid var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.03);
+        }
+
+        .qa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 0.75rem;
+        }
+
+        .qa-question {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .qa-toggle-btn {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .qa-toggle-btn:hover {
+            background: var(--accent-cyan);
+            color: #0f172a;
+        }
+
+        .qa-answer {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: #cbd5e1;
+        }
+
+        .qa-answer.show {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .qa-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 0.75rem;
+            align-items: center;
+        }
+
+        .master-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .master-btn:hover {
+            border-color: var(--accent-emerald);
+            color: var(--accent-emerald);
+        }
+
+        .master-btn.active {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--accent-emerald);
+            color: var(--accent-emerald);
+            font-weight: 600;
+        }
+
+        /* Progress Bar */
+        .progress-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            min-width: 200px;
+            height: 10px;
+            background: #0f172a;
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
+            transition: width 0.3s ease;
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-emerald);
+            color: #0f172a;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            box-shadow: var(--shadow-lg);
+            display: none;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
+
     <header>
-        <h1>Quiz 1 Master Prep</h1>
-        <div class="search-container">
-            <input type="text" id="search-bar" placeholder="Search topics, solutions, keywords...">
+        <h1>KMITL Data Structures <span>Quiz 1 Master App</span></h1>
+        <p>Offline Exam Guide, 15 Python Source Solutions, Interactive Practice Q&A Cards & Pre-Exam Cheat Sheet</p>
+        <div class="badge-bar">
+            <span class="badge">ðŸ“˜ Study Guide</span>
+            <span class="badge badge-indigo">ðŸ’» 15 Code Solutions</span>
+            <span class="badge badge-emerald">ðŸ“ 22 Practice Questions</span>
+            <span class="badge">âš¡ 5-Min Cheat Sheet</span>
         </div>
     </header>
 
-    <div class="tabs">
-        <button class="tab-btn active" data-target="guide">Study Guide (Ch 1-4)</button>
-        <button class="tab-btn" data-target="solutions">Code Solutions (30 Ex)</button>
-        <button class="tab-btn" data-target="exam">Practice Exam</button>
-    </div>
+    <div class="container">
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('study')">ðŸ“˜ Study Guide</button>
+            <button class="tab-btn" onclick="switchTab('solutions')">ðŸ’» Code Solutions (15)</button>
+            <button class="tab-btn" onclick="switchTab('exam')">ðŸ“ Practice Exam</button>
+            <button class="tab-btn" onclick="switchTab('cheat')">âš¡ Cheat Sheet</button>
+        </nav>
 
-    <main>
-        <!-- Tab 1: Study Guide -->
-        <section id="guide" class="tab-content active searchable-content">
-            <div class="card searchable-item">
-                <h2>Chapter 1: Introduction to Data Structures</h2>
-                <p>Overview of basic data structures. Understanding the difference between abstract data types (ADTs) and their implementation.</p>
-                <ul>
-                    <li>Arrays vs Linked Lists</li>
-                    <li>Time Complexity (Big-O Notation)</li>
-                    <li>Fast I/O code templates: <code>sys.stdin.read().split()</code></li>
-                </ul>
-            </div>
-            <div class="card searchable-item">
-                <h2>Chapter 2: Stacks and Queues</h2>
-                <p>LIFO (Last-In-First-Out) and FIFO (First-In-First-Out) principles.</p>
-                <ul>
-                    <li>Stack operations: push, pop, peek</li>
-                    <li>Stack: Right-associative exponentiation '^' infix-to-postfix rules and defensive popping checks.</li>
-                    <li>Queue operations: enqueue, dequeue</li>
-                    <li>Queue: Explicit O(1) <code>collections.deque.popleft()</code> vs O(N) <code>list.pop(0)</code>.</li>
-                    <li>Queue: Circular Queue equations (Empty vs Full) and Event-driven time-jumping.</li>
-                </ul>
-            </div>
-            <div class="card searchable-item">
-                <h2>Chapter 3: Linked Lists</h2>
-                <p>Singly, doubly, and circular linked lists.</p>
-                <ul>
-                    <li>Node structure (data + pointer)</li>
-                    <li>Insertion and deletion at head, tail, and middle</li>
-                    <li>Pointer reassignment safety and head/tail single-node boundary handling</li>
-                </ul>
-            </div>
-            <div class="card searchable-item">
-                <h2>Chapter 4: Trees</h2>
-                <p>Hierarchical data structures. Binary trees and Binary Search Trees (BST).</p>
-                <ul>
-                    <li>Tree traversals: Inorder, Preorder, Postorder</li>
-                    <li>BST property: left child &lt; parent &lt; right child</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Tab 2: Code Solutions -->
-        <section id="solutions" class="tab-content searchable-content">
+        <!-- TAB 1: STUDY GUIDE -->
+        <div id="tab-study" class="tab-content active">
             <div class="card">
-                <h2>Interactive Code Browser</h2>
-                <p>Select an exercise to view the solution.</p>
-                <div class="exercise-list">
-                    <div class="card searchable-item">
-                        <h3>Exercise 1: Array Reversal</h3>
-                        <p>Reverse an array in-place.</p>
-                        <div class="code-container">
-                            <button class="copy-btn">Copy</button>
-                            <pre><code><span class="keyword">def</span> <span class="function">reverse_array</span>(arr):
-    <span class="comment"># Two pointer approach</span>
-    left, right = <span class="string">0</span>, <span class="function">len</span>(arr) - <span class="string">1</span>
-    <span class="keyword">while</span> left &lt; right:
-        arr[left], arr[right] = arr[right], arr[left]
-        left += <span class="string">1</span>
-        right -= <span class="string">1</span>
-    <span class="keyword">return</span> arr</code></pre>
+                <div class="section-title">ðŸ Chapters 1 & 2: Python Essentials & OOP Refresher</div>
+                <p>Essential syntax and algorithmic primitives required for all data structure implementations.</p>
+                
+                <h3>1. Fast Input Parsing</h3>
+                <pre><code># Read single int
+n = int(input())
+
+# Read multiple ints on one line
+a, b = map(int, input().split())
+
+# Read space-separated list of ints
+arr = list(map(int, input().split()))
+
+# List comprehension alternative
+nums = [int(x) for x in input().split()]</code></pre>
+
+                <h3>2. String Slicing & Formatting</h3>
+                <pre><code>s = "KMITL"
+s[::-1]        # Reverse string -> 'LTIMK'
+s[1:4]         # Indices 1, 2, 3 -> 'MIT'
+s[:-1]         # All except last -> 'KMIT'
+
+val = 3.14159
+print(f"{val:.2f}")    # '3.14' (2 decimal places)
+print("{:>10}".format(s)) # Right align width 10</code></pre>
+
+                <h3>3. OOP Node Blueprint</h3>
+                <pre><code>class Node:
+    def __init__(self, val):
+        self.val = val
+        self.next = None  # Singly Linked List pointer
+        self.prev = None  # Doubly Linked List pointer</code></pre>
+            </div>
+
+            <div class="card">
+                <div class="section-title">ðŸ“š Chapter 3: Stack Data Structure (LIFO)</div>
+                <p><b>Stack</b> is a Last-In, First-Out data structure. Operations occur only at the top.</p>
+                
+                <h3>Core Operations & Complexities</h3>
+                <table>
+                    <tr><th>Operation</th><th>Method</th><th>Time Complexity</th><th>Description</th></tr>
+                    <tr><td>Push</td><td><code>stack.append(x)</code></td><td>O(1)</td><td>Add element to top of stack</td></tr>
+                    <tr><td>Pop</td><td><code>stack.pop()</code></td><td>O(1)</td><td>Remove and return top element</td></tr>
+                    <tr><td>Peek / Top</td><td><code>stack[-1]</code></td><td>O(1)</td><td>Look at top element without removing</td></tr>
+                    <tr><td>Is Empty</td><td><code>not stack</code></td><td>O(1)</td><td>Returns True if stack has no elements</td></tr>
+                </table>
+
+                <h3>1. Parentheses Matching Algorithm</h3>
+                <pre><code>def is_balanced(s):
+    stack = []
+    pairs = {')': '(', ']': '[', '}': '{'}
+    for char in s:
+        if char in "({[":
+            stack.append(char)
+        elif char in ")]}":
+            if not stack or stack[-1] != pairs[char]:
+                return False
+            stack.pop()
+    return len(stack) == 0</code></pre>
+
+                <h3>2. Infix to Postfix Conversion (Shunting-Yard)</h3>
+                <p><b>Operator Precedence Table:</b></p>
+                <table>
+                    <tr><th>Operator</th><th>Precedence</th><th>Associativity</th><th>Notes</th></tr>
+                    <tr><td><code>^</code> (Power)</td><td>3</td><td><b>RIGHT</b></td><td>Special rule: <code>a^b^c = a^(b^c)</code></td></tr>
+                    <tr><td><code>* /</code></td><td>2</td><td>LEFT</td><td>Standard multiplication & division</td></tr>
+                    <tr><td><code>+ -</code></td><td>1</td><td>LEFT</td><td>Standard addition & subtraction</td></tr>
+                    <tr><td><code>(</code></td><td>0</td><td>-</td><td>Bottom priority inside stack</td></tr>
+                </table>
+
+                <div class="callout callout-danger">
+                    <div class="callout-title">âš ï¸ TOP STACK EXAM TRAP: Power Operator (^)</div>
+                    <code>^</code> is <b>RIGHT-associative</b>! When converting infix <code>A ^ B ^ C</code> to postfix, the result is <code>A B C ^ ^</code> (NOT <code>A B ^ C ^</code>). In the shunting-yard algorithm, do NOT pop stack operators of equal precedence when processing <code>^</code>!
+                </div>
+
+                <h3>3. Postfix Evaluation Algorithm</h3>
+                <pre><code>def eval_postfix(expr):
+    stack = []
+    for token in expr.split():
+        if token.lstrip('-').isdigit():
+            stack.append(float(token))
+        else:
+            b = stack.pop()   # STEP 1: Pop right operand FIRST
+            a = stack.pop()   # STEP 2: Pop left operand SECOND
+            if token == '+': stack.append(a + b)
+            elif token == '-': stack.append(a - b)
+            elif token == '*': stack.append(a * b)
+            elif token == '/': stack.append(a / b)
+            elif token == '^': stack.append(a ** b)
+    return stack[0]</code></pre>
+            </div>
+
+            <div class="card">
+                <div class="section-title">ðŸ”„ Chapter 4: Queue Data Structure (FIFO)</div>
+                <p><b>Queue</b> is a First-In, First-Out structure. Enqueue adds to rear; Dequeue removes from front.</p>
+
+                <div class="callout callout-danger">
+                    <div class="callout-title">ðŸš¨ CRITICAL EXAM TRAP: deque vs list.pop(0)</div>
+                    Never use <code>list.pop(0)</code> for a queue! In Python, <code>list.pop(0)</code> takes <b>O(N)</b> time because all remaining elements must shift in memory. Always use <code>from collections import deque</code> and <code>deque.popleft()</code> which is <b>O(1)</b>!
+                </div>
+
+                <h3>1. Circular Queue Equations</h3>
+                <p>Circular Queue reuses array slots using modulo arithmetic:</p>
+                <ul>
+                    <li><b>Next Rear Index:</b> <code>(rear + 1) % capacity</code></li>
+                    <li><b>Next Front Index:</b> <code>(front + 1) % capacity</code></li>
+                    <li><b>Is Empty Condition:</b> <code>size == 0</code></li>
+                    <li><b>Is Full Condition:</b> <code>size == capacity</code></li>
+                </ul>
+
+                <h3>2. BFS Grid Template (Search Portal)</h3>
+                <pre><code>from collections import deque
+
+def bfs_grid(grid, start, end):
+    rows, cols = len(grid), len(grid[0])
+    visited = set([start])  # MARK VISITED BEFORE ENQUEUE!
+    q = deque([(start, 0)])
+    
+    while q:
+        (r, c), dist = q.popleft()
+        if (r, c) == end:
+            return dist
+        
+        for dr, dc in [(-1,0), (1,0), (0,-1), (0,1)]:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != '#' and (nr, nc) not in visited:
+                visited.add((nr, nc))  # MARK VISITED IMMEDIATELY
+                q.append(((nr, nc), dist + 1))
+    return -1</code></pre>
+
+                <div class="callout callout-success">
+                    <div class="callout-title">ðŸ’¡ Golden BFS Rule</div>
+                    Always add node to <code>visited</code> <b>BEFORE</b> pushing it to the queue. If you wait until popping, duplicate entries will flood the queue causing TLE/MLE.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title">ðŸ”— Chapter 5: Linked List Data Structure</div>
+                <p>Dynamic linear structure where elements (nodes) are linked via memory pointers.</p>
+
+                <h3>Singly vs Doubly Linked List</h3>
+                <table>
+                    <tr><th>Feature</th><th>Singly Linked List</th><th>Doubly Linked List</th></tr>
+                    <tr><td>Pointers per Node</td><td><code>next</code></td><td><code>next</code> and <code>prev</code></td></tr>
+                    <tr><td>Traversal Direction</td><td>Forward only</td><td>Bidirectional (Forward & Backward)</td></tr>
+                    <tr><td>Deletion of Node</td><td>O(N) (needs predecessor)</td><td>O(1) (given node reference)</td></tr>
+                    <tr><td>Memory Overhead</td><td>1 pointer per node</td><td>2 pointers per node</td></tr>
+                </table>
+
+                <h3>1. Doubly Linked List Node Insertion (4-Step Rule)</h3>
+                <pre><code>def insert_after(self, curr_node, new_val):
+    new_node = Node(new_val)
+    new_node.next = curr_node.next   # Step 1: N.next -> B
+    new_node.prev = curr_node        # Step 2: N.prev -> A
+    if curr_node.next is not None:
+        curr_node.next.prev = new_node# Step 3: B.prev -> N
+    curr_node.next = new_node        # Step 4: A.next -> N</code></pre>
+
+                <h3>2. Preventing NoneType Pointer Crashes</h3>
+                <p>Before dereferencing <code>curr.next.val</code>, ALWAYS verify that <code>curr</code> AND <code>curr.next</code> are not <code>None</code>!</p>
+
+                <h3>3. Radix Sort (Descending Order) Bucket Rule</h3>
+                <p>For Radix Sort descending order using 10 linked list buckets (0 to 9):</p>
+                <ul>
+                    <li><b>Positives:</b> Gather buckets from index <b>9 down to 0</b>.</li>
+                    <li><b>Negatives:</b> Gather buckets from index <b>0 up to 9</b>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 2: CODE SOLUTIONS -->
+        <div id="tab-solutions" class="tab-content">
+            <div class="toolbar">
+                <div class="search-box">
+                    <input type="text" id="solution-search" placeholder="Search 15 code solutions by title or code keyword..." oninput="filterSolutions()">
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn active" onclick="filterSolutionCategory('All', this)">All (15)</button>
+                    <button class="filter-btn" onclick="filterSolutionCategory('Stack', this)">Ch 3: Stack (5)</button>
+                    <button class="filter-btn" onclick="filterSolutionCategory('Queue', this)">Ch 4: Queue (5)</button>
+                    <button class="filter-btn" onclick="filterSolutionCategory('LinkedList', this)">Ch 5: LinkedList (5)</button>
+                </div>
+            </div>
+
+            <div id="solutions-container">
+                <div class="card solution-card" data-cat="Stack" data-title="parentheses ver 1" data-ch="chapter 3">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 3</span>
+                            <span class="badge badge-indigo">Item 1</span>
+                            <span class="card-title" style="margin-left: 8px;">Parentheses ver 1</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N)</span>
                         </div>
                     </div>
-                    <div class="card searchable-item">
-                        <h3>Exercise 5: Stack using Arrays</h3>
-                        <p>Implement a basic stack using a list.</p>
-                        <div class="code-container">
-                            <button class="copy-btn">Copy</button>
-                            <pre><code><span class="keyword">class</span> <span class="function">Stack</span>:
-    <span class="keyword">def</span> <span class="function">__init__</span>(self):
+                    <p><b>Summary:</b> Stack bracket matching - counts open and close brackets and returns remaining stack count.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_03_Stack/item_1_26s1_Parentheses_ver_1.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 3 - Item 1: 26s1 Parentheses ver.1
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# &#160;&#160;&#160;&#160;Write a program to receive input in the form of brackets. The opening brackets are: ( and [ and the closing brackets are: ) and ]. 
+# &#160;&#160;&#160;&#160;Determine if the brackets can be paired correctly. &#160;&#160;&#160;&#160;Display the number of brackets needed to complete the pairs if they are incomplete. &#160;&#160;&#160;&#160;If all pairs are complete, display &quot;Perfect&quot;.
+# ================================================================================
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def peek(self):
+        return self.items[-1]
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def size(self):
+        return len(self.items)
+
+
+def count_unmatched(s):
+    matching_open = {&#39;)&#39;: &#39;(&#39;, &#39;]&#39;: &#39;[&#39;}
+    stack = Stack()
+    unmatched_closers = 0
+
+    for ch in s:
+        if ch in &#39;([&#39;:
+            stack.push(ch)
+        elif ch in &#39;)]&#39;:
+            if not stack.is_empty() and stack.peek() == matching_open[ch]:
+                stack.pop()
+            else:
+                unmatched_closers += 1
+
+    unmatched_openers = stack.size()
+    return unmatched_closers + unmatched_openers
+
+
+def main():
+    s = input(&quot;Enter Input : &quot;)
+    total = count_unmatched(s)
+    print(total)
+    if total == 0:
+        print(&quot;Perfect ! ! !&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 3 Item 1 (26s1 Parentheses ver.1).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="Stack" data-title="parenthesis matching" data-ch="chapter 3">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 3</span>
+                            <span class="badge badge-indigo">Item 2</span>
+                            <span class="card-title" style="margin-left: 8px;">Parenthesis Matching</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Bracket matching with 3 bracket types ({[]}). Returns matched or unmatched error type.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_03_Stack/item_2_26s1_Parenthesis_Matching.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 3 - Item 2: 26s1 Parenthesis Matching
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Write a program to check if an expression has complete parentheses using a Stack to solve the problem.
+# The program should be able to indicate the cause of the error, if any:
+# Mismatched opening and closing parenthesesExcess closing parenthesesExcess opening parenthesesThen display the result according to the example.
+# ================================================================================
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def peek(self):
+        return self.items[-1]
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def size(self):
+        return len(self.items)
+
+    def to_string(self):
+        return &#39;&#39;.join(self.items)
+
+
+def check_expression(s):
+    pairs = {&#39;)&#39;: &#39;(&#39;, &#39;]&#39;: &#39;[&#39;, &#39;}&#39;: &#39;{&#39;}
+    stack = Stack()
+
+    for ch in s:
+        if ch in &#39;([{&#39;:
+            stack.push(ch)
+        elif ch in &#39;)]}&#39;:
+            if stack.is_empty():
+                return &quot;close paren excess&quot;, None, None
+            top = stack.pop()
+            if top != pairs[ch]:
+                return &quot;Unmatch open-close&quot;, None, None
+
+    if not stack.is_empty():
+        return &quot;open paren excess&quot;, stack.size(), stack.to_string()
+
+    return &quot;MATCH&quot;, None, None
+
+
+def main():
+    s = input(&quot;Enter expresion : &quot;)
+    status, count, chars = check_expression(s)
+
+    if status == &quot;open paren excess&quot;:
+        print(f&quot;{s} {status}   {count} : {chars}&quot;)
+    else:
+        print(f&quot;{s} {status}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 3 Item 2 (26s1 Parenthesis Matching).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="Stack" data-title="infix to postfix" data-ch="chapter 3">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 3</span>
+                            <span class="badge badge-indigo">Item 3</span>
+                            <span class="card-title" style="margin-left: 8px;">Infix to Postfix</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Shunting-yard algorithm handling precedence and right-associative power (^) operator.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_03_Stack/item_3_26s1_Infix_to_Postfix.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 3 - Item 3: 26s1 Infix to Postfix
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Receive input in Infix notation and display the result in Postfix notation. The operators used are: +, -, *, /, ^.
+# ================================================================================
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def peek(self):
+        return self.items[-1]
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+
+def infix_to_postfix(expr):
+    precedence = {&#39;+&#39;: 1, &#39;-&#39;: 1, &#39;*&#39;: 2, &#39;/&#39;: 2, &#39;^&#39;: 3}
+    right_associative = {&#39;^&#39;}
+    output = []
+    stack = Stack()
+
+    for ch in expr:
+        if ch.isalnum():
+            output.append(ch)
+        elif ch == &#39;(&#39;:
+            stack.push(ch)
+        elif ch == &#39;)&#39;:
+            while not stack.is_empty() and stack.peek() != &#39;(&#39;:
+                output.append(stack.pop())
+            stack.pop()
+        elif ch in precedence:
+            while (not stack.is_empty() and stack.peek() != &#39;(&#39; and
+                   (precedence[stack.peek()] &gt; precedence[ch] or
+                    (precedence[stack.peek()] == precedence[ch] and ch not in right_associative))):
+                output.append(stack.pop())
+            stack.push(ch)
+
+    while not stack.is_empty():
+        output.append(stack.pop())
+
+    return &#39;&#39;.join(output)
+
+
+def main():
+    expr = input(&quot;Enter Infix : &quot;)
+    result = infix_to_postfix(expr)
+    print(f&quot;Postfix : {result}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 3 Item 3 (26s1 Infix to Postfix).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="Stack" data-title="stack calculator" data-ch="chapter 3">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 3</span>
+                            <span class="badge badge-indigo">Item 4</span>
+                            <span class="card-title" style="margin-left: 8px;">Stack Calculator</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Custom stack machine parsing integer operations (+, -, *, /, %, D, P) with error handling.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_03_Stack/item_4_26s1_Stack_Calculator.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 3 - Item 4: 26s1 Stack Calculator
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Write a class calculator that operates through the function run(instructions) with the following instructions:
+# +: Pop 2 values from the stack, add them, and push the result onto the stack.-: Pop 2 values from the stack, subtract the top value from the second value, and push the result onto the stack.*: Pop 2 values from the stack, multiply them, and push the result onto the stack./: Pop 2 values from the stack, divide the second value by the top value, and push the result onto the stack.DUP: Duplicate (not double) the top value of the stack.POP: Pop the top value from the stack and discard it.PSH: Push a number onto the stack.Note: Any other instructions (such as letters) should result in &quot;Invalid instruction: [instruction]&quot;.
+# ================================================================================
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def peek(self):
+        return self.items[-1]
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+
+class Calculator:
+    def __init__(self):
+        self.stack = Stack()
+
+    def run(self, instructions):
+        self.stack = Stack()
+        tokens = instructions.split()
+        i = 0
+        while i &lt; len(tokens):
+            token = tokens[i]
+
+            if token == &#39;+&#39;:
+                x = self.stack.pop()
+                y = self.stack.pop()
+                self.stack.push(x + y)
+            elif token == &#39;-&#39;:
+                x = self.stack.pop()
+                y = self.stack.pop()
+                self.stack.push(x - y)
+            elif token == &#39;*&#39;:
+                x = self.stack.pop()
+                y = self.stack.pop()
+                self.stack.push(x * y)
+            elif token == &#39;/&#39;:
+                x = self.stack.pop()
+                y = self.stack.pop()
+                self.stack.push(x / y)
+            elif token == &#39;DUP&#39;:
+                self.stack.push(self.stack.peek())
+            elif token == &#39;POP&#39;:
+                self.stack.pop()
+            elif token == &#39;PSH&#39;:
+                i += 1
+                self.stack.push(float(tokens[i]))
+            else:
+                try:
+                    num = float(token)
+                    self.stack.push(num)
+                except ValueError:
+                    return f&quot;Invalid instruction: {token}&quot;
+            i += 1
+
+        if self.stack.is_empty():
+            return 0
+
+        result = self.stack.peek()
+        if isinstance(result, float) and result.is_integer():
+            result = int(result)
+        return result
+
+
+def main():
+    print(&quot;* Stack Calculator *&quot;)
+    instructions = input(&quot;Enter arguments : &quot;)
+    calc = Calculator()
+    result = calc.run(instructions)
+    print(result)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 3 Item 4 (26s1 Stack Calculator).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="Stack" data-title="parking lot" data-ch="chapter 3">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 3</span>
+                            <span class="badge badge-indigo">Item 5</span>
+                            <span class="card-title" style="margin-left: 8px;">Parking Lot</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Parking lot simulation using stack push/pop and temporary stack buffer to unblock cars.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_03_Stack/item_5_26s1_Parking_lot.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 3 - Item 5: 26s1 Parking lot
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Mr. A&#39;s parking area is shaded in blue, while the red area belongs to Mr. B, who is a relative. Both Mr. A&#39;s and Mr. B&#39;s parking areas are very narrow and can only accommodate cars in a single line. Mr. B does not use his parking space but allows Mr. A to use it without parking his car there permanently. Due to the narrow alley, parking (arrive) and retrieving cars (depart) will operate as a stack. The condition is that when retrieving any car x, the order of the cars should remain the same, as shown in the diagram simulating the parking of cars in Mr. A&#39;s parking space using stack operations. Below is an example output.
+# Input: Receive 4 values in one line separated by a space (&quot; &quot;). The first position is the maximum number of cars that can park in Mr. A&#39;s alley, the second position is the car currently parked in Mr. A&#39;s alley, the third position is the action (e.g., if it is &quot;arrive&quot;, it will add a car to the alley, and if it is &quot;depart&quot;, it will remove a car from the alley), and the fourth position is the number of the car to be added or removed.
+# Note: If there are no cars in the alley, set the input to 0 in the second position.
+# ================================================================================
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def peek(self):
+        return self.items[-1]
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def contains(self, item):
+        return item in self.items
+
+    def to_list(self):
+        return list(self.items)
+
+
+class ParkingLot:
+    def __init__(self, max_cars, cars):
+        self.max_cars = max_cars
+        self.stack = Stack()
+        for c in cars:
+            self.stack.push(c)
+
+    def arrive(self, num):
+        if self.stack.contains(num):
+            return f&quot;car {num} already in soi&quot;
+        elif len(self.stack.to_list()) &gt;= self.max_cars:
+            return f&quot;car {num} cannot arrive : Soi Full&quot;
+        else:
+            self.stack.push(num)
+            return f&quot;car {num} arrive! : Add Car {num}&quot;
+
+    def depart(self, num):
+        if not self.stack.contains(num):
+            return f&quot;car {num} cannot depart : Dont Have Car {num}&quot;
+
+        temp = Stack()
+        while self.stack.peek() != num:
+            temp.push(self.stack.pop())
+        self.stack.pop()
+        while not temp.is_empty():
+            self.stack.push(temp.pop())
+
+        return f&quot;car {num} depart ! : Car {num} was remove&quot;
+
+    def cars(self):
+        return self.stack.to_list()
+
+
+def main():
+    print(&quot;******** Parking Lot ********&quot;)
+    line = input(&quot;Enter max of car / car in soi / operation : &quot;)
+
+    max_str, cars_str, op_str = [part.strip() for part in line.split(&#39;/&#39;)]
+    max_cars = int(max_str)
+
+    cars_str = cars_str.strip()
+    cars = [int(x) for x in cars_str.split(&#39;,&#39;)]
+
+    lot = ParkingLot(max_cars, cars)
+
+    op_parts = op_str.split()
+    action = op_parts[0]
+    num = int(op_parts[1])
+
+    if action == &#39;arrive&#39;:
+        print(lot.arrive(num))
+    elif action == &#39;depart&#39;:
+        print(lot.depart(num))
+
+    print(lot.cars())
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 3 Item 5 (26s1 Parking lot).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="Queue" data-title="basic queue" data-ch="chapter 4">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 4</span>
+                            <span class="badge badge-indigo">Item 1</span>
+                            <span class="card-title" style="margin-left: 8px;">Basic Queue</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Basic queue operations (enqueue E, dequeue D) using list slice and pointer operations.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_04_Queue/item_1_26s1_Basic_Queue.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 4 - Item 1: 26s1 Basic Queue
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Write a program that accepts two types of input using a QUEUE to solve the problem.
+# E &lt;value&gt;
+# Insert the value into the QUEUE.Display the value that was enqueued and the index of the newly added element.D
+# Dequeue the front element of the QUEUE.Display the number that was removed and the size of the QUEUE after the dequeue operation.At the end, if there are still values in the QUEUE, display them. If the QUEUE is empty, display &quot;Empty&quot;.
+# ================================================================================
+
+class Queue:
+    def __init__(self):
+        self.items = []
+
+    def enqueue(self, value):
+        self.items.append(value)
+        return len(self.items) - 1
+
+    def dequeue(self):
+        if self.isEmpty():
+            return None
+        return self.items.pop(0)
+
+    def size(self):
+        return len(self.items)
+
+    def isEmpty(self):
+        return len(self.items) == 0
+
+    def getItems(self):
+        return [str(item) for item in self.items]
+
+
+inp = input(&quot;Enter Input : &quot;)
+commands = [cmd.strip() for cmd in inp.split(&quot;,&quot;)]
+
+queue = Queue()
+
+for cmd in commands:
+    if cmd.startswith(&quot;E &quot;):
+        value = cmd.split()[1]
+        index = queue.enqueue(value)
+        print(f&quot;Add {value} index is {index}&quot;)
+    elif cmd == &quot;D&quot;:
+        if queue.isEmpty():
+            print(&quot;-1&quot;)
+        else:
+            value = queue.dequeue()
+            print(f&quot;Pop {value} size in queue is {queue.size()}&quot;)
+
+if queue.isEmpty():
+    print(&quot;Empty&quot;)
+else:
+    print(f&quot;Number in Queue is :  {queue.getItems()}&quot;)
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 4 Item 1 (26s1 Basic Queue).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="Queue" data-title="queue 2" data-ch="chapter 4">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 4</span>
+                            <span class="badge badge-indigo">Item 2</span>
+                            <span class="card-title" style="margin-left: 8px;">Queue 2</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N log N)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Queue with special duplicate removal or priority ordering based on instruction requirements.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_04_Queue/item_2_26s1_Queue_2.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 4 - Item 2: 26s1 Queue-2
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Simulate queue shifting within a specified time using the class Queue.
+# There is one main queue of any length.The queue in front of cashier 1 has a length of 5 people, with each person taking 3 minutes for service.The queue in front of cashier 2 has a length of 5 people, with each person taking 2 minutes for service.Customers move from the main queue every 1 minute. If cashier 1&#39;s queue is empty, they go there first; if it&#39;s full, they go to cashier 2.Display the minutes, the main queue, cashier 1 queue, and cashier 2 queue until the main queue is empty.
+# ================================================================================
+
+class Queue:
+    def __init__(self):
         self.items = []
         
-    <span class="keyword">def</span> <span class="function">push</span>(self, item):
-        self.items.<span class="function">append</span>(item)
+    def enqueue(self, value):
+        self.items.append(value)
         
-    <span class="keyword">def</span> <span class="function">pop</span>(self):
-        <span class="keyword">if</span> <span class="keyword">not</span> self.<span class="function">is_empty</span>():
-            <span class="keyword">return</span> self.items.<span class="function">pop</span>()</code></pre>
-                        </div>
-                    </div>
-                    <div class="card searchable-item">
-                        <h3>Exercise 12: BST Insertion</h3>
-                        <p>Insert a node into a Binary Search Tree.</p>
-                        <div class="code-container">
-                            <button class="copy-btn">Copy</button>
-                            <pre><code><span class="keyword">def</span> <span class="function">insert</span>(root, val):
-    <span class="keyword">if</span> <span class="keyword">not</span> root:
-        <span class="keyword">return</span> <span class="function">Node</span>(val)
-    <span class="keyword">if</span> val &lt; root.val:
-        root.left = <span class="function">insert</span>(root.left, val)
-    <span class="keyword">else</span>:
-        root.right = <span class="function">insert</span>(root.right, val)
-    <span class="keyword">return</span> root</code></pre>
-                        </div>
-                    </div>
-                    <div class="card searchable-item">
-                        <h3>... (Placeholder for remaining exercises)</h3>
-                        <p>All 30 exercises are mapped conceptually like above.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    def dequeue(self):
+        if not self.isEmpty():
+            return self.items.pop(0)
+        return None
+        
+    def isEmpty(self):
+        return len(self.items) == 0
+        
+    def size(self):
+        return len(self.items)
+        
+    def __str__(self):
+        return str(self.items)
 
-        <!-- Tab 3: Practice Exam -->
-        <section id="exam" class="tab-content searchable-content">
-            <div class="card searchable-item">
-                <h2>Quick Self-Test</h2>
-                <p>Test your knowledge on key concepts.</p>
-                <div class="exam-question">
-                    <h3>1. What is the time complexity of searching in a balanced BST?</h3>
-                    <p><strong>Answer:</strong> O(log n)</p>
-                </div>
-                <div class="exam-question">
-                    <h3>2. Which data structure operates on a LIFO basis?</h3>
-                    <p><strong>Answer:</strong> Stack</p>
+if __name__ == &quot;__main__&quot;:
+    inp = input(&quot;Enter people : &quot;)
+
+    main_q = Queue()
+    for char in inp:
+        main_q.enqueue(char)
+            
+    q1 = Queue()
+    q2 = Queue()
+    
+    time = 1
+    q1_tick = 0
+    q2_tick = 0
+    
+    while not main_q.isEmpty():
+        if not q1.isEmpty():
+            q1_tick += 1
+            if q1_tick == 3:
+                q1.dequeue()
+                q1_tick = 0
+                
+        if not q2.isEmpty():
+            q2_tick += 1
+            if q2_tick == 2:
+                q2.dequeue()
+                q2_tick = 0
+                
+        person = main_q.dequeue()
+        if q1.size() &lt; 5:
+            q1.enqueue(person)
+        else:
+            q2.enqueue(person)
+            
+        print(f&quot;{time} {main_q} {q1} {q2}&quot;)
+        time += 1
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 4 Item 2 (26s1 Queue-2).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="Queue" data-title="concept queue" data-ch="chapter 4">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 4</span>
+                            <span class="badge badge-indigo">Item 3</span>
+                            <span class="card-title" style="margin-left: 8px;">Concept Queue</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(1) per op</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Circular Queue implementation using fixed array and modulo indexing for front/rear pointers.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_04_Queue/item_3_26s1_Concept_Queue.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 4 - Item 3: 26s1 Concept Queue
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Accept a single line of input where each sequence is indicated by a letter followed by the number of times the action should be performed. &#39;E&#39; indicates an enqueue operation, and &#39;D&#39; indicates a dequeue operation. If the letter is something else, count it as an error input.
+# You must report how many ineffective dequeues occur in sequence and show how the queue changes at each step.
+# ================================================================================
+
+class Queue:
+    def __init__(self):
+        self.items = []
+        
+    def enqueue(self, value):
+        self.items.append(value)
+        
+    def dequeue(self):
+        if not self.isEmpty():
+            return self.items.pop(0)
+        return None
+        
+    def isEmpty(self):
+        return len(self.items) == 0
+        
+    def size(self):
+        return len(self.items)
+        
+    def __str__(self):
+        return str(self.items)
+
+if __name__ == &quot;__main__&quot;:
+    inp_string = input(&quot;input : &quot;)
+    inp = inp_string.split(&quot;,&quot;)
+    
+    q = Queue()
+    enq_counter = 0
+    error_dequeue = 0
+    error_input = 0
+    
+    for step in inp:
+        step = step.strip()
+        print(f&quot;Step : {step}&quot;)
+        if step.startswith(&#39;E&#39;) and step[1:].isdigit():
+            count = int(step[1:])
+            for _ in range(count):
+                q.enqueue(f&quot;*{enq_counter}&quot;)
+                enq_counter += 1
+            print(f&quot;Enqueue : {q}&quot;)
+        elif step.startswith(&#39;D&#39;) and step[1:].isdigit():
+            count = int(step[1:])
+            for _ in range(count):
+                if q.isEmpty():
+                    error_dequeue += 1
+                else:
+                    q.dequeue()
+            print(f&quot;Dequeue : {q}&quot;)
+        else:
+            error_input += 1
+            print(q)
+            
+        print(f&quot;Error Dequeue : {error_dequeue}&quot;)
+        print(f&quot;Error input : {error_input}&quot;)
+        print(&quot;-&quot; * 20)
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 4 Item 3 (26s1 Concept Queue).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="Queue" data-title="cafe" data-ch="chapter 4">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 4</span>
+                            <span class="badge badge-indigo">Item 4</span>
+                            <span class="card-title" style="margin-left: 8px;">Cafe</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N * B)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Event-driven simulation tracking customer arrival, coffee prep times, and barista waiting times.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_04_Queue/item_4_26s1_Cafe.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 4 - Item 4: 26s1 Cafe
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Coffee Shop ScenarioAt a certain coffee shop, there are 2 baristas. Customers arrive at time si and order a coffee that takes pi minutes to make. If both baristas are busy, the customer has to wait in a queue.
+# Your tasks:
+# Simulate the order in which customers receive their coffee.
+# Identify the customer who waited the longest before placing their order.
+# If nobody had to wait, display: No waiting.
+# Input date
+# Log : 0,3/0,7/2,3/7,7/10,5/10,1
+# ???? Explanation
+# Customer 1 enters at time 0 and orders a coffee that takes 3 minutes to make.
+# Customer 2 enters at time 0 and orders a coffee that takes 7 minutes to make.
+# Customer 3 enters at time 2 and orders a coffee that takes 3 minutes to make.
+# Customer 4 enters at time 7 and orders a coffee that takes 7 minutes to make.
+# Customer 5 enters at time 10 and orders a coffee that takes 5 minutes to make.
+# Customer 6 enters at time 10 and orders a coffee that takes 1 minute to make.
+# ⏰ Timeline
+# Time (t)Event0Customers 1 and 2 enter the shop and place their orders.2Customer 3 enters the shop.3Customer 1 gets their coffee. Customer 3 places an order after waiting 1 minute.6Customer 3 gets their coffee.7Customer 2 gets their coffee. Customer 4 enters and places an order.10Customers 5 and 6 enter the shop. Customer 5 places an order.14Customer 4 gets their coffee. Customer 6 places an order after waiting 4 minutes.15Customers 5 and 6 get their coffee.
+# ================================================================================
+
+class Customer:
+    def __init__(self, cid, arr, prep):
+        self.cid = cid
+        self.arr = arr
+        self.prep = prep
+        self.finish = 0
+        self.wait = 0
+
+class Queue:
+    def __init__(self):
+        self.items = []
+        
+    def enqueue(self, value):
+        self.items.append(value)
+        
+    def dequeue(self):
+        if not self.is_empty():
+            return self.items.pop(0)
+        return None
+        
+    def is_empty(self):
+        return len(self.items) == 0
+
+if __name__ == &quot;__main__&quot;:
+    print(&quot; ***Cafe***&quot;)
+    inp = input(&quot;Log : &quot;).split(&#39;/&#39;)
+    
+    q = Queue()
+    for i, s in enumerate(inp):
+        arr, prep = map(int, s.split(&#39;,&#39;))
+        q.enqueue(Customer(i + 1, arr, prep))
+        
+    b1_free = 0
+    b2_free = 0
+    
+    processed = []
+    
+    while not q.is_empty():
+        c = q.dequeue()
+        if b1_free &lt;= b2_free:
+            start = max(c.arr, b1_free)
+            c.wait = start - c.arr
+            c.finish = start + c.prep
+            b1_free = c.finish
+        else:
+            start = max(c.arr, b2_free)
+            c.wait = start - c.arr
+            c.finish = start + c.prep
+            b2_free = c.finish
+        processed.append(c)
+        
+    max_wait = 0
+    max_wait_cid = -1
+    for c in processed:
+        if c.wait &gt; max_wait:
+            max_wait = c.wait
+            max_wait_cid = c.cid
+            
+    processed.sort(key=lambda x: (x.finish, x.cid))
+    
+    for c in processed:
+        print(f&quot;Time {c.finish} customer {c.cid} get coffee&quot;)
+        
+    if max_wait == 0:
+        print(&quot;No waiting&quot;)
+    else:
+        print(f&quot;The customer who waited the longest is : {max_wait_cid}&quot;)
+        print(f&quot;The customer waited for {max_wait} minutes&quot;)
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 4 Item 4 (26s1 Cafe).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="Queue" data-title="search portal" data-ch="chapter 4">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 4</span>
+                            <span class="badge badge-indigo">Item 5</span>
+                            <span class="card-title" style="margin-left: 8px;">Search Portal</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(V + E)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Breadth-First Search (BFS) grid pathfinding to find shortest path from start to portal/exit.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_04_Queue/item_5_26s1_Search_Portal.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 4 - Item 5: 26s1 Search Portal
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Sunfong received an assignment from the teacher to create a programming problem for the students. He went home to think about it and found himself in a dark room. He can see and walk to adjacent areas (in 4 directions: North, South, East, West). Sunfong must find the exit door from the dream to deliver the assignment to the teacher. He decided to use the Breadth First Search (BFS) method, starting from the initial point, checking and remembering the path in the order of North, East, South, and West. Then, he walks to the next cell and repeats the process.
+# Sunfong needs a program to tell him if he can reach the exit or if he will be stuck in the dream forever. He is too lazy to write the code himself, so he wants the students to write it for him in a neat and concise manner.
+# Program Details:Input:
+# Receive the width, height, and the map. Each line of the map is separated by a comma.Example input: 3 3 F__,##_,O__This means the map is 3 wide and 3 high, and it looks like this
+# F__##_O__
+# ================================================================================
+
+class Queue:
+    def __init__(self):
+        self.items = []
+        
+    def enqueue(self, value):
+        self.items.append(value)
+        
+    def dequeue(self):
+        if not self.is_empty():
+            return self.items.pop(0)
+        return None
+        
+    def is_empty(self):
+        return len(self.items) == 0
+
+if __name__ == &quot;__main__&quot;:
+    inp = input(&quot;Enter width, height, and room: &quot;)
+    parts = inp.split()
+    
+    if len(parts) &lt; 3:
+        print(&quot;Invalid map input.&quot;)
+        exit(0)
+        
+    width = int(parts[0])
+    height = int(parts[1])
+    room = parts[2].split(&#39;,&#39;)
+    
+    # Validation
+    valid = True
+    if len(room) != height:
+        valid = False
+    else:
+        for r in room:
+            if len(r) != width:
+                valid = False
+                break
+                
+    if not valid:
+        print(&quot;Invalid map input.&quot;)
+        exit(0)
+        
+    start = None
+    for y in range(height):
+        for x in range(width):
+            if room[y][x] == &#39;F&#39;:
+                start = (x, y)
+                break
+        if start:
+            break
+            
+    if start is None:
+        print(&quot;Invalid map input.&quot;)
+        exit(0)
+        
+    q = Queue()
+    q.enqueue(start)
+    visited = set()
+    visited.add(start)
+    
+    found = False
+    
+    # Directions: North, East, South, West
+    directions = [(0, -1), (1, 0), (0, 1), (-1, 0)]
+    
+    while not q.is_empty():
+        print(f&quot;Queue: {q.items}&quot;)
+        curr = q.dequeue()
+        x, y = curr
+        
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if 0 &lt;= nx &lt; width and 0 &lt;= ny &lt; height:
+                if room[ny][nx] == &#39;O&#39;:
+                    found = True
+                    break
+                if room[ny][nx] == &#39;_&#39; and (nx, ny) not in visited:
+                    q.enqueue((nx, ny))
+                    visited.add((nx, ny))
+                    
+        if found:
+            break
+            
+    if found:
+        print(&quot;Found the exit portal.&quot;)
+    else:
+        print(&quot;Cannot reach the exit portal.&quot;)
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 4 Item 5 (26s1 Search Portal).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="LinkedList" data-title="singly linked list" data-ch="chapter 5">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 5</span>
+                            <span class="badge badge-indigo">Item 1</span>
+                            <span class="card-title" style="margin-left: 8px;">Singly Linked List</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Singly Linked List class with append, prepend, insert_at_index, search, and delete operations.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_05_LinkedList/item_1_Singly_Linked_List.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 5 - Item 1: Singly Linked List
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Instructions for Implementing a Singly Linked List ClassWrite a class for a Singly Linked List that includes the following methods:
+# __init__(self): Initializes the head to indicate the starting point of the Linked List.__str__(self): Returns a string representation of the Linked List, showing all elements from head to tail.isEmpty(self): Checks if the Linked List is empty and returns True or False.append(self, data): Adds an item to the end of the Linked List. Does not return a value.addHead(self, data): Adds an item to the front of the Linked List. Does not return a value.search(self, data): Searches for the desired item in the Linked List and returns Found or Not Found.index(self, data): Searches for the desired item in the Linked List and returns its index (0, 1, 2, 3, 4, ...). If not found, returns -1.size(self): Returns the size of the Linked List.pop(self, pos): Removes the item at the given index pos from the Linked List and returns Success or Out of Range.Input Format:append -&gt; APaddHead -&gt; AHsearch -&gt; SEindex -&gt; IDsize -&gt; SIpop -&gt; PO
+# class Node:&#160; &#160; def __init__(self, value):&#160; &#160; &#160; &#160; self.value = value&#160; &#160; &#160; &#160; self.next = None
+# class LinkedList:&#160; &#160; def __init__(self):&#160; &#160; &#160; &#160; self.head = None
+# &#160; &#160; def __str__(self):&#160; &#160; &#160; &#160; if self.isEmpty():&#160; &#160; &#160; &#160; &#160; &#160; return &quot;Empty&quot;&#160; &#160; &#160; &#160; cur, s = self.head, str(self.head.value) + &quot; &quot;&#160; &#160; &#160; &#160; while cur.next != None:&#160; &#160; &#160; &#160; &#160; &#160; s += str(cur.next.value) + &quot; &quot;&#160; &#160; &#160; &#160; &#160; &#160; cur = cur.next&#160; &#160; &#160; &#160; return s
+# &#160; &#160; def isEmpty(self):&#160; &#160; &#160; &#160; return self.head == None
+# &#160; &#160; def append(self, item):&#160; &#160; &#160; &#160; # Code Here
+# &#160; &#160; def addHead(self, item):&#160; &#160; &#160; &#160; # Code Here
+# &#160; &#160; def search(self, item):&#160; &#160; &#160; &#160; # Code Here
+# &#160; &#160; def index(self, item):&#160; &#160; &#160; &#160; # Code Here
+# &#160; &#160; def size(self):&#160; &#160; &#160; &#160; # Code Here
+# &#160; &#160; def pop(self, pos):&#160; &#160; &#160; &#160; # Code HereL = LinkedList()inp = input(&#39;Enter Input : &#39;).split(&#39;,&#39;)for i in inp:&#160; &#160; if i[:2] == &quot;AP&quot;:&#160; &#160; &#160; &#160; L.append(i[3:])&#160; &#160; elif i[:2] == &quot;AH&quot;:&#160; &#160; &#160; &#160; L.addHead(i[3:])&#160; &#160; elif i[:2] == &quot;SE&quot;:&#160; &#160; &#160; &#160; print(f&quot;{L.search(i[3:])} {i[3:]} in {L}&quot;)&#160; &#160; elif i[:2] == &quot;SI&quot;:&#160; &#160; &#160; &#160; print(f&quot;Linked List size = {L.size()} : {L}&quot;)&#160; &#160; elif i[:2] == &quot;ID&quot;:&#160; &#160; &#160; &#160; print(f&quot;Index ({i[3:]}) = {L.index(i[3:])} : {L}&quot;)&#160; &#160; elif i[:2] == &quot;PO&quot;:&#160; &#160; &#160; &#160; before = f&quot;{L}&quot;&#160; &#160; &#160; &#160; k = L.pop(int(i[3:]))&#160; &#160; &#160; &#160; if k == &quot;Success&quot;:&#160; &#160; &#160; &#160; &#160; &#160; print(f&quot;{k} | {before}-&gt; {L}&quot;)&#160; &#160; &#160; &#160; else:&#160; &#160; &#160; &#160; &#160; &#160; print(f&quot;{k} | {L}&quot;)before = f&quot;{L}&quot;
+# ================================================================================
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def __str__(self):
+        if self.isEmpty():
+            return &quot;Empty&quot;
+        cur, s = self.head, str(self.head.value) + &quot; &quot;
+        while cur.next != None:
+            s += str(cur.next.value) + &quot; &quot;
+            cur = cur.next
+        return s
+
+    def isEmpty(self):
+        return self.head == None
+
+    def append(self, item):
+        new_node = Node(item)
+        if self.isEmpty():
+            self.head = new_node
+            return
+        cur = self.head
+        while cur.next != None:
+            cur = cur.next
+        cur.next = new_node
+
+    def addHead(self, item):
+        new_node = Node(item)
+        new_node.next = self.head
+        self.head = new_node
+
+    def search(self, item):
+        cur = self.head
+        while cur != None:
+            if cur.value == item:
+                return &quot;Found&quot;
+            cur = cur.next
+        return &quot;Not Found&quot;
+
+    def index(self, item):
+        cur = self.head
+        idx = 0
+        while cur != None:
+            if cur.value == item:
+                return idx
+            cur = cur.next
+            idx += 1
+        return -1
+
+    def size(self):
+        cur = self.head
+        count = 0
+        while cur != None:
+            count += 1
+            cur = cur.next
+        return count
+
+    def pop(self, pos):
+        if pos &lt; 0 or self.isEmpty():
+            return &quot;Out of Range&quot;
+        
+        if pos == 0:
+            self.head = self.head.next
+            return &quot;Success&quot;
+            
+        cur = self.head
+        idx = 0
+        while cur.next != None and idx &lt; pos - 1:
+            cur = cur.next
+            idx += 1
+            
+        if cur.next == None:
+            return &quot;Out of Range&quot;
+            
+        cur.next = cur.next.next
+        return &quot;Success&quot;
+
+L = LinkedList()
+inp = input(&#39;Enter Input : &#39;).split(&#39;,&#39;)
+for i in inp:
+    if i[:2] == &quot;AP&quot;:
+        L.append(i[3:])
+    elif i[:2] == &quot;AH&quot;:
+        L.addHead(i[3:])
+    elif i[:2] == &quot;SE&quot;:
+        print(f&quot;{L.search(i[3:])} {i[3:]} in {L}&quot;)
+    elif i[:2] == &quot;SI&quot;:
+        print(f&quot;Linked List size = {L.size()} : {L}&quot;)
+    elif i[:2] == &quot;ID&quot;:
+        print(f&quot;Index ({i[3:]}) = {L.index(i[3:])} : {L}&quot;)
+    elif i[:2] == &quot;PO&quot;:
+        before = f&quot;{L}&quot;
+        k = L.pop(int(i[3:]))
+        if k == &quot;Success&quot;:
+            print(f&quot;{k} | {before}-&gt; {L}&quot;)
+        else:
+            print(f&quot;{k} | {L}&quot;)
+
+print(&quot;Linked List :&quot;, L)
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 5 Item 1 (Singly Linked List).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="LinkedList" data-title="doubly linked list" data-ch="chapter 5">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 5</span>
+                            <span class="badge badge-indigo">Item 2</span>
+                            <span class="card-title" style="margin-left: 8px;">Doubly Linked List</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Doubly Linked List with prev and next pointers supporting bidirectional traversal and deletion.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_05_LinkedList/item_2_Doubly_Linked_List_append_insert_remove.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 5 - Item 2: Doubly Linked List(append,insert,remove)
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Write a class for a Doubly Linked List which includes the following methods:
+# def __init__(self): Initializes the linked list.
+# def __str__(self): Returns a string representing the values in the linked list.
+# def str_reverse(self): Returns a string representing the values in the linked list from back to front.
+# def isEmpty(self): Returns whether the list is empty.
+# def append(self, data): Adds a node with the given data to the end of the linked list.
+# def insert(self, index, data): Inserts data at the specified index.
+# def remove(self, data): Removes and returns the node with the given data.
+# When inserting, the new data replaces the position of the old data, and the old data is moved to follow the new data.Input format is as follows:
+# append -&gt; Aadd_before -&gt; Abinsert -&gt; Iremove -&gt; R******* Use the Node class to implement the Linked List. Do not use Python&#39;s built-in list.*********
+# class Node:
+#     def __init__(self, data):
+#         self.data = data
+#         self.next = None
+#         self.previous = None
+# ================================================================================
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.previous = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def __str__(self):
+        if self.isEmpty():
+            return &quot;&quot;
+        cur = self.head
+        s = str(cur.data)
+        while cur.next:
+            cur = cur.next
+            s += &quot;-&gt;&quot; + str(cur.data)
+        return s
+
+    def str_reverse(self):
+        if self.isEmpty():
+            return &quot;&quot;
+        cur = self.tail
+        s = str(cur.data)
+        while cur.previous:
+            cur = cur.previous
+            s += &quot;-&gt;&quot; + str(cur.data)
+        return s
+
+    def isEmpty(self):
+        return self.head is None
+
+    def size(self):
+        count = 0
+        cur = self.head
+        while cur:
+            count += 1
+            cur = cur.next
+        return count
+
+    def append(self, data):
+        new_node = Node(data)
+        if self.isEmpty():
+            self.head = self.tail = new_node
+        else:
+            self.tail.next = new_node
+            new_node.previous = self.tail
+            self.tail = new_node
+
+    def insert(self, index, data):
+        new_node = Node(data)
+        if self.isEmpty():
+            self.head = self.tail = new_node
+            return
+            
+        sz = self.size()
+        if index == 0:
+            new_node.next = self.head
+            self.head.previous = new_node
+            self.head = new_node
+        elif index &gt;= sz:
+            self.append(data)
+        else:
+            cur = self.head
+            for _ in range(index):
+                cur = cur.next
+            new_node.next = cur
+            new_node.previous = cur.previous
+            cur.previous.next = new_node
+            cur.previous = new_node
+
+    def remove(self, data):
+        cur = self.head
+        idx = 0
+        while cur:
+            if cur.data == data:
+                if cur.previous:
+                    cur.previous.next = cur.next
+                else:
+                    self.head = cur.next
+                    
+                if cur.next:
+                    cur.next.previous = cur.previous
+                else:
+                    self.tail = cur.previous
+                return cur, idx
+            cur = cur.next
+            idx += 1
+        return None, -1
+
+if __name__ == &quot;__main__&quot;:
+    inp = input(&#39;Enter Input : &#39;).split(&#39;,&#39;)
+    L = DoublyLinkedList()
+    
+    for item in inp:
+        item = item.strip()
+        parts = item.split(&#39; &#39;)
+        cmd = parts[0]
+        
+        if cmd == &#39;A&#39;:
+            L.append(parts[1])
+        elif cmd == &#39;Ab&#39;:
+            L.insert(0, parts[1])
+        elif cmd == &#39;I&#39;:
+            idx, data = parts[1].split(&#39;:&#39;)
+            idx = int(idx)
+            if idx &lt; 0 or idx &gt; L.size():
+                print(&quot;Data cannot be added&quot;)
+            else:
+                print(f&quot;index = {idx} and data = {data}&quot;)
+                L.insert(idx, data)
+        elif cmd == &#39;R&#39;:
+            removed, idx = L.remove(parts[1])
+            if removed is None:
+                print(&quot;Not Found!&quot;)
+            else:
+                print(f&quot;removed : {parts[1]} from index : {idx}&quot;)
+                
+        print(&quot;linked list :&quot;, L)
+        print(&quot;reverse :&quot;, L.str_reverse())
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 5 Item 2 (Doubly Linked List(append,insert,remove)).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="LinkedList" data-title="merge order list" data-ch="chapter 5">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 5</span>
+                            <span class="badge badge-indigo">Item 3</span>
+                            <span class="card-title" style="margin-left: 8px;">Merge Order List</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N + M)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Merge two sorted linked lists into a single sorted linked list without creating new nodes.</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_05_LinkedList/item_3_MergeOrderList.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 5 - Item 3: MergeOrderList
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Instructions for Merging Two Linked Lists Without Creating a LinkedList ClassNode Class:
+# Ensure you have a Node class that contains a value and a reference to the next Node.Functions to Implement:
+# createList(): Creates a LinkedList from a given list of values and returns the head of the LinkedList.printList(): Prints all the elements of a LinkedList starting from the given head.mergeOrderList(): Merges two LinkedLists into one in ascending order of their values and returns the head of the merged LinkedList.
+# ****Using sort() is prohibited. If found, no points will be awarded.****
+# ****Creating a LinkedList class is prohibited.****
+# class&#160;node:&#160;&#160;&#160;&#160;def&#160;__init__(self,data,next&#160;=&#160;None&#160;):&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;### Code Here ###
+# &#160;&#160;&#160;&#160;def&#160;__str__(self):&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;### Code Here ###
+# def&#160;createList(l=[]):&#160;&#160;&#160;&#160;### Code Here ###
+# def&#160;printList(H):&#160;&#160;&#160;&#160;### Code Here ###
+# def&#160;mergeOrderesList(p,q):&#160;&#160;&#160;&#160;### Code Here ###
+# ####################&#160;FIX&#160;comand&#160;####################&#160;&#160;&#160;#&#160;input&#160;only&#160;a&#160;number&#160;save in L1,L2LL1&#160;=&#160;createList(L1)LL2&#160;=&#160;createList(L2)print(&#39;LL1&#160;:&#160;&#39;,end=&#39;&#39;)printList(LL1)print(&#39;LL2&#160;:&#160;&#39;,end=&#39;&#39;)printList(LL2)m&#160;=&#160;mergeOrderesList(LL1,LL2)print(&#39;Merge&#160;Result&#160;:&#160;&#39;,end=&#39;&#39;)printList(m)
+# ================================================================================
+
+class node:
+    def __init__(self, data, next=None):
+        self.data = int(data)
+        self.next = next
+        
+    def __str__(self):
+        return str(self.data)
+
+def createList(l=[]):
+    if not l or l == [&#39;&#39;]:
+        return None
+    head = node(l[0])
+    cur = head
+    for val in l[1:]:
+        cur.next = node(val)
+        cur = cur.next
+    return head
+
+def printList(H):
+    cur = H
+    while cur:
+        print(cur.data, end=&#39; &#39;)
+        cur = cur.next
+    print()
+
+def mergeOrderesList(p, q):
+    dummy = node(0)
+    cur = dummy
+    while p and q:
+        if p.data &lt;= q.data:
+            cur.next = p
+            p = p.next
+        else:
+            cur.next = q
+            q = q.next
+        cur = cur.next
+        
+    if p:
+        cur.next = p
+    if q:
+        cur.next = q
+        
+    return dummy.next
+
+L1, L2 = [], []
+inp = input(&#39;Enter 2 Lists : &#39;).split(&#39; &#39;)
+if len(inp) &gt; 0 and inp[0]:
+    L1 = inp[0].split(&#39;,&#39;)
+if len(inp) &gt; 1 and inp[1]:
+    L2 = inp[1].split(&#39;,&#39;)
+
+LL1 = createList(L1)
+LL2 = createList(L2)
+print(&#39;LL1 : &#39;, end=&#39;&#39;)
+printList(LL1)
+print(&#39;LL2 : &#39;, end=&#39;&#39;)
+printList(LL2)
+m = mergeOrderesList(LL1, LL2)
+print(&#39;Merge Result : &#39;, end=&#39;&#39;)
+printList(m)
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 5 Item 3 (MergeOrderList).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="LinkedList" data-title="vim text editor" data-ch="chapter 5">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 5</span>
+                            <span class="badge badge-indigo">Item 4</span>
+                            <span class="card-title" style="margin-left: 8px;">VIM Text Editor</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(1) per op</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Doubly Linked List with dummy head and dummy tail modeling cursor movements (L, R, B, D, I).</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_05_LinkedList/item_4_VIM_Text_Editor.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 5 - Item 4: VIM Text Editor
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Kritsada had a brilliant idea to create his own Text Editor similar to VIM, which operates in a single mode called Command Mode (our input). The program includes 5 commands: Insert (I), Left (L), Right (R), Backspace (B), and Delete (D). (The functionality of each command is explained below.) However, Kritsada lacks programming skills, so he requested help from computer engineering students to develop the Text Editor he envisioned. The output should display the remaining word after executing the commands and the position of the cursor.
+# Explanation of the 5 Input Commands:I &lt;word&gt;: Inserts the word at the current cursor position. After inserting the word, the cursor moves to the end of the inserted word.
+# L: Moves the cursor one position to the left. If the cursor is already at the leftmost position, nothing happens.
+# R: Moves the cursor one position to the right. If the cursor is already at the rightmost position, nothing happens.
+# B: Deletes the character to the left of the cursor. If the cursor is already at the leftmost position, nothing happens.
+# D: Deletes the character to the right of the cursor. If the cursor is already at the rightmost position, nothing happens.
+# ================================================================================
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.prev = None
+        self.next = None
+
+class TextEditor:
+    def __init__(self):
+        self.dummy_head = Node(None)
+        self.dummy_tail = Node(None)
+        self.dummy_head.next = self.dummy_tail
+        self.dummy_tail.prev = self.dummy_head
+        self.cursor = self.dummy_head
+
+    def insert(self, word):
+        new_node = Node(word)
+        new_node.next = self.cursor.next
+        new_node.prev = self.cursor
+        self.cursor.next.prev = new_node
+        self.cursor.next = new_node
+        self.cursor = new_node
+
+    def left(self):
+        if self.cursor != self.dummy_head:
+            self.cursor = self.cursor.prev
+
+    def right(self):
+        if self.cursor.next != self.dummy_tail:
+            self.cursor = self.cursor.next
+
+    def backspace(self):
+        if self.cursor != self.dummy_head:
+            to_delete = self.cursor
+            self.cursor = self.cursor.prev
+            self.cursor.next = to_delete.next
+            to_delete.next.prev = self.cursor
+
+    def delete(self):
+        if self.cursor.next != self.dummy_tail:
+            to_delete = self.cursor.next
+            self.cursor.next = to_delete.next
+            to_delete.next.prev = self.cursor
+
+    def __str__(self):
+        s = &quot;&quot;
+        cur = self.dummy_head
+        while cur:
+            if cur != self.dummy_head and cur != self.dummy_tail:
+                s += str(cur.data) + &quot; &quot;
+            if cur == self.cursor:
+                s += &quot;| &quot;
+            cur = cur.next
+        return s
+
+if __name__ == &quot;__main__&quot;:
+    inp = input(&quot;Enter Input : &quot;).split(&#39;,&#39;)
+    editor = TextEditor()
+    
+    for cmd in inp:
+        cmd = cmd.strip()
+        if cmd.startswith(&#39;I&#39;):
+            parts = cmd.split(&#39; &#39;, 1)
+            if len(parts) &gt; 1:
+                editor.insert(parts[1])
+        elif cmd == &#39;L&#39;:
+            editor.left()
+        elif cmd == &#39;R&#39;:
+            editor.right()
+        elif cmd == &#39;B&#39;:
+            editor.backspace()
+        elif cmd == &#39;D&#39;:
+            editor.delete()
+            
+    print(editor)
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 5 Item 4 (VIM Text Editor).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
+                </div>                <div class="card solution-card" data-cat="LinkedList" data-title="radix sort (descending)" data-ch="chapter 5">
+                    <div class="card-header">
+                        <div>
+                            <span class="badge">Chapter 5</span>
+                            <span class="badge badge-indigo">Item 5</span>
+                            <span class="card-title" style="margin-left: 8px;">Radix Sort (Descending)</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-emerald">Time: O(N * d)</span>
+                        </div>
+                    </div>
+                    <p><b>Summary:</b> Radix Sort using 10 Linked List buckets, sorting numbers in descending order (positives 9..0, negatives 0..9).</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Path: <code>Chapter_05_LinkedList/item_5_Radix_Sort_Descending_order.py</code></p>
+                    <pre><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><code># ================================================================================
+# Chapter 5 - Item 5: Radix Sort (Descending order)
+# --------------------------------------------------------------------------------
+# Problem Statement:
+# Directions for Using Linked List to Perform Radix Sort in Descending OrderCreate a Linked List Class:
+# Implement a Linked List class.Implement Radix Sort:
+# Use the Linked List class to perform Radix Sort.Follow the algorithm steps as outlined in the last two slides of the lecture.Sort Order:
+# Ensure the Radix Sort is done in descending order.Output Requirements:
+# Display the result of each round of the Radix Sort.Ensure the sorting is done with the minimum number of rounds possible.In the last three lines of the output, include:The minimum number of rounds taken.The data before performing Radix Sort.The data after performing Radix Sort.Make sure to test your implementation to verify that it meets the above requirements.
+# ================================================================================
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        
+    def append(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = self.tail = new_node
+        else:
+            self.tail.next = new_node
+            self.tail = new_node
+            
+    def is_empty(self):
+        return self.head is None
+        
+    def clear(self):
+        self.head = self.tail = None
+        
+    def print_elements(self):
+        cur = self.head
+        elements = []
+        while cur:
+            elements.append(str(cur.data))
+            cur = cur.next
+        return &quot; &quot;.join(elements) + &quot; &quot; if elements else &quot;&quot;
+        
+    def to_arrow_string(self):
+        cur = self.head
+        elements = []
+        while cur:
+            elements.append(str(cur.data))
+            cur = cur.next
+        return &quot; -&gt; &quot;.join(elements)
+
+if __name__ == &quot;__main__&quot;:
+    inp = input(&quot;Enter Input : &quot;).split()
+    arr = [int(x) for x in inp]
+    
+    if not arr:
+        exit(0)
+        
+    before_list = LinkedList()
+    for num in arr:
+        before_list.append(num)
+        
+    # Find max digits mathematically using absolute values to support negatives correctly
+    max_abs_val = max(abs(x) for x in arr)
+    if max_abs_val == 0:
+        max_digits = 0
+    else:
+        max_digits = len(str(max_abs_val))
+        
+    main_list = LinkedList()
+    for num in arr:
+        if num &gt;= 0:
+            main_list.append(num)
+    for num in arr:
+        if num &lt; 0:
+            main_list.append(num)
+        
+    for rnd in range(1, max_digits + 1):
+        print(&quot;-&quot; * 60)
+        print(f&quot;Round : {rnd}&quot;)
+        bins = [LinkedList() for _ in range(10)]
+        
+        cur = main_list.head
+        while cur:
+            val = cur.data
+            digit = (abs(val) // (10 ** (rnd - 1))) % 10
+            bins[digit].append(val)
+            cur = cur.next
+            
+        for i in range(10):
+            print(f&quot;{i} : {bins[i].print_elements()}&quot;)
+            
+        main_list.clear()
+        # Collect Positives (9 down to 0)
+        for i in range(9, -1, -1):
+            cur = bins[i].head
+            while cur:
+                if cur.data &gt;= 0:
+                    main_list.append(cur.data)
+                cur = cur.next
+                
+        # Collect Negatives (0 up to 9)
+        for i in range(10):
+            cur = bins[i].head
+            while cur:
+                if cur.data &lt; 0:
+                    main_list.append(cur.data)
+                cur = cur.next
+                
+    print(&quot;-&quot; * 60)
+    print(f&quot;{max_digits} Time(s)&quot;)
+    print(f&quot;Before Radix Sort : {before_list.to_arrow_string()}&quot;)
+    print(f&quot;After  Radix Sort : {main_list.to_arrow_string()}&quot;)
+
+# ================================================================================
+# How it works:
+# --------------------------------------------------------------------------------
+# This Python script solves Chapter 5 Item 5 (Radix Sort (Descending order)).
+#
+# Key Steps &amp; Logic:
+# 1. Inputs are parsed from user input and converted to appropriate data types.
+# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
+#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
+# 3. The final computed output is formatted and printed to match testcase specifications.
+# ================================================================================</code></pre>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+
+        <!-- TAB 3: PRACTICE EXAM -->
+        <div id="tab-exam" class="tab-content">
+            <div class="progress-box">
+                <div>
+                    <b style="color:var(--text-main); font-size:1.05rem;">Practice Exam Progress:</b>
+                    <span id="master-count" style="color:var(--accent-emerald); font-weight:700;">0</span> / <span id="total-count">22</span> Mastered
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <div class="search-box">
+                    <input type="text" id="exam-search" placeholder="Search exam questions by keyword..." oninput="filterExam()">
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn active" onclick="filterExamCategory('All', this)">All</button>
+                    <button class="filter-btn" onclick="filterExamCategory('Ch 1-2', this)">Ch 1-2</button>
+                    <button class="filter-btn" onclick="filterExamCategory('Ch 3', this)">Ch 3: Stack</button>
+                    <button class="filter-btn" onclick="filterExamCategory('Ch 4', this)">Ch 4: Queue</button>
+                    <button class="filter-btn" onclick="filterExamCategory('Ch 5', this)">Ch 5: LinkedList</button>
+                </div>
+            </div>
+
+            <div id="exam-container">
+                <div class="qa-card" id="qa-1" data-ch="Ch 1-2">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 1-2</span>
+                            <span class="badge badge-indigo">Easy</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q1: Fast Input Parsing on Single Line</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(1)">Show Answer</button>
+                    </div>
+                    <p>How do you parse space-separated integers on a single line of input in Python into separate variables or a list?</p>
+                    <div class="qa-answer" id="ans-1">
+                        Use <code>map(int, input().split())</code> for separate variables or <code>list(map(int, input().split()))</code> / list comprehension <code>[int(x) for x in input().split()]</code>.<br><br><b>Code Example:</b><pre><code># Read a and b
+ a, b = map(int, input().split())
+
+# Read array of integers
+nums = list(map(int, input().split()))</code></pre>
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-1" onclick="toggleMastered(1)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-2" data-ch="Ch 1-2">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 1-2</span>
+                            <span class="badge badge-indigo">Easy</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q2: String Slicing & Reversal Mechanics</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(2)">Show Answer</button>
+                    </div>
+                    <p>What do <code>s[::-1]</code>, <code>s[1:4]</code>, and <code>s[:-1]</code> evaluate to for string <code>s = 'KMITL'</code>?</p>
+                    <div class="qa-answer" id="ans-2">
+                        <ul><li><code>s[::-1]</code> reverses the string: <b>'LTIMK'</b></li><li><code>s[1:4]</code> extracts indices 1, 2, 3 (end index is exclusive): <b>'MIT'</b></li><li><code>s[:-1]</code> extracts all characters except the last: <b>'KMIT'</b></li></ul>
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-2" onclick="toggleMastered(2)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-3" data-ch="Ch 1-2">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 1-2</span>
+                            <span class="badge badge-indigo">Medium</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q3: OOP Node Blueprint & Instance Variables</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(3)">Show Answer</button>
+                    </div>
+                    <p>Write a Python class <code>Node</code> for a linked list node containing data value and next pointer. Explain why <code>self.next = None</code> is set in <code>__init__</code>.</p>
+                    <div class="qa-answer" id="ans-3">
+                        <b>Node Blueprint:</b><pre><code>class Node:
+    def __init__(self, val):
+        self.val = val
+        self.next = None  # Pointer initialized to None</code></pre><br>Setting <code>self.next = None</code> ensures every newly created node is initially isolated and does not point to arbitrary memory, preventing accidental cycles and pointer dereference crashes.
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-3" onclick="toggleMastered(3)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-4" data-ch="Ch 1-2">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 1-2</span>
+                            <span class="badge badge-indigo">Easy</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q4: Float & String Formatting Specifiers</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(4)">Show Answer</button>
+                    </div>
+                    <p>How do you format float <code>val = 3.14159</code> to exactly 2 decimal places in Python using f-strings and format method?</p>
+                    <div class="qa-answer" id="ans-4">
+                        <b>f-string:</b> <code>f'{val:.2f}'</code> &rarr; <code>'3.14'</code><br><b>format():</b> <code>'{:.2f}'.format(val)</code> &rarr; <code>'3.14'</code><br><b>Right-alignment width 10:</b> <code>f'{val:>10.2f}'</code>
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-4" onclick="toggleMastered(4)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-5" data-ch="Ch 3">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 3</span>
+                            <span class="badge badge-indigo">Easy</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q5: Stack LIFO Principle & Complexity</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(5)">Show Answer</button>
+                    </div>
+                    <p>What is the LIFO principle of a Stack and what are the time complexities of push, pop, and peek operations?</p>
+                    <div class="qa-answer" id="ans-5">
+                        <b>LIFO</b> stands for <b>Last In, First Out</b>. The last element added to the stack is the first one removed.<br><b>Time Complexities:</b><ul><li><code>push(x)</code>: <b>O(1)</b></li><li><code>pop()</code>: <b>O(1)</b></li><li><code>peek() / top()</code>: <b>O(1)</b></li><li><code>is_empty()</code>: <b>O(1)</b></li></ul>
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-5" onclick="toggleMastered(5)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-6" data-ch="Ch 3">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 3</span>
+                            <span class="badge badge-indigo">Medium</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q6: Parentheses Matching Stack Trace</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(6)">Show Answer</button>
+                    </div>
+                    <p>Walk through the stack state for string <code>'{[()]}'</code> versus <code>'([)]'</code>. Why does the second string fail?</p>
+                    <div class="qa-answer" id="ans-6">
+                        <b>String 1: <code>'{[()]}'</code></b><br>1. Push '{' &rarr; Stack: ['{']<br>2. Push '[' &rarr; Stack: ['{', '[']<br>3. Push '(' &rarr; Stack: ['{', '[', '(']<br>4. Pop ')' matches '(' &rarr; Stack: ['{', '[']<br>5. Pop ']' matches '[' &rarr; Stack: ['{']<br>6. Pop '}' matches '{' &rarr; Stack: [] (Balanced!)<br><br><b>String 2: <code>'([)]'</code></b><br>1. Push '(' &rarr; Stack: ['(']<br>2. Push '[' &rarr; Stack: ['(', '[']<br>3. Char ')' requires top to be '(', but stack[-1] is '[' &rarr; <b>MISMATCH ERROR!</b>
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-6" onclick="toggleMastered(6)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-7" data-ch="Ch 3">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 3</span>
+                            <span class="badge badge-indigo">Hard</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q7: Infix to Postfix Conversion & Right-Associativity</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(7)">Show Answer</button>
+                    </div>
+                    <p>Convert infix expression <code>A + B * C ^ D ^ E</code> to postfix. Explain the operator precedence and associativity rules applied.</p>
+                    <div class="qa-answer" id="ans-7">
+                        <b>Precedence & Associativity Rules:</b><br>- <code>^</code> (power) has highest precedence (3) and is <b>RIGHT-associative</b> (a^b^c = a^(b^c)).<br>- <code>* /</code> have precedence 2 (LEFT-associative).<br>- <code>+ -</code> have precedence 1 (LEFT-associative).<br><br><b>Step-by-step:</b><br>1. <code>C ^ D ^ E</code> evaluates right-to-left: <code>C D E ^ ^</code><br>2. <code>B * (C D E ^ ^)</code> becomes <code>B C D E ^ ^ *</code><br>3. <code>A + ...</code> becomes <code>A B C D E ^ ^ * +</code><br><br><b>Final Postfix:</b> <code>A B C D E ^ ^ * +</code>
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-7" onclick="toggleMastered(7)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-8" data-ch="Ch 3">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 3</span>
+                            <span class="badge badge-indigo">Medium</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q8: Postfix Evaluation Step-by-Step Pop Order</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(8)">Show Answer</button>
+                    </div>
+                    <p>Evaluate postfix expression <code>'3 4 2 * + 5 -'</code>. Why is operand pop order critical during subtraction and division?</p>
+                    <div class="qa-answer" id="ans-8">
+                        <b>Step-by-step Stack Trace:</b><br>1. Push 3 &rarr; Stack: [3]<br>2. Push 4 &rarr; Stack: [3, 4]<br>3. Push 2 &rarr; Stack: [3, 4, 2]<br>4. Oper '*': pop b=2, a=4 &rarr; 4*2=8 &rarr; Push 8 &rarr; Stack: [3, 8]<br>5. Oper '+': pop b=8, a=3 &rarr; 3+8=11 &rarr; Push 11 &rarr; Stack: [11]<br>6. Push 5 &rarr; Stack: [11, 5]<br>7. Oper '-': pop b=5, a=11 &rarr; 11-5=6 &rarr; Push 6 &rarr; Stack: [6]<br><br><b>Pop Order Rule:</b> The FIRST popped element is right operand <code>b</code>, SECOND popped is left operand <code>a</code>. <code>a - b</code> is computed. Reversing this gives <code>b - a</code> (wrong answer!).
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-8" onclick="toggleMastered(8)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-9" data-ch="Ch 3">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 3</span>
+                            <span class="badge badge-indigo">Medium</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q9: Stack Calculator Machine Instructions</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(9)">Show Answer</button>
+                    </div>
+                    <p>In Chapter 3 Item 4 (Stack Calculator), how are instructions processed when 'PS' (push top duplicate), '+', and 'POP' are received?</p>
+                    <div class="qa-answer" id="ans-9">
+                        <b>Calculator Instructions:</b><br>- Number: push to stack.<br>- <code>+</code>: pop top 2 numbers <code>b, a</code> and push <code>a + b</code>.<br>- <code>-</code>: pop top 2 numbers <code>b, a</code> and push <code>a - b</code>.<br>- <code>DUP / PS</code>: duplicate top element by reading <code>stack[-1]</code> and pushing it.<br>- <code>POP</code>: remove top element with <code>stack.pop()</code>.
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-9" onclick="toggleMastered(9)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-10" data-ch="Ch 3">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 3</span>
+                            <span class="badge badge-indigo">Medium</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q10: Parking Lot Simulation Algorithm</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(10)">Show Answer</button>
+                    </div>
+                    <p>In Chapter 3 Item 5 (Parking Lot), how do you remove a car parked in the middle of a single-lane parking stack?</p>
+                    <div class="qa-answer" id="ans-10">
+                        <b>Algorithm:</b><br>1. Pop cars from the main parking stack one by one and push them into a <b>temporary buffer stack</b> until the target car is at the top.<br>2. Pop the target car from the main stack (it has departed!).<br>3. Pop all cars from the temporary buffer stack and push them back into the main parking stack in reverse order.<br><br>This preserves the original relative ordering of all non-departed cars!
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-10" onclick="toggleMastered(10)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-11" data-ch="Ch 4">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 4</span>
+                            <span class="badge badge-indigo">Easy</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q11: Queue FIFO Principle & Applications</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(11)">Show Answer</button>
+                    </div>
+                    <p>What is the FIFO principle of a Queue? Name 3 real-world software applications of queues.</p>
+                    <div class="qa-answer" id="ans-11">
+                        <b>FIFO</b> stands for <b>First In, First Out</b>. The first element enqueued is the first element dequeued.<br><br><b>3 Applications:</b><br>1. <b>Breadth-First Search (BFS)</b> in graphs and grids.<br>2. <b>CPU / Disk Task Scheduling</b> (OS process queues).<br>3. <b>Print Queue & Web Server Request Buffering</b>.
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-11" onclick="toggleMastered(11)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-12" data-ch="Ch 4">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 4</span>
+                            <span class="badge badge-indigo">Hard</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q12: deque vs list.pop(0) - The O(N) TLE Trap</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(12)">Show Answer</button>
+                    </div>
+                    <p>Why is <code>list.pop(0)</code> an O(N) operation in Python, while <code>collections.deque.popleft()</code> is O(1)? Why does this matter for exams?</p>
+                    <div class="qa-answer" id="ans-12">
+                        <b>Python List (Array-based):</b> Elements are stored contiguously. Removing index 0 requires shifting all remaining <code>N-1</code> elements left by 1 position &rarr; <b>O(N) time</b>!<br><br><b>collections.deque (Doubly Linked Block List):</b> Removing head element requires updating head pointer only &rarr; <b>O(1) time</b>!<br><br><b>Exam Trap:</b> Using <code>list.pop(0)</code> inside a loop of size <code>N</code> turns an O(N) queue algorithm into <b>O(N^2)</b>, causing Time Limit Exceeded (TLE) on judge tests.
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-12" onclick="toggleMastered(12)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-13" data-ch="Ch 4">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 4</span>
+                            <span class="badge badge-indigo">Medium</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q13: Circular Queue Modulo Indexing Equations</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(13)">Show Answer</button>
+                    </div>
+                    <p>Write the exact equations for enqueue and dequeue index calculations in a Circular Queue of capacity N.</p>
+                    <div class="qa-answer" id="ans-13">
+                        <b>Circular Queue Equations:</b><pre><code># Enqueue next rear slot:
+rear = (rear + 1) % capacity
+
+# Dequeue next front slot:
+front = (front + 1) % capacity
+
+# Current element count update:
+size += 1  # on enqueue
+size -= 1  # on dequeue</code></pre>
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-13" onclick="toggleMastered(13)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-14" data-ch="Ch 4">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 4</span>
+                            <span class="badge badge-indigo">Medium</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q14: Circular Queue Full vs Empty State Conditions</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(14)">Show Answer</button>
+                    </div>
+                    <p>How do you distinguish between Empty state and Full state in a Circular Queue when tracking a size attribute versus pointers only?</p>
+                    <div class="qa-answer" id="ans-14">
+                        <b>With Size Variable (Recommended):</b><br>- <b>Empty:</b> <code>size == 0</code><br>- <b>Full:</b> <code>size == capacity</code><br><br><b>Without Size Variable (Pointer-only with 1 empty slot reserved):</b><br>- <b>Empty:</b> <code>front == rear</code><br>- <b>Full:</b> <code>(rear + 1) % capacity == front</code>
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-14" onclick="toggleMastered(14)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-15" data-ch="Ch 4">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 4</span>
+                            <span class="badge badge-indigo">Hard</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q15: Cafe Event-Driven Queue Simulation</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(15)">Show Answer</button>
+                    </div>
+                    <p>In Chapter 4 Item 4 (Cafe Simulation), how are barista finish times tracked for arriving customer orders?</p>
+                    <div class="qa-answer" id="ans-15">
+                        <b>Barista Scheduling Logic:</b><br>Maintain an array <code>times = [0] * num_baristas</code> storing when each barista completes their current work.<br><br>For each arriving order <code>(arrive_time, prep_duration)</code>:<br>1. Find earliest available barista: <code>earliest = min(times)</code> and <code>idx = times.index(earliest)</code>.<br>2. Compute completion time: <code>times[idx] = max(times[idx], arrive_time) + prep_duration</code>.<br>3. Total cafe time is <code>max(times)</code>.
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-15" onclick="toggleMastered(15)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-16" data-ch="Ch 4">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 4</span>
+                            <span class="badge badge-indigo">Hard</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q16: Search Portal (BFS) Visited Marking Timing Rule</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(16)">Show Answer</button>
+                    </div>
+                    <p>In BFS grid traversal (Search Portal), why MUST you add a node to the visited set BEFORE enqueuing it, rather than when popping it?</p>
+                    <div class="qa-answer" id="ans-16">
+                        <b>CRITICAL BFS RULE:</b><br>If you mark visited <i>after popping</i>, multiple neighboring nodes currently in the queue can enqueue the same unvisited node multiple times, leading to <b>exponential duplicate entries in the queue and Memory / Time Exceeded</b>.<br><br>Marking <code>visited.add(neighbor)</code> <b>immediately before</b> <code>q.append(neighbor)</code> guarantees each node enters the queue at most once.
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-16" onclick="toggleMastered(16)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-17" data-ch="Ch 5">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 5</span>
+                            <span class="badge badge-indigo">Medium</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q17: Linked List vs Dynamic Array (List) Trade-offs</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(17)">Show Answer</button>
+                    </div>
+                    <p>Compare Linked List and Dynamic Array (Python List) in terms of random access, insertion at head, and memory overhead.</p>
+                    <div class="qa-answer" id="ans-17">
+                        <table style='width:100%; border-collapse:collapse; text-align:left;'><tr><th>Feature</th><th>Python List (Array)</th><th>Linked List</th></tr><tr><td>Random Access [i]</td><td><b>O(1)</b></td><td><b>O(N)</b></td></tr><tr><td>Insert at Head</td><td><b>O(N)</b></td><td><b>O(1)</b></td></tr><tr><td>Insert at Middle</td><td><b>O(N)</b></td><td><b>O(1)</b> (with node ref)</td></tr><tr><td>Memory Overhead</td><td>Low (contiguous block)</td><td>Higher (node + pointer)</td></tr></table>
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-17" onclick="toggleMastered(17)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-18" data-ch="Ch 5">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 5</span>
+                            <span class="badge badge-indigo">Medium</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q18: Preventing NoneType Pointer Crash in Linked List</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(18)">Show Answer</button>
+                    </div>
+                    <p>What causes <code>AttributeError: 'NoneType' object has no attribute 'next'</code> in linked list code and how do you write safe traversal loops?</p>
+                    <div class="qa-answer" id="ans-18">
+                        <b>Cause:</b> Attempting to access <code>curr.next</code> when <code>curr</code> is <code>None</code>, or <code>curr.next.next</code> when <code>curr.next</code> is <code>None</code>.<br><br><b>Safe Traversal Patterns:</b><pre><code># Safe node traversal:
+curr = self.head
+while curr is not None:
+    print(curr.val)
+    curr = curr.next
+
+# Safe lookahead (e.g. deletion / insertion before):
+curr = self.head
+while curr is not None and curr.next is not None:
+    if curr.next.val == target:
+        curr.next = curr.next.next
+        break
+    curr = curr.next</code></pre>
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-18" onclick="toggleMastered(18)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-19" data-ch="Ch 5">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 5</span>
+                            <span class="badge badge-indigo">Hard</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q19: Doubly Linked List Node Insertion 4-Step Pointer Update</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(19)">Show Answer</button>
+                    </div>
+                    <p>List the exact 4 pointer updates required to insert new node N between node A and node B (where B = A.next) in a Doubly Linked List.</p>
+                    <div class="qa-answer" id="ans-19">
+                        <b>4 Pointer Updates:</b><pre><code>new_node.next = A.next      # Step 1: Point N.next to B
+new_node.prev = A         # Step 2: Point N.prev to A
+if A.next is not None:
+A.next.prev = new_node # Step 3: Point B.prev to N
+A.next = new_node         # Step 4: Point A.next to N</code></pre><br><b>Note:</b> If inserting at tail (B is None), update tail pointer <code>self.tail = new_node</code>.
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-19" onclick="toggleMastered(19)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-20" data-ch="Ch 5">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 5</span>
+                            <span class="badge badge-indigo">Hard</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q20: Merge Two Sorted Linked Lists Algorithm</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(20)">Show Answer</button>
+                    </div>
+                    <p>Explain how to merge two sorted linked lists L1 and L2 into a single sorted list in O(N + M) time using O(1) extra space.</p>
+                    <div class="qa-answer" id="ans-20">
+                        <b>Two-Pointer Merge Algorithm:</b><br>1. Create a <code>dummy = Node(0)</code> head node and a pointer <code>curr = dummy</code>.<br>2. Compare <code>L1.val</code> and <code>L2.val</code>:<br>&nbsp;&nbsp;&nbsp;&nbsp;- If <code>L1.val <= L2.val</code>: set <code>curr.next = L1</code> and move <code>L1 = L1.next</code>.<br>&nbsp;&nbsp;&nbsp;&nbsp;- Else: set <code>curr.next = L2</code> and move <code>L2 = L2.next</code>.<br>&nbsp;&nbsp;&nbsp;&nbsp;- Advance <code>curr = curr.next</code>.<br>3. After loop, attach remaining elements: <code>curr.next = L1 if L1 else L2</code>.<br>4. Return <code>dummy.next</code>.
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-20" onclick="toggleMastered(20)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-21" data-ch="Ch 5">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 5</span>
+                            <span class="badge badge-indigo">Hard</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q21: VIM Text Editor Cursor Simulation using Doubly LL</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(21)">Show Answer</button>
+                    </div>
+                    <p>In Chapter 5 Item 4 (VIM Text Editor), why is a Doubly Linked List with dummy head and tail ideal for simulating text cursor operations?</p>
+                    <div class="qa-answer" id="ans-21">
+                        <b>Doubly Linked List VIM Mechanics:</b><br>- <b>Cursor Pointer:</b> Points directly to the node immediately before the cursor <code>|</code>.<br>- <b>Left (L):</b> <code>cursor = cursor.prev</code> in <b>O(1)</b>.<br>- <b>Right (R):</b> <code>cursor = cursor.next</code> in <b>O(1)</b>.<br>- <b>Insert (I char):</b> Insert new node right after <code>cursor</code> and advance <code>cursor = new_node</code> in <b>O(1)</b>.<br>- <b>Backspace (B):</b> Remove node at <code>cursor</code> and move <code>cursor = cursor.prev</code> in <b>O(1)</b>.<br>- <b>Delete (D):</b> Remove node at <code>cursor.next</code> in <b>O(1)</b>.<br><br>Dummy head and dummy tail remove all special null boundary checks!
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-21" onclick="toggleMastered(21)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>                <div class="qa-card" id="qa-22" data-ch="Ch 5">
+                    <div class="qa-header">
+                        <div>
+                            <span class="badge">Ch 5</span>
+                            <span class="badge badge-indigo">Hard</span>
+                            <span class="qa-question" style="margin-left: 8px;">Q22: Radix Sort Descending Bucket Gathering Mechanics</span>
+                        </div>
+                        <button class="qa-toggle-btn" onclick="toggleAnswer(22)">Show Answer</button>
+                    </div>
+                    <p>In Chapter 5 Item 5 (Radix Sort Descending), how are positive and negative numbers gathered from 10 digit buckets to ensure descending order?</p>
+                    <div class="qa-answer" id="ans-22">
+                        <b>Radix Sort Descending Gathering Logic:</b><br>1. Create 10 Linked List buckets (0 through 9).<br>2. Distribute numbers into buckets based on current digit: <code>digit = (abs(val) // (10^(rnd-1))) % 10</code>.<br>3. <b>Gather Positives:</b> Iterate buckets in <b>REVERSE</b> order (index <b>9 down to 0</b>). Append positive numbers to main list.<br>4. <b>Gather Negatives:</b> Iterate buckets in <b>FORWARD</b> order (index <b>0 up to 9</b>). Append negative numbers to main list.<br><br>This ensures positive numbers sort descending at the front, followed by negative numbers descending at the back!
+                    </div>
+                    <div class="qa-actions">
+                        <button class="master-btn" id="mbtn-22" onclick="toggleMastered(22)">
+                            <span>âœ“</span> Mark as Mastered
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: CHEAT SHEET -->
+        <div id="tab-cheat" class="tab-content">
+            <div class="card">
+                <div class="section-title">âš¡ 5-Minute Pre-Exam Cheat Sheet</div>
+                <p>Read this summary 5 minutes before entering the exam room!</p>
+
+                <div class="callout callout-success">
+                    <div class="callout-title">ðŸ† TOP 5 MUST-REMEMBER RULES FOR QUIZ 1</div>
+                    <ol>
+                        <li><b>list.pop(0) is O(N)</b> &rarr; Always use <code>deque.popleft()</code> which is <b>O(1)</b>.</li>
+                        <li><b>^ operator is RIGHT-associative</b> &rarr; <code>a^b^c = a^(b^c)</code> (Shunting-yard precedence 3, right-assoc).</li>
+                        <li><b>Always check if not stack</b> before calling <code>stack.pop()</code> to prevent IndexError crash.</li>
+                        <li><b>Circular Queue Modulo Index:</b> <code>(index + 1) % capacity</code>.</li>
+                        <li><b>BFS visited rule:</b> Mark nodes <code>visited.add()</code> <b>BEFORE</b> enqueuing.</li>
+                    </ol>
+                </div>
+
+                <h3>Operator Precedence Table</h3>
+                <table>
+                    <tr><th>Operator</th><th>Precedence</th><th>Associativity</th><th>Action in Infix-to-Postfix</th></tr>
+                    <tr><td><code>^</code></td><td>3</td><td>RIGHT</td><td>Pop stack top ONLY if strictly HIGHER precedence</td></tr>
+                    <tr><td><code>* / %</code></td><td>2</td><td>LEFT</td><td>Pop stack top if HIGHER or EQUAL precedence</td></tr>
+                    <tr><td><code>+ -</code></td><td>1</td><td>LEFT</td><td>Pop stack top if HIGHER or EQUAL precedence</td></tr>
+                    <tr><td><code>(</code></td><td>0</td><td>-</td><td>Push directly to stack; pop when <code>)</code> encountered</td></tr>
+                </table>
+
+                <h3>Time & Space Complexity Reference Matrix</h3>
+                <table>
+                    <tr><th>Data Structure</th><th>Access [i]</th><th>Insert Head</th><th>Insert Tail</th><th>Delete Head</th><th>Delete Tail</th></tr>
+                    <tr><td>Python List</td><td>O(1)</td><td>O(N)</td><td>O(1)*</td><td>O(N)</td><td>O(1)</td></tr>
+                    <tr><td>collections.deque</td><td>O(N)</td><td>O(1)</td><td>O(1)</td><td>O(1)</td><td>O(1)</td></tr>
+                    <tr><td>Singly Linked List</td><td>O(N)</td><td>O(1)</td><td>O(N) / O(1)*</td><td>O(1)</td><td>O(N)</td></tr>
+                    <tr><td>Doubly Linked List</td><td>O(N)</td><td>O(1)</td><td>O(1)*</td><td>O(1)</td><td>O(1)*</td></tr>
+                </table>
+                <p style="font-size:0.85rem; color:var(--text-muted);">*Assuming tail pointer is maintained.</p>
+
+                <h3>Must-Know Exam Code Snippets</h3>
+                
+                <b>1. Bracket Matching (4-Line Core):</b>
+                <pre><code>for char in s:
+    if char in "({[": stack.append(char)
+    elif not stack or stack.pop() != pairs[char]: return False
+return len(stack) == 0</code></pre>
+
+                <b>2. Postfix Evaluation Pop Order:</b>
+                <pre><code>b = stack.pop()  # FIRST popped is right operand
+a = stack.pop()  # SECOND popped is left operand
+stack.append(a - b)  # compute a op b</code></pre>
+
+                <b>3. Doubly Linked List Insert Node:</b>
+                <pre><code>new.next = curr.next
+new.prev = curr
+if curr.next: curr.next.prev = new
+curr.next = new</code></pre>
+
+                <b>4. BFS Search Template:</b>
+                <pre><code>q = deque([(start, 0)])
+visited = set([start])
+while q:
+    pos, dist = q.popleft()
+    if pos == end: return dist
+    for nb in neighbors(pos):
+        if nb not in visited:
+            visited.add(nb); q.append((nb, dist+1))</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast">Copied to clipboard!</div>
 
     <script>
-        // Tab Navigation
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
+        // Tab switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
 
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all
-                tabBtns.forEach(b => b.classList.remove('active'));
-                tabContents.forEach(c => c.classList.remove('active'));
-                
-                // Add active class to clicked
-                btn.classList.add('active');
-                const targetId = btn.getAttribute('data-target');
-                document.getElementById(targetId).classList.add('active');
-                
-                // Clear search on tab switch for better UX
-                runSearch(document.getElementById('search-bar').value);
+            event.currentTarget.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        // Code Copying
+        function copyCode(btn) {
+            const code = btn.nextElementSibling.innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                showToast("Code copied to clipboard!");
             });
-        });
+        }
 
-        // Search Functionality
-        const searchBar = document.getElementById('search-bar');
-        const searchableItems = document.querySelectorAll('.searchable-item');
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(() => { t.style.display = 'none'; }, 2000);
+        }
 
-        function runSearch(query) {
-            const lowerQuery = query.toLowerCase();
-            searchableItems.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                if (text.includes(lowerQuery)) {
-                    item.classList.remove('hidden');
+        // Code Solutions Filtering
+        let currentSolCat = 'All';
+        function filterSolutionCategory(cat, btn) {
+            currentSolCat = cat;
+            document.querySelectorAll('#tab-solutions .filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterSolutions();
+        }
+
+        function filterSolutions() {
+            const query = document.getElementById('solution-search').value.toLowerCase();
+            document.querySelectorAll('.solution-card').forEach(card => {
+                const cat = card.getAttribute('data-cat');
+                const title = card.getAttribute('data-title');
+                const codeText = card.querySelector('code').innerText.toLowerCase();
+
+                const catMatch = (currentSolCat === 'All' || cat === currentSolCat);
+                const queryMatch = (title.includes(query) || codeText.includes(query));
+
+                if (catMatch && queryMatch) {
+                    card.style.display = 'block';
                 } else {
-                    item.classList.add('hidden');
+                    card.style.display = 'none';
                 }
             });
         }
 
-        searchBar.addEventListener('input', (e) => {
-            runSearch(e.target.value);
-        });
+        // Practice Exam Q&A Functions
+        function toggleAnswer(id) {
+            const ans = document.getElementById('ans-' + id);
+            const btn = event.currentTarget;
+            if (ans.classList.contains('show')) {
+                ans.classList.remove('show');
+                btn.innerText = 'Show Answer';
+            } else {
+                ans.classList.add('show');
+                btn.innerText = 'Hide Answer';
+            }
+        }
 
-        // Copy Code Functionality
-        const copyBtns = document.querySelectorAll('.copy-btn');
-        copyBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const codeBlock = btn.nextElementSibling.querySelector('code');
-                const text = codeBlock.innerText;
-                
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = btn.textContent;
-                    btn.textContent = 'Copied!';
-                    setTimeout(() => {
-                        btn.textContent = originalText;
-                    }, 2000);
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                });
+        let masteredSet = new Set(JSON.parse(localStorage.getItem('kmitl_quiz1_mastered') || '[]'));
+        function initMastered() {
+            masteredSet.forEach(id => {
+                const card = document.getElementById('qa-' + id);
+                const btn = document.getElementById('mbtn-' + id);
+                if (card) card.classList.add('mastered');
+                if (btn) {
+                    btn.classList.add('active');
+                    btn.innerHTML = '<span>âœ“</span> Mastered';
+                }
             });
+            updateProgress();
+        }
+
+        function toggleMastered(id) {
+            const card = document.getElementById('qa-' + id);
+            const btn = document.getElementById('mbtn-' + id);
+
+            if (masteredSet.has(id)) {
+                masteredSet.delete(id);
+                card.classList.remove('mastered');
+                btn.classList.remove('active');
+                btn.innerHTML = '<span>âœ“</span> Mark as Mastered';
+            } else {
+                masteredSet.add(id);
+                card.classList.add('mastered');
+                btn.classList.add('active');
+                btn.innerHTML = '<span>âœ“</span> Mastered';
+            }
+            localStorage.setItem('kmitl_quiz1_mastered', JSON.stringify(Array.from(masteredSet)));
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const count = masteredSet.size;
+            const total = 22;
+            document.getElementById('master-count').innerText = count;
+            const pct = Math.round((count / total) * 100);
+            document.getElementById('progress-fill').style.width = pct + '%';
+        }
+
+        let currentExamCat = 'All';
+        function filterExamCategory(cat, btn) {
+            currentExamCat = cat;
+            document.querySelectorAll('#tab-exam .filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterExam();
+        }
+
+        function filterExam() {
+            const query = document.getElementById('exam-search').value.toLowerCase();
+            document.querySelectorAll('.qa-card').forEach(card => {
+                const ch = card.getAttribute('data-ch');
+                const text = card.innerText.toLowerCase();
+
+                const catMatch = (currentExamCat === 'All' || ch.includes(currentExamCat));
+                const queryMatch = text.includes(query);
+
+                if (catMatch && queryMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize state on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initMastered();
         });
     </script>
 </body>
 </html>
-
-
-
