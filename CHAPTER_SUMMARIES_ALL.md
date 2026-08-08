@@ -1,20 +1,23 @@
 # KMITL Data Structures & Algorithms - All Chapter Summaries
 # Course: 01276122 | Student ID: 68011309
 # Last Updated: 2026-08-08
-# Format: Markdown (UTF-8, no emoji - safe for all terminals)
+# Format: Markdown (UTF-8, plain ASCII - safe for all terminals)
+
+================================================================================
+>>> QUIZ 1 FOCUS: CHAPTER 3 (STACK), CHAPTER 4 (QUEUE), CHAPTER 5 (LINKED LIST) <<<
+================================================================================
 
 ---
 
 ## HOW TO UPDATE THIS FILE
 - Each chapter has a clearly marked section header: `## CHAPTER X: <TITLE>`
-- To add new topics, append under the correct chapter section
-- To add new chapters (e.g., Chapter 7+), copy the chapter template at the bottom
-- Keep code blocks inside triple backticks with language tag: ```python
-- Use plain ASCII characters only - NO emoji to avoid encoding issues
+- CHAPTERS 3, 4, AND 5 ARE THE PRIMARY FOCUS FOR QUIZ 1.
+- CHAPTERS 1 AND 2 SERVE AS FOUNDATIONAL REFRESHER NOTES.
+- Use plain ASCII characters only - NO emoji or non-ASCII symbols.
 
 ---
 
-## CHAPTER 1: Python Basics (Python 1)
+## CHAPTER 1: Python Basics (Python 1) [FOUNDATIONAL REFRESHER]
 
 ### Core Concepts
 - Input parsing, type conversion, math operations, conditional logic
@@ -69,11 +72,11 @@ evens = [x for x in arr if x % 2 == 0]
 
 ---
 
-## CHAPTER 2: Object-Oriented Programming (Python 2)
+## CHAPTER 2: Object-Oriented Programming (Python 2) [FOUNDATIONAL REFRESHER]
 
 ### Core Concepts
 - Classes, `__init__`, instance variables, methods
-- Inheritance (not heavily tested)
+- Inheritance (basic structure)
 - String formatting, format specifiers
 
 ### Key Patterns
@@ -116,7 +119,7 @@ print("{:0>5}".format(n))  # zero-pad to width 5
 
 ---
 
-## CHAPTER 3: Stack (LIFO - Last In First Out)
+## CHAPTER 3: Stack (LIFO - Last In First Out) [*** QUIZ 1 FOCUS ***]
 
 ### Core Concepts
 - LIFO structure: last element pushed is first popped
@@ -211,7 +214,7 @@ def eval_postfix(expr):
 1. **`^` is RIGHT-associative**: `a ^ b ^ c` = `a ^ (b ^ c)`, NOT `(a ^ b) ^ c`
 2. **Empty stack check before pop**: Always check `if not stack` before `stack.pop()` to avoid IndexError
 3. **Order of operands in postfix eval**: pop `b` first, then pop `a`; do `a op b`
-4. **Stack Calculator (item_4) operand order**: The actual code pops `x` (top) then `y` (second) and does `x - y` for subtraction. Verify this matches KMITL judge expected output before exam.
+4. **Stack Calculator operand order**: The actual code pops `x` (top) then `y` (second) and does `x - y` for subtraction. Verify this matches testcase specs.
 
 ### Chapter 3 Problems Summary
 | Problem | Algorithm | Key Data Structure |
@@ -224,7 +227,7 @@ def eval_postfix(expr):
 
 ---
 
-## CHAPTER 4: Queue (FIFO - First In First Out)
+## CHAPTER 4: Queue (FIFO - First In First Out) [*** QUIZ 1 FOCUS ***]
 
 ### Core Concepts
 - FIFO structure: first element enqueued is first dequeued
@@ -325,60 +328,402 @@ def bfs(grid, start, end):
 
 ---
 
-## CHAPTER 5: Linked List
+## CHAPTER 5: Linked List [*** QUIZ 1 FOCUS ***]
 
 ### Core Concepts
 - Dynamic data structure with nodes connected by pointers
-- Singly Linked List: each node has `next` pointer
-- Doubly Linked List: each node has `next` AND `prev` pointer
-- No random access (no indexing like arrays)
+- Singly Linked List (SLL): each node has `next` pointer
+- Doubly Linked List (DLL): each node has `next` AND `prev` (`previous`) pointer
+- No random access (no indexing like arrays, linear O(N) traversal required)
 
-### Node Classes
+---
+
+### FULL IMPLEMENTATIONS FOR CHAPTER 5
+
+#### 1. Singly Linked List (SLL)
+Full implementation supporting `append`, `addHead`, `search`, `index`, `size`, and `pop(pos)`.
+
 ```python
-class SinglyNode:
-    def __init__(self, val):
-        self.val = val
+class Node:
+    def __init__(self, value):
+        self.value = value
         self.next = None
 
-class DoublyNode:
-    def __init__(self, val):
-        self.val = val
-        self.next = None
-        self.prev = None
-```
-
-### Singly Linked List - Core Operations
-```python
-class SinglyLinkedList:
+class LinkedList:
     def __init__(self):
         self.head = None
 
-    def append(self, val):          # Add to end - O(N)
-        new = SinglyNode(val)
-        if not self.head:
-            self.head = new
+    def __str__(self):
+        if self.isEmpty():
+            return "Empty"
+        cur, s = self.head, str(self.head.value) + " "
+        while cur.next is not None:
+            s += str(cur.next.value) + " "
+            cur = cur.next
+        return s
+
+    def isEmpty(self):
+        return self.head is None
+
+    def append(self, item):
+        new_node = Node(item)
+        if self.isEmpty():
+            self.head = new_node
             return
-        curr = self.head
-        while curr.next:
-            curr = curr.next
-        curr.next = new
+        cur = self.head
+        while cur.next is not None:
+            cur = cur.next
+        cur.next = new_node
 
-    def prepend(self, val):         # Add to front - O(1)
-        new = SinglyNode(val)
-        new.next = self.head
-        self.head = new
+    def addHead(self, item):
+        new_node = Node(item)
+        new_node.next = self.head
+        self.head = new_node
 
-    def delete(self, val):          # Delete node - O(N)
-        if not self.head: return
-        if self.head.val == val:
+    def search(self, item):
+        cur = self.head
+        while cur is not None:
+            if cur.value == item:
+                return "Found"
+            cur = cur.next
+        return "Not Found"
+
+    def index(self, item):
+        cur = self.head
+        idx = 0
+        while cur is not None:
+            if cur.value == item:
+                return idx
+            cur = cur.next
+            idx += 1
+        return -1
+
+    def size(self):
+        cur = self.head
+        count = 0
+        while cur is not None:
+            count += 1
+            cur = cur.next
+        return count
+
+    def pop(self, pos):
+        if pos < 0 or self.isEmpty():
+            return "Out of Range"
+        if pos == 0:
             self.head = self.head.next
-            return
-        curr = self.head
-        while curr.next and curr.next.val != val:
-            curr = curr.next
-        if curr.next:
-            curr.next = curr.next.next
+            return "Success"
+        cur = self.head
+        idx = 0
+        while cur.next is not None and idx < pos - 1:
+            cur = cur.next
+            idx += 1
+        if cur.next is None:
+            return "Out of Range"
+        cur.next = cur.next.next
+        return "Success"
 ```
+
+---
+
+#### 2. Doubly Linked List (DLL)
+Full implementation supporting `append`, `insert`, `remove`, and `str_reverse`.
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.previous = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def isEmpty(self):
+        return self.head is None
+
+    def size(self):
+        count = 0
+        cur = self.head
+        while cur:
+            count += 1
+            cur = cur.next
+        return count
+
+    def __str__(self):
+        if self.isEmpty():
+            return ""
+        cur = self.head
+        s = str(cur.data)
+        while cur.next:
+            cur = cur.next
+            s += "->" + str(cur.data)
+        return s
+
+    def str_reverse(self):
+        if self.isEmpty():
+            return ""
+        cur = self.tail
+        s = str(cur.data)
+        while cur.previous:
+            cur = cur.previous
+            s += "->" + str(cur.data)
+        return s
+
+    def append(self, data):
+        new_node = Node(data)
+        if self.isEmpty():
+            self.head = self.tail = new_node
+        else:
+            self.tail.next = new_node
+            new_node.previous = self.tail
+            self.tail = new_node
+
+    def insert(self, index, data):
+        new_node = Node(data)
+        if self.isEmpty():
+            self.head = self.tail = new_node
+            return
+        sz = self.size()
+        if index == 0:
+            new_node.next = self.head
+            self.head.previous = new_node
+            self.head = new_node
+        elif index >= sz:
+            self.append(data)
+        else:
+            cur = self.head
+            for _ in range(index):
+                cur = cur.next
+            new_node.next = cur
+            new_node.previous = cur.previous
+            cur.previous.next = new_node
+            cur.previous = new_node
+
+    def remove(self, data):
+        cur = self.head
+        idx = 0
+        while cur:
+            if cur.data == data:
+                if cur.previous:
+                    cur.previous.next = cur.next
+                else:
+                    self.head = cur.next
+                if cur.next:
+                    cur.next.previous = cur.previous
+                else:
+                    self.tail = cur.previous
+                return cur, idx
+            cur = cur.next
+            idx += 1
+        return None, -1
+```
+
+---
+
+#### 3. Merge Two Sorted Linked Lists
+Merging two ordered linked lists in ascending order without creating a wrapper LinkedList class or using built-in sort.
+
+```python
+class node:
+    def __init__(self, data, next=None):
+        self.data = int(data)
+        self.next = next
+
+    def __str__(self):
+        return str(self.data)
+
+def createList(l=[]):
+    if not l or l == ['']:
+        return None
+    head = node(l[0])
+    cur = head
+    for val in l[1:]:
+        cur.next = node(val)
+        cur = cur.next
+    return head
+
+def printList(H):
+    cur = H
+    while cur:
+        print(cur.data, end=' ')
+        cur = cur.next
+    print()
+
+def mergeOrderesList(p, q):
+    dummy = node(0)
+    cur = dummy
+    while p and q:
+        if p.data <= q.data:
+            cur.next = p
+            p = p.next
+        else:
+            cur.next = q
+            q = q.next
+        cur = cur.next
+    if p:
+        cur.next = p
+    if q:
+        cur.next = q
+    return dummy.next
+```
+
+---
+
+#### 4. VIM Text Editor Simulation
+Doubly linked list with dummy head and dummy tail for cursor movements and character insertions/deletions.
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.prev = None
+        self.next = None
+
+class TextEditor:
+    def __init__(self):
+        self.dummy_head = Node(None)
+        self.dummy_tail = Node(None)
+        self.dummy_head.next = self.dummy_tail
+        self.dummy_tail.prev = self.dummy_head
+        self.cursor = self.dummy_head
+
+    def insert(self, word):
+        new_node = Node(word)
+        new_node.next = self.cursor.next
+        new_node.prev = self.cursor
+        self.cursor.next.prev = new_node
+        self.cursor.next = new_node
+        self.cursor = new_node
+
+    def left(self):
+        if self.cursor != self.dummy_head:
+            self.cursor = self.cursor.prev
+
+    def right(self):
+        if self.cursor.next != self.dummy_tail:
+            self.cursor = self.cursor.next
+
+    def backspace(self):
+        if self.cursor != self.dummy_head:
+            to_delete = self.cursor
+            self.cursor = self.cursor.prev
+            self.cursor.next = to_delete.next
+            to_delete.next.prev = self.cursor
+
+    def delete(self):
+        if self.cursor.next != self.dummy_tail:
+            to_delete = self.cursor.next
+            self.cursor.next = to_delete.next
+            to_delete.next.prev = self.cursor
+
+    def __str__(self):
+        s = ""
+        cur = self.dummy_head
+        while cur:
+            if cur != self.dummy_head and cur != self.dummy_tail:
+                s += str(cur.data) + " "
+            if cur == self.cursor:
+                s += "| "
+            cur = cur.next
+        return s
+```
+
+---
+
+#### 5. Radix Sort in Descending Order using Linked List
+Multi-digit Radix Sort using Linked List buckets (0-9). Positives are gathered from bucket 9 down to 0, while negatives are gathered from 0 up to 9.
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def append(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = self.tail = new_node
+        else:
+            self.tail.next = new_node
+            self.tail = new_node
+
+    def is_empty(self):
+        return self.head is None
+
+    def clear(self):
+        self.head = self.tail = None
+
+    def print_elements(self):
+        cur = self.head
+        elements = []
+        while cur:
+            elements.append(str(cur.data))
+            cur = cur.next
+        return " ".join(elements) + " " if elements else ""
+
+    def to_arrow_string(self):
+        cur = self.head
+        elements = []
+        while cur:
+            elements.append(str(cur.data))
+            cur = cur.next
+        return " -> ".join(elements)
+
+def radix_sort_descending(arr):
+    if not arr:
+        return
+    before_list = LinkedList()
+    for num in arr:
+        before_list.append(num)
+
+    max_abs_val = max(abs(x) for x in arr)
+    max_digits = 0 if max_abs_val == 0 else len(str(max_abs_val))
+
+    main_list = LinkedList()
+    for num in arr:
+        if num >= 0:
+            main_list.append(num)
+    for num in arr:
+        if num < 0:
+            main_list.append(num)
+
+    for rnd in range(1, max_digits + 1):
+        bins = [LinkedList() for _ in range(10)]
+        cur = main_list.head
+        while cur:
+            val = cur.data
+            digit = (abs(val) // (10 ** (rnd - 1))) % 10
+            bins[digit].append(val)
+            cur = cur.next
+
+        main_list.clear()
+        # Collect Positives (9 down to 0 for descending order)
+        for i in range(9, -1, -1):
+            cur = bins[i].head
+            while cur:
+                if cur.data >= 0:
+                    main_list.append(cur.data)
+                cur = cur.next
+
+        # Collect Negatives (0 up to 9 for descending order)
+        for i in range(10):
+            cur = bins[i].head
+            while cur:
+                if cur.data < 0:
+                    main_list.append(cur.data)
+                cur = cur.next
+
+    return before_list, main_list, max_digits
+```
+
+---
 
 ### CRITICAL: Pointer Reassignment Safety
 ```python
@@ -391,69 +736,21 @@ if curr and curr.next:
     curr = curr.next.next
 ```
 
-### Doubly Linked List - Insert After Node
-```python
-def insert_after(self, target_node, val):
-    new = DoublyNode(val)
-    new.next = target_node.next
-    new.prev = target_node
-    if target_node.next:
-        target_node.next.prev = new
-    target_node.next = new
-    if new.next is None:
-        self.tail = new
-```
-
-### Merge Two Sorted Linked Lists
-```python
-def merge_sorted(l1, l2):
-    dummy = SinglyNode(0)
-    curr = dummy
-    while l1 and l2:
-        if l1.val <= l2.val:
-            curr.next = l1
-            l1 = l1.next
-        else:
-            curr.next = l2
-            l2 = l2.next
-        curr = curr.next
-    curr.next = l1 if l1 else l2
-    return dummy.next
-```
-
-### Radix Sort (Descending) - Bucket Distribution
-```python
-def radix_sort_desc(arr):
-    max_val = max(arr)
-    exp = 1
-    while max_val // exp > 0:
-        buckets = [[] for _ in range(10)]
-        for num in arr:
-            digit = (num // exp) % 10
-            buckets[digit].append(num)
-        # Gather in REVERSE order for descending
-        arr = []
-        for i in range(9, -1, -1):   # 9 down to 0
-            arr.extend(buckets[i])
-        exp *= 10
-    return arr
-```
-
 ### EXAM TRAPS - Chapter 5
 1. **Check `curr` and `curr.next` before traversal** - prevent NoneType crash
-2. **Update BOTH `next` AND `prev` pointers** in doubly linked list
-3. **Radix Sort descending** - gather buckets from index 9 down to 0
+2. **Update BOTH `next` AND `prev` pointers** in doubly linked list operations
+3. **Radix Sort descending** - gather positive buckets from index 9 down to 0, negative from 0 up to 9
 4. **Tail pointer** - update when inserting at end or deleting tail node
 5. **DLL delete** - also update predecessor's `next` and successor's `prev`
 
 ### Chapter 5 Problems Summary
 | Problem | Algorithm | Key Challenge |
 |---------|-----------|--------------|
-| Singly Linked List | Linked list ops | Pointer management |
-| Doubly Linked List | DLL insert/delete | Both prev and next |
-| Merge Order List | Merge sort merge | Two-pointer technique |
-| VIM Text Editor | DLL cursor sim | Insert/delete at cursor |
-| Radix Sort Desc | Counting/bucket sort | Reverse bucket gather |
+| Singly Linked List | Linked list ops | Pointer management & indexing |
+| Doubly Linked List | DLL insert/delete | Both prev and next pointers |
+| Merge Order List | Merge sort merge | Two-pointer technique with dummy head |
+| VIM Text Editor | DLL cursor sim | Insert/delete relative to cursor |
+| Radix Sort Desc | Counting/bucket sort | Reverse bucket gather for descending |
 
 ---
 
@@ -572,14 +869,16 @@ def draw_stairs(n, current=1):
 
 ## QUICK REFERENCE TABLE
 
-| Chapter | Topic | Must-Know Pattern |
-|---------|-------|-------------------|
-| 1 | Python Basics | map(int, input().split()) |
-| 2 | OOP | class Node: __init__ |
-| 3 | Stack (LIFO) | stack.append / stack.pop |
-| 4 | Queue (FIFO) | deque + popleft() |
-| 5 | Linked List | Pointer safety check |
-| 6 | Recursion | Base case first |
+| Chapter | Topic | Must-Know Pattern | Quiz 1 Status |
+|---------|-------|-------------------|---------------|
+| 1 | Python Basics | map(int, input().split()) | Refresher |
+| 2 | OOP | class Node: __init__ | Refresher |
+| 3 | Stack (LIFO) | stack.append / stack.pop | QUIZ 1 FOCUS |
+| 4 | Queue (FIFO) | deque + popleft() | QUIZ 1 FOCUS |
+| 5 | Linked List | SLL, DLL, Merge, VIM, Radix | QUIZ 1 FOCUS |
+| 6 | Recursion | Base case first | Post-Quiz 1 |
+
+---
 
 ## COMPLEXITY CHEAT SHEET
 
