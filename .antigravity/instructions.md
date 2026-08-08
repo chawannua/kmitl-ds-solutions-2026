@@ -20,5 +20,8 @@ When generating or modifying solution code, adhere to the following structure:
 - **Environment Variables**: Use environment variables (`KMITL_STUDENT_ID`, `KMITL_PASS`, `GITHUB_TOKEN`) for all credentials.
 - **Data Masking**: Mask sensitive data (such as environment variables or use secure prompt fallbacks) to ensure raw passwords are never pushed to public repositories.
 
-## 5. File Encoding
-- Save all files using **UTF-8 encoding**.
+## 6. Quiz & Scope Guidelines
+- **Quiz 1 Focus**: Primary focus on Chapter 3 (Stack), Chapter 4 (Queue), and Chapter 5 (Linked List).
+- **Refresher Scope**: Chapters 1 & 2 (Python basics & OOP) serve as foundational refresher reference notes.
+- **Verification**: Ensure all markdown and app content are free of mangled characters or broken symbols (plain ASCII / clean UTF-8).
+
