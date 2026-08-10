@@ -2,8 +2,10 @@
 # Chapter 3 - Item 1: 26s1 Parentheses ver.1
 # --------------------------------------------------------------------------------
 # Problem Statement:
-#     Write a program to receive input in the form of brackets. The opening brackets are: ( and [ and the closing brackets are: ) and ]. 
-#     Determine if the brackets can be paired correctly.     Display the number of brackets needed to complete the pairs if they are incomplete.     If all pairs are complete, display "Perfect".
+#     Write a program to receive input in the form of brackets. 
+      The opening brackets are: ( and [ and the closing brackets are: ) and ]. 
+#     Determine if the brackets can be paired correctly.    
+      Display the number of brackets needed to complete the pairs if they are incomplete.     If all pairs are complete, display "Perfect".
 # ================================================================================
 
 class Stack:
