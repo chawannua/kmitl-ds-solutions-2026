@@ -48,6 +48,13 @@
 * `item_4_26s1_Tower_of_Hanoi.py` - Tower of Hanoi
 * `item_5_26s1_Draw_stair.py` - Draw Stair
 
+### 🔹 Chapter 7: Tree 1 (BST)
+* `item_1_25s1_Binary_Search_Tree.py` - Binary Search Tree
+* `item_2_25s1_BST_height.py` - BST Height
+* `item_3_25s1_BST_search.py` - BST Search
+* `item_4_25s1_BST_insert_delete.py` - BST Insert / Delete
+* `item_5_25s1_Expression_Tree.py` - Expression Tree
+
 ### 🔹 Chapter 8: Tree 2 (AVL)
 * `item_1_25s1_Tree2_1_AVL_1.py` - Tree2-1 AVL-1
 * `item_2_25s1_Tree2_2_AVL_2.py` - Tree2-2 AVL-2
@@ -58,4 +65,4 @@
 ---
 
 ## 🏆 Current Progress
-* **Chapters 1-6 & Chapter 8 Total Score**: 70 / 70 (100% Passed)
+* **Chapters 1-8 Total Score**: 80 / 80 (100% Passed)
