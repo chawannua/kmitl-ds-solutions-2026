@@ -3,7 +3,7 @@
 # --------------------------------------------------------------------------------
 # Problem Statement:
 # Write a program to receive input, create an AVL tree, and display the post-order traversal of the nodes.
-Modify the add method to add data to the AVL tree, and the postOrder method to traverse all nodes in post-order.
+# Modify the add method to add data to the AVL tree, and the postOrder method to traverse all nodes in post-order.
 # ================================================================================
 
 class AVLTree:

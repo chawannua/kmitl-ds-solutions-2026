@@ -40,11 +40,11 @@ items = [x.strip() for x in input().split(',')]
 #### 2. Item 1: Rabbit, Turtle, Fly (Physics Formula)
 Problem logic: Calculate the distance a fly travels back and forth between a rabbit and turtle moving towards each other.
 Formula: 
-- Total time before collision = d / (Vr + Vt)
-- Fly distance = total_time * Vf = (d * Vf) / (Vr + Vt)
+- Total time before collision = d / (Vt - Vr)
+- Fly distance = total_time * Vf = (d * Vf) / (Vt - Vr)
 ```python
 d, Vr, Vt, Vf = map(float, input().split())
-fly_distance = (d * Vf) / (Vr + Vt)
+fly_distance = (d * Vf) / (Vt - Vr)
 print(f"{fly_distance:.2f}")
 ```
 

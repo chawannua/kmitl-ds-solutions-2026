@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -332,7 +332,7 @@
         }
 
         .search-box::before {
-            content: "ðŸ”";
+            content: "🔍";
             position: absolute;
             left: 12px;
             top: 50%;
@@ -534,9 +534,9 @@
         <h1>KMITL Data Structures <span>Quiz 1 Master App</span></h1>
         <p>Offline Exam Guide, 15 Python Source Solutions, Interactive Practice Q&A Cards & Pre-Exam Cheat Sheet</p>
         <div class="badge-bar">
-            <span class="badge">ðŸ“˜ Study Guide</span>
-            <span class="badge badge-indigo">ðŸ’» 15 Code Solutions</span>
-            <span class="badge badge-emerald">ðŸ“ 22 Practice Questions</span>
+            <span class="badge">📘 Study Guide</span>
+            <span class="badge badge-indigo">💻 15 Code Solutions</span>
+            <span class="badge badge-emerald">📝 22 Practice Questions</span>
             <span class="badge">âš¡ 5-Min Cheat Sheet</span>
         </div>
     </header>
@@ -544,16 +544,16 @@
     <div class="container">
         <!-- Navigation Tabs -->
         <nav class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('study')">ðŸ“˜ Study Guide</button>
-            <button class="tab-btn" onclick="switchTab('solutions')">ðŸ’» Code Solutions (15)</button>
-            <button class="tab-btn" onclick="switchTab('exam')">ðŸ“ Practice Exam</button>
+            <button class="tab-btn active" onclick="switchTab('study')">📘 Study Guide</button>
+            <button class="tab-btn" onclick="switchTab('solutions')">💻 Code Solutions (15)</button>
+            <button class="tab-btn" onclick="switchTab('exam')">📝 Practice Exam</button>
             <button class="tab-btn" onclick="switchTab('cheat')">âš¡ Cheat Sheet</button>
         </nav>
 
         <!-- TAB 1: STUDY GUIDE -->
         <div id="tab-study" class="tab-content active">
             <div class="card">
-                <div class="section-title">ðŸ Chapters 1 & 2: Python Essentials & OOP Refresher</div>
+                <div class="section-title">🐍 Chapters 1 & 2: Python Essentials & OOP Refresher</div>
                 <p>Essential syntax and algorithmic primitives required for all data structure implementations.</p>
                 
                 <h3>1. Fast Input Parsing</h3>
@@ -588,7 +588,7 @@ print("{:>10}".format(s)) # Right align width 10</code></pre>
             </div>
 
             <div class="card">
-                <div class="section-title">ðŸ“š Chapter 3: Stack Data Structure (LIFO)</div>
+                <div class="section-title">📚 Chapter 3: Stack Data Structure (LIFO)</div>
                 <p><b>Stack</b> is a Last-In, First-Out data structure. Operations occur only at the top.</p>
                 
                 <h3>Core Operations & Complexities</h3>
@@ -624,7 +624,7 @@ print("{:>10}".format(s)) # Right align width 10</code></pre>
                 </table>
 
                 <div class="callout callout-danger">
-                    <div class="callout-title">âš ï¸ TOP STACK EXAM TRAP: Power Operator (^)</div>
+                    <div class="callout-title">⚠️ TOP STACK EXAM TRAP: Power Operator (^)</div>
                     <code>^</code> is <b>RIGHT-associative</b>! When converting infix <code>A ^ B ^ C</code> to postfix, the result is <code>A B C ^ ^</code> (NOT <code>A B ^ C ^</code>). In the shunting-yard algorithm, do NOT pop stack operators of equal precedence when processing <code>^</code>!
                 </div>
 
@@ -646,11 +646,11 @@ print("{:>10}".format(s)) # Right align width 10</code></pre>
             </div>
 
             <div class="card">
-                <div class="section-title">ðŸ”„ Chapter 4: Queue Data Structure (FIFO)</div>
+                <div class="section-title">🔄 Chapter 4: Queue Data Structure (FIFO)</div>
                 <p><b>Queue</b> is a First-In, First-Out structure. Enqueue adds to rear; Dequeue removes from front.</p>
 
                 <div class="callout callout-danger">
-                    <div class="callout-title">ðŸš¨ CRITICAL EXAM TRAP: deque vs list.pop(0)</div>
+                    <div class="callout-title">🚨 CRITICAL EXAM TRAP: deque vs list.pop(0)</div>
                     Never use <code>list.pop(0)</code> for a queue! In Python, <code>list.pop(0)</code> takes <b>O(N)</b> time because all remaining elements must shift in memory. Always use <code>from collections import deque</code> and <code>deque.popleft()</code> which is <b>O(1)</b>!
                 </div>
 
@@ -684,13 +684,13 @@ def bfs_grid(grid, start, end):
     return -1</code></pre>
 
                 <div class="callout callout-success">
-                    <div class="callout-title">ðŸ’¡ Golden BFS Rule</div>
+                    <div class="callout-title">💡 Golden BFS Rule</div>
                     Always add node to <code>visited</code> <b>BEFORE</b> pushing it to the queue. If you wait until popping, duplicate entries will flood the queue causing TLE/MLE.
                 </div>
             </div>
 
             <div class="card">
-                <div class="section-title">ðŸ”— Chapter 5: Linked List Data Structure</div>
+                <div class="section-title">🔗 Chapter 5: Linked List Data Structure</div>
                 <p>Dynamic linear structure where elements (nodes) are linked via memory pointers.</p>
 
                 <h3>Singly vs Doubly Linked List</h3>
@@ -2427,7 +2427,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-1" onclick="toggleMastered(1)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-2" data-ch="Ch 1-2">
@@ -2445,7 +2445,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-2" onclick="toggleMastered(2)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-3" data-ch="Ch 1-2">
@@ -2466,7 +2466,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-3" onclick="toggleMastered(3)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-4" data-ch="Ch 1-2">
@@ -2484,7 +2484,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-4" onclick="toggleMastered(4)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-5" data-ch="Ch 3">
@@ -2502,7 +2502,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-5" onclick="toggleMastered(5)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-6" data-ch="Ch 3">
@@ -2520,7 +2520,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-6" onclick="toggleMastered(6)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-7" data-ch="Ch 3">
@@ -2538,7 +2538,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-7" onclick="toggleMastered(7)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-8" data-ch="Ch 3">
@@ -2556,7 +2556,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-8" onclick="toggleMastered(8)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-9" data-ch="Ch 3">
@@ -2574,7 +2574,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-9" onclick="toggleMastered(9)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-10" data-ch="Ch 3">
@@ -2592,7 +2592,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-10" onclick="toggleMastered(10)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-11" data-ch="Ch 4">
@@ -2610,7 +2610,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-11" onclick="toggleMastered(11)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-12" data-ch="Ch 4">
@@ -2628,7 +2628,7 @@ nums = list(map(int, input().split()))</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-12" onclick="toggleMastered(12)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-13" data-ch="Ch 4">
@@ -2654,7 +2654,7 @@ size -= 1  # on dequeue</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-13" onclick="toggleMastered(13)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-14" data-ch="Ch 4">
@@ -2672,7 +2672,7 @@ size -= 1  # on dequeue</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-14" onclick="toggleMastered(14)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-15" data-ch="Ch 4">
@@ -2690,7 +2690,7 @@ size -= 1  # on dequeue</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-15" onclick="toggleMastered(15)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-16" data-ch="Ch 4">
@@ -2708,7 +2708,7 @@ size -= 1  # on dequeue</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-16" onclick="toggleMastered(16)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-17" data-ch="Ch 5">
@@ -2726,7 +2726,7 @@ size -= 1  # on dequeue</code></pre>
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-17" onclick="toggleMastered(17)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-18" data-ch="Ch 5">
@@ -2756,7 +2756,7 @@ while curr is not None and curr.next is not None:
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-18" onclick="toggleMastered(18)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-19" data-ch="Ch 5">
@@ -2778,7 +2778,7 @@ A.next = new_node         # Step 4: Point A.next to N</code></pre><br><b>Note:</
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-19" onclick="toggleMastered(19)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-20" data-ch="Ch 5">
@@ -2796,7 +2796,7 @@ A.next = new_node         # Step 4: Point A.next to N</code></pre><br><b>Note:</
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-20" onclick="toggleMastered(20)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-21" data-ch="Ch 5">
@@ -2814,7 +2814,7 @@ A.next = new_node         # Step 4: Point A.next to N</code></pre><br><b>Note:</
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-21" onclick="toggleMastered(21)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>                <div class="qa-card" id="qa-22" data-ch="Ch 5">
@@ -2832,7 +2832,7 @@ A.next = new_node         # Step 4: Point A.next to N</code></pre><br><b>Note:</
                     </div>
                     <div class="qa-actions">
                         <button class="master-btn" id="mbtn-22" onclick="toggleMastered(22)">
-                            <span>âœ“</span> Mark as Mastered
+                            <span>✓</span> Mark as Mastered
                         </button>
                     </div>
                 </div>
@@ -2846,7 +2846,7 @@ A.next = new_node         # Step 4: Point A.next to N</code></pre><br><b>Note:</
                 <p>Read this summary 5 minutes before entering the exam room!</p>
 
                 <div class="callout callout-success">
-                    <div class="callout-title">ðŸ† TOP 5 MUST-REMEMBER RULES FOR QUIZ 1</div>
+                    <div class="callout-title">🏆 TOP 5 MUST-REMEMBER RULES FOR QUIZ 1</div>
                     <ol>
                         <li><b>list.pop(0) is O(N)</b> &rarr; Always use <code>deque.popleft()</code> which is <b>O(1)</b>.</li>
                         <li><b>^ operator is RIGHT-associative</b> &rarr; <code>a^b^c = a^(b^c)</code> (Shunting-yard precedence 3, right-assoc).</li>
@@ -2982,7 +2982,7 @@ while q:
                 if (card) card.classList.add('mastered');
                 if (btn) {
                     btn.classList.add('active');
-                    btn.innerHTML = '<span>âœ“</span> Mastered';
+                    btn.innerHTML = '<span>✓</span> Mastered';
                 }
             });
             updateProgress();
@@ -2996,12 +2996,12 @@ while q:
                 masteredSet.delete(id);
                 card.classList.remove('mastered');
                 btn.classList.remove('active');
-                btn.innerHTML = '<span>âœ“</span> Mark as Mastered';
+                btn.innerHTML = '<span>✓</span> Mark as Mastered';
             } else {
                 masteredSet.add(id);
                 card.classList.add('mastered');
                 btn.classList.add('active');
-                btn.innerHTML = '<span>âœ“</span> Mastered';
+                btn.innerHTML = '<span>✓</span> Mastered';
             }
             localStorage.setItem('kmitl_quiz1_mastered', JSON.stringify(Array.from(masteredSet)));
             updateProgress();

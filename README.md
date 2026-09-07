@@ -66,3 +66,19 @@
 
 ## 🏆 Current Progress
 * **Chapters 1-8 Total Score**: 80 / 80 (100% Passed)
+
+---
+
+## 🌟 Featured Interactive Tool
+
+* `2_QUIZ1_OFFLINE_APP.html` - An offline interactive exam application for self-assessment.
+
+---
+
+## 🧪 Testing
+
+To run the full test suite, use pytest:
+
+```bash
+python -m pytest tests/
+```
