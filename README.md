@@ -48,7 +48,14 @@
 * `item_4_26s1_Tower_of_Hanoi.py` - Tower of Hanoi
 * `item_5_26s1_Draw_stair.py` - Draw Stair
 
+### 🔹 Chapter 8: Tree 2 (AVL)
+* `item_1_25s1_Tree2_1_AVL_1.py` - Tree2-1 AVL-1
+* `item_2_25s1_Tree2_2_AVL_2.py` - Tree2-2 AVL-2
+* `item_3_25s1_Tree2_3_AVL_3.py` - Tree2-3 AVL-3
+* `item_4_25s1_Tree2_4_AVL_4.py` - Tree2-4 AVL-4
+* `item_5_25s1_Cut_The_Tree.py` - Cut The Tree
+
 ---
 
 ## 🏆 Current Progress
-* **Chapters 1-6 Total Score**: 60 / 60 (100% Passed)
+* **Chapters 1-6 & Chapter 8 Total Score**: 70 / 70 (100% Passed)
