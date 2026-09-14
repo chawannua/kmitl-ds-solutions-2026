@@ -66,11 +66,35 @@ if __name__ == "__main__":
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 3 Item 2 (26s1 Parenthesis Matching).
+# Stack-based bracket validator that pinpoints WHICH of three error types
+# broke the expression, using early-exit checks during the scan.
+#
+# Core idea:
+#   A closing bracket can only fail in two ways DURING the scan (nothing on
+#   the stack to match, or the wrong opener on top); a leftover opener can
+#   only be detected once the whole string has been read, since you can't
+#   know it's "extra" until nothing ever closes it.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. check_expression(s) pushes every opener '(', '[', '{' onto the stack.
+# 2. On a closer, if stack.is_empty() the function returns immediately with
+#    "close paren excess" -- nothing on the stack could ever match this
+#    closer, so no more scanning is needed.
+# 3. Otherwise it pops the top and compares it via pairs[ch]. A mismatch
+#    (e.g. top='(' but ch==']') returns "Unmatch open-close" right away --
+#    unlike item_1, this stops the scan instead of just counting the error.
+# 4. If the loop finishes with the stack non-empty, those are openers that
+#    were never closed -- only knowable after the last character, so this
+#    check sits outside the for-loop and returns "open paren excess" plus
+#    the count and the leftover characters (stack.to_string()).
+# 5. An empty stack at the end means every opener found its closer -> MATCH.
+#
+# Worked example -- Enter expresion : (a+b]
+#   char  | action                          | stack after
+#   ------+---------------------------------+------------
+#    (    | opener -> push                  | (
+#   a,+,b | not a bracket -> ignored        | (
+#    ]    | closer, pop top='(' , pairs[']']='[' != '(' -> fail
+#   Result: "Unmatch open-close", returned the instant the mismatch is seen.
+#   Printed: (a+b] Unmatch open-close
 # ================================================================================

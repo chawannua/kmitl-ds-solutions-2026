@@ -26,11 +26,32 @@ print(f"{total_distance:.2f}")
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 1 Item 1 (Rabbit & Turtle & Fly).
+# Closed-form relative-speed formula -- no loop needed because the fly's total
+# path length only depends on how long the chase lasts, not on each leg.
+#
+# Core idea:
+#   The fly bounces back and forth infinitely many times, but the SUM of an
+#   infinite number of shrinking legs still just equals (fly speed) x (total
+#   chase time), because the fly is airborne for the whole chase. So instead
+#   of summing a geometric series of bounces, compute how long the turtle
+#   takes to close the gap, then multiply by Vf directly (Hint: S = V*T).
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. d, Vr, Vt, Vf = map(float, ...) reads the 4 numbers on one line and
+#    converts them to float, since the answer must be printed to 2 decimals.
+# 2. time = d / (Vt - Vr) is the classic "closing speed" formula: the turtle
+#    starts d meters behind and gains ground on the rabbit at (Vt - Vr) m/s,
+#    so it needs d / (Vt - Vr) seconds to catch up. The problem guarantees
+#    Vt > Vr, so this division never hits zero or goes negative.
+# 3. total_distance = Vf * time converts that chase duration into the fly's
+#    total flight distance -- the back-and-forth path is irrelevant, only
+#    elapsed time times fly speed matters.
+# 4. f"{total_distance:.2f}" formats the result to exactly 2 decimal places,
+#    matching the "answer as a decimal with 2 digits" output requirement.
+# 5. No for/while loop is used anywhere, satisfying the problem's constraint.
+#
+# Worked example -- Enter Input : 100 1 2 10  (d=100, Vr=1, Vt=2, Vf=10)
+#   time            = 100 / (2 - 1) = 100.0 seconds
+#   total_distance  = 10 * 100.0    = 1000.0 meters
+#   Printed output  = "1000.00"
 # ================================================================================

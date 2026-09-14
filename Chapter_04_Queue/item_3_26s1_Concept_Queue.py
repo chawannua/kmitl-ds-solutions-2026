@@ -64,11 +64,34 @@ if __name__ == "__main__":
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 4 Item 3 (26s1 Concept Queue).
+# Replays a comma-separated op log against a FIFO queue, counting failed ops.
+#
+# Core idea:
+#   Every enqueued item is tagged "*<enq_counter>" with a counter that only ever
+#   increases, so the queue's contents always reveal each item's original
+#   insertion order even after many enqueue/dequeue rounds have mixed things up.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. inp_string.split(",") turns "E3,D2,X,..." into steps; each is stripped of
+#    whitespace before being classified.
+# 2. "E<n>" (checked via step.startswith('E') and step[1:].isdigit()): loops n
+#    times calling q.enqueue(f"*{enq_counter}") then enq_counter += 1, so each
+#    push gets a fresh, unique label -- item identity, not just value, is kept.
+# 3. "D<n>": loops n times, but checks q.isEmpty() BEFORE every single pop(0).
+#    If empty it counts an "ineffective dequeue" (error_dequeue += 1) instead of
+#    dequeuing; this lets a D-count larger than the queue's size correctly count
+#    only the excess pops as errors instead of crashing or silently stopping.
+# 4. Anything else (e.g. "X") is not E/D shaped, so it only bumps error_input
+#    and the queue is printed unchanged -- no queue operation happens.
+# 5. After every step the running error_dequeue/error_input totals and a
+#    "-" * 20 divider are printed, giving a full step-by-step audit trail.
+#
+# Worked example -- "E3,D2,X,E1,D5"
+#   step | queue after   | error_dequeue | error_input
+#   -----+---------------+---------------+-------------
+#   E3   | [*0,*1,*2]    | 0             | 0
+#   D2   | [*2]          | 0             | 0
+#   X    | [*2]          | 0             | 1   <- unrecognized op, queue untouched
+#   E1   | [*2,*3]       | 0             | 1
+#   D5   | []            | 3             | 1   <- 2 real pops + 3 ineffective ones
 # ================================================================================

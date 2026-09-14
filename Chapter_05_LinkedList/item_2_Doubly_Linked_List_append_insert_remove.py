@@ -145,11 +145,58 @@ if __name__ == "__main__":
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 5 Item 2 (Doubly Linked List(append,insert,remove)).
+# Doubly linked list with head AND tail pointers, so every insert/remove must
+# fix FOUR links (both directions on both neighbours), not just two.
+#
+# Core idea:
+#   Because each Node has .next and .previous, whenever a node is spliced in
+#   or out, its neighbour on each side must have that same relationship
+#   updated in BOTH directions -- fixing only .next (like a singly linked
+#   list) would leave str_reverse() walking a broken/partial chain.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. append(data): if empty, new_node becomes both head and tail. Otherwise
+#    link forward (tail.next = new_node) THEN backward
+#    (new_node.previous = tail) THEN move the tail pointer. The forward link
+#    must be set before tail is reassigned, or the old tail is lost.
+#
+# 2. insert(index, data) -- 3 cases, each reassigns pointers in a safe order:
+#    a. index == 0: new_node.next = self.head (attach forward first, so the
+#       old head is not lost), then self.head.previous = new_node, then
+#       self.head = new_node.
+#    b. index >= size: delegates to append() (inserting past the end == append).
+#    c. middle: walk `cur` to the target index, then splice new_node BEFORE
+#       cur: new_node.next = cur; new_node.previous = cur.previous;
+#       cur.previous.next = new_node; cur.previous = new_node.
+#       All 4 links are written -- 2 on new_node, 2 on its neighbours -- and
+#       new_node.previous is read (cur.previous) before it gets overwritten
+#       by the next line, so the order here also matters.
+#
+# 3. remove(data): walk `cur` until cur.data == data, then unlink it from
+#    BOTH sides:
+#    - if cur.previous exists, bridge it to cur.next; else cur WAS head, so
+#      self.head must move to cur.next (special case: removing the head).
+#    - if cur.next exists, bridge it back to cur.previous; else cur WAS tail,
+#      so self.tail must move to cur.previous (special case: removing the
+#      tail). A single-element list hits BOTH special cases at once, leaving
+#      head = tail = None.
+#
+# 4. str_reverse() walks from self.tail via .previous -- this only produces
+#    correct output because every insert/remove above kept .previous in sync
+#    with .next; it is the direct proof that both directions were maintained.
+#
+# Worked example -- Enter Input : A a, A b, A c, Ab z, I 1:x, R b
+#   A a   -> append: head=tail=[a]
+#   A b   -> append: [a]<->[b]                 (tail becomes b)
+#   A c   -> append: [a]<->[b]<->[c]           (tail becomes c)
+#   Ab z  -> insert(0,z): head.previous=z, z.next=old head
+#            before: head -> [a] <-> [b] <-> [c] <- tail
+#            after:  head -> [z] <-> [a] <-> [b] <-> [c] <- tail
+#   I 1:x -> insert(1,x): cur=[a] (index 1), splice x before it
+#            before: [z] <-> [a] <-> [b] <-> [c]
+#            after:  [z] <-> [x] <-> [a] <-> [b] <-> [c]
+#   R b   -> remove('b'): cur=[b] has both neighbours (a, c)
+#            before: [z] <-> [x] <-> [a] <-> [b] <-> [c]
+#            after:  [z] <-> [x] <-> [a] <-> [c]     (b's slot bridged)
+#   Final: linked list : z->x->a->c   reverse : c->a->x->z
 # ================================================================================

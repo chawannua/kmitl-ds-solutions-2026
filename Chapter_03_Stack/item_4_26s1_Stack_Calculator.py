@@ -88,11 +88,44 @@ if __name__ == "__main__":
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 3 Item 4 (26s1 Stack Calculator).
+# A tiny stack-machine interpreter: each whitespace-separated token is either
+# pushed as data or executed as an instruction against a single shared Stack.
+#
+# Core idea:
+#   run() rebuilds self.stack fresh on every call (so a Calculator instance
+#   is reusable across inputs), then walks tokens with a manual index `i`
+#   instead of a for-loop because 'PSH' must consume the FOLLOWING token as
+#   its argument (i += 1 inside the PSH branch, then i += 1 again at the
+#   loop's end).
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. For '+', '-', '*', '/': x = stack.pop() is the TOP (most recently
+#    pushed) value, y = stack.pop() is the value below it. The result
+#    pushed back is x OP y, so '-' computes (top - second) and '/' computes
+#    (top / second) -- pop order matters here, unlike for '+' and '*'.
+# 2. 'DUP' pushes stack.peek() again without removing anything, duplicating
+#    the top value in place.
+# 3. 'POP' calls stack.pop() and discards the result, simply removing the
+#    top element.
+# 4. 'PSH' does NOT parse the current token as its number; it advances i to
+#    look at the NEXT token and pushes that one as a float.
+# 5. Any other token falls to the try/except: if it parses as a float it's
+#    pushed as a bare number, otherwise run() returns
+#    "Invalid instruction: {token}" immediately.
+# 6. If the stack ends empty, run() returns 0 (a safe default instead of
+#    crashing on stack.peek()). Otherwise the top value is returned,
+#    coerced to int when it has no fractional part (result.is_integer()).
+#
+# Worked example -- Enter arguments : PSH 4 PSH 2 / DUP + POP
+#   token | action                             | stack after
+#   ------+------------------------------------+------------
+#   PSH 4 | push 4.0                            | [4.0]
+#   PSH 2 | push 2.0                            | [4.0, 2.0]
+#     /   | x=pop()=2.0(top), y=pop()=4.0,      | [0.5]
+#         | push(x/y)=0.5                       |
+#    DUP  | push(peek())=0.5                    | [0.5, 0.5]
+#     +   | x=pop()=0.5, y=pop()=0.5, push(1.0) | [1.0]
+#    POP  | pop and discard                     | []
+#   Stack is empty at the end -> run() returns 0
+#   Printed: 0
 # ================================================================================

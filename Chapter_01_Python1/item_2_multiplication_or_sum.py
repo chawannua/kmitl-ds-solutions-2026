@@ -20,11 +20,29 @@ else:
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 1 Item 2 (multiplication or sum).
+# A single threshold check on num1 * num2 decides which of two operations
+# (product vs. sum) gets printed.
+#
+# Core idea:
+#   The product is only ever computed once and reused as the branch
+#   condition, so the "expensive" (larger) value never needs to be
+#   recomputed twice; only the sum is calculated separately, and only in
+#   the branch where it is actually needed.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. input(...).split() splits "num1 num2" on whitespace into two strings,
+#    which are then explicitly converted with int(...) since the problem
+#    guarantees two integers.
+# 2. if num1 * num2 <= 1000: uses "<=" (not "<") because the spec says
+#    "less than or equal to 1,000" should print the product -- so the
+#    boundary case product == 1000 must fall into the product branch.
+# 3. When the product exceeds 1000, the else branch prints num1 + num2
+#    instead, per the problem's "otherwise show the sum" rule.
+# 4. Both branches share the same print("The result is", ...) prefix, so
+#    only the trailing value differs between the two cases.
+#
+# Worked example A -- Enter num1 num2 : 10 20
+#   product = 10 * 20 = 200 <= 1000  -> print "The result is 200"
+# Worked example B -- Enter num1 num2 : 100 50
+#   product = 100 * 50 = 5000 > 1000 -> print "The result is 150" (sum)
 # ================================================================================

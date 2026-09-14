@@ -56,11 +56,35 @@ else:
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 4 Item 1 (26s1 Basic Queue).
+# Direct FIFO queue built on a Python list, driven by comma-separated "E"/"D" ops.
+#
+# Core idea:
+#   enqueue() reports the index the value LANDED at, and dequeue() always removes
+#   from the FRONT (index 0), so the printed indices/sizes double as a live trace
+#   of the queue's front-to-rear layout without ever inspecting items directly.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. inp.split(",") breaks "E 1,E 2,D,..." into individual commands; each is
+#    stripped so stray spaces around commas don't break the "E "/"D" prefix check.
+# 2. "E <value>": queue.enqueue(value) appends to self.items and returns
+#    len(self.items) - 1 -- the index is computed AFTER the append, so it always
+#    equals the value's rear position, matching "Add <value> index is <i>".
+# 3. "D": isEmpty() is checked first because pop(0) on an empty list would raise
+#    IndexError; if empty the command prints "-1" instead of crashing. Otherwise
+#    dequeue() does self.items.pop(0), removing the FRONT element -- O(n) shift
+#    cost, acceptable here since the queue stays small.
+# 4. After all commands, isEmpty() decides between "Empty" and printing
+#    getItems(), which stringifies whatever is left in front-to-rear order.
+#
+# Worked example -- "E 1,E 2,D,E 3,D,D,D"
+#   op    | queue after | printed
+#   ------+-------------+-----------------------------
+#   E 1   | ['1']       | Add 1 index is 0
+#   E 2   | ['1','2']   | Add 2 index is 1
+#   D     | ['2']       | Pop 1 size in queue is 1
+#   E 3   | ['2','3']   | Add 3 index is 1
+#   D     | ['3']       | Pop 2 size in queue is 1
+#   D     | []          | Pop 3 size in queue is 0
+#   D     | []          | -1               <- isEmpty() caught the extra D
+#   final:  Empty
 # ================================================================================

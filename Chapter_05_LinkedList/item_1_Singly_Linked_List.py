@@ -124,11 +124,46 @@ print("Linked List :", L)
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 5 Item 1 (Singly Linked List).
+# Classic singly linked list backed only by head, with every op walking from
+# head via a "cur" cursor -- there is no tail pointer, no prev links.
+#
+# Core idea:
+#   Every method that needs a position (append, index-based pop) must walk the
+#   chain node-by-node from self.head because a Node only knows its .next.
+#   append() therefore costs O(n) since it has no cached tail reference.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. append(item): if empty, the new node just BECOMES head (self.head =
+#    new_node). Otherwise walk `cur` until cur.next == None (the last node),
+#    then splice with cur.next = new_node. Checking cur.next (not cur) keeps
+#    the loop stopped ON the last node so the link can be attached to it.
+#
+# 2. addHead(item): reverse of append -- link the OLD head after the new node
+#    first (new_node.next = self.head), THEN repoint self.head = new_node.
+#    Order matters: if self.head were reassigned first, self.head would already
+#    equal new_node and new_node.next = self.head would just point to itself.
+#
+# 3. pop(pos): removal needs the node BEFORE the target, not the target itself,
+#    because unlinking means rewriting somebody else's .next.
+#    - pos == 0 is a special case: there is no "previous" node, so the head
+#      pointer itself is moved (self.head = self.head.next).
+#    - Otherwise `cur` stops at index pos-1 (idx < pos - 1 guard), then
+#      cur.next = cur.next.next skips over the target node in one step.
+#    - Out of Range covers: negative pos, empty list, or walking off the end
+#      (cur.next == None before reaching pos-1, or after the loop).
+#
+# 4. search/index/size all share the same "walk cur until None, count/compare"
+#    shape; the only difference is what they return on each step.
+#
+# Worked example -- Enter Input : AP a,AP b,AH c,SE b,ID b,SI,PO 0,SI
+#   AP a  -> head=[a]                         list: a
+#   AP b  -> append after a                   list: a -> b
+#   AH c  -> c.next = old head(a); head = c    list: c -> a -> b
+#   SE b  -> walk c->a->b, match -> "Found b"
+#   ID b  -> walk with idx counter -> index 2
+#   SI    -> size = 3
+#   PO 0  -> pos==0 special case: head = head.next (a)
+#            before: head -> [c] -> [a] -> [b] -> None
+#            after:  head -> [a] -> [b] -> None            ("c" dropped)
+#   SI    -> size = 2, list now "a b "
 # ================================================================================

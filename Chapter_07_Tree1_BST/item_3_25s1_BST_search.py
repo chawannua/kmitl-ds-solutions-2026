@@ -66,11 +66,35 @@ print(T.count_less_equal(root, k))
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 7 Item 3 (25s1 BST search).
+# Builds a BST, then counts nodes <= k with an UNCONDITIONAL full traversal
+# (despite the item's name, this is not a pruned/halving search).
+#
+# BST invariant: enforced only inside insert(), the same "data < curr.data
+# -> left, else -> right" comparison as item_1/item_2. printTree() also
+# reuses the right-node-left sideways layout from item_1.
 #
 # Key Steps & Logic:
-# 1. Parsed the input sequence of integers and threshold integer k separated by '/'.
-# 2. Inserted each integer sequentially into a Binary Search Tree (BST).
-# 3. Visualized the constructed BST using 2D tree formatting (right-root-left traversal).
-# 4. Recursively traversed the tree to count all nodes whose value is less than or equal to k.
+# 1. The input line is split on '/' into the number sequence and the
+#    threshold k (e.g. "8 3 10 1 6 14/6" -> numbers and k=6); the numbers
+#    are inserted into the BST one by one via insert(), exactly like item_1.
+# 2. count_less_equal(node, k) is NOT a binary search: it checks
+#    "node.data <= k" for the current node, then unconditionally recurses
+#    into BOTH node.left and node.right, summing all three counts. It never
+#    uses the BST ordering to skip a branch, so it visits every node -- an
+#    O(n) full-tree scan rather than an O(log n) bounded range lookup.
+# 3. printTree(root) draws the sideways tree first, then a '----' divider
+#    line is printed, then the final count from count_less_equal is printed.
+#
+# Worked example -- Enter Input : 8 3 10 1 6 14/6
+#   Tree (same shape as item_1):
+#
+#         8
+#        / \
+#       3   10
+#      / \    \
+#     1   6    14
+#
+#   count_less_equal visits all 6 nodes: 8<=6? no. 3<=6? yes. 10<=6? no.
+#   1<=6? yes. 6<=6? yes. 14<=6? no. Total matches = 3.
+#   Program prints the sideways tree, the '----' divider, then: 3
 # ================================================================================

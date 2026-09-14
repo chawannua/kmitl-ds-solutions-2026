@@ -79,11 +79,39 @@ printList(m)
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 5 Item 3 (MergeOrderList).
+# Classic "merge two sorted linked lists" via a dummy head and two cursors --
+# no new nodes are created for the merge, only existing nodes are re-linked.
+#
+# Core idea:
+#   mergeOrderesList assumes p and q are each ALREADY sorted ascending. A
+#   dummy sentinel node (`dummy = node(0)`) removes the need for an "is this
+#   the first node?" special case: `cur` always has something to attach to,
+#   even before any real node has been picked.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. `p` and `q` are cursors into list 1 and list 2. While BOTH still have
+#    nodes left, compare p.data <= q.data (the "<=" makes the merge stable --
+#    ties keep list 1's node first) and re-link the smaller node's node
+#    object onto cur.next, then advance that cursor (p = p.next or
+#    q = q.next) and advance cur to the node just attached.
+#
+# 2. Only ONE of p/q can run out first. Whichever list still has nodes left
+#    (`if p: cur.next = p` / `if q: cur.next = q`) is spliced onto the tail
+#    of the merged list IN ONE STEP -- its remaining nodes are already sorted
+#    relative to each other, so there is no need to walk them one at a time.
+#
+# 3. dummy.next (not dummy itself) is returned, since dummy was only a
+#    throwaway anchor to hang the first real node from cur.next.
+#
+# Worked example -- Enter 2 Lists : 1,3,5 2,4,6
+#   LL1: [1] -> [3] -> [5] -> None
+#   LL2: [2] -> [4] -> [6] -> None
+#   dummy -> ?                         cur = dummy
+#   1<=2 -> take 1   dummy -> [1]                        p advances to 3
+#   3> 2  -> take 2   dummy -> [1] -> [2]                q advances to 4
+#   3<=4 -> take 3   dummy -> [1] -> [2] -> [3]          p advances to 5
+#   5> 4  -> take 4   dummy -> [1] -> [2] -> [3] -> [4]  q advances to 6
+#   5<=6 -> take 5   ... -> [5]                          p becomes None
+#   q still holds [6] -> spliced whole: cur.next = q
+#   Merge Result : 1 2 3 4 5 6
 # ================================================================================

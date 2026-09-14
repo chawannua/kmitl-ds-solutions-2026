@@ -66,11 +66,36 @@ if __name__ == "__main__":
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 4 Item 2 (26s1 Queue-2).
+# Minute-by-minute simulation of three chained queues (main -> cashier 1/cashier 2).
+#
+# Core idea:
+#   q1_tick / q2_tick are per-cashier "minutes elapsed on current customer"
+#   counters. A dequeue only happens once a counter reaches that cashier's
+#   fixed service time (3 for q1, 2 for q2), so each Queue never needs to know
+#   about time itself -- the ticks live outside it.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. Every character of the input string becomes one person; main_q.enqueue(char)
+#    loads them all in arrival order before the simulation starts.
+# 2. Each loop iteration is one minute. First, IF a cashier queue is non-empty,
+#    its tick counter increments; hitting the service time triggers
+#    q1.dequeue()/q2.dequeue() (pop(0) on the front) and resets the tick to 0.
+#    This check runs BEFORE the new arrival below, so a just-served slot can be
+#    refilled the same minute.
+# 3. One person leaves main_q via dequeue() and joins q1 if q1.size() < 5 (still
+#    has room), else falls through to q2 -- cashier 1 is always preferred.
+# 4. print(f"{time} {main_q} {q1} {q2}") uses Queue.__str__ (== str(self.items))
+#    so each line shows the front-to-rear contents of all three queues for that
+#    minute; the loop stops the instant main_q is empty, even if q1/q2 still
+#    have people waiting to be served.
+#
+# Worked example -- "ABCDEFG" (service times: q1=3 min, q2=2 min)
+#   t | main_q            | q1                | q2 | note
+#   --+-------------------+-------------------+----+----------------------------
+#   1 | [B,C,D,E,F,G]     | [A]               | [] | A enters q1 (empty)
+#   2 | [C,D,E,F,G]       | [A,B]             | [] | tick=1, no dequeue yet
+#   3 | [D,E,F,G]         | [A,B,C]           | [] | tick=2
+#   4 | [E,F,G]           | [B,C,D]           | [] | tick=3 -> A served, D in
+#   7 | []                | [C,D,E,F,G]       | [] | tick=3 -> B served, G in
+#   q2 stays empty the whole run because q1.size() never reaches 5 when checked.
 # ================================================================================

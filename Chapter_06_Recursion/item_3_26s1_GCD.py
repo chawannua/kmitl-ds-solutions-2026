@@ -33,11 +33,32 @@ else:
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 6 Item 3 (26s1 GCD).
+# Euclidean algorithm implemented as direct recursion on the remainder.
+#
+# Core idea:
+#   gcd(a, b) == gcd(b, a % b) for any a, b (with b != 0): the pair (b, a % b)
+#   has the exact same set of common divisors as (a, b), so recursing on it
+#   never changes the answer while shrinking the numbers involved.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. Base case: b == 0 returns abs(a) -- once the second number reaches 0, a
+#    itself IS the greatest common divisor (dividing by 0 is undefined, so this
+#    is also where the recursion MUST stop).
+# 2. Recursive case: return gcd(b, a % b). The second argument becomes a % b,
+#    which by definition of modulo satisfies 0 <= a % b < b -- it is strictly
+#    smaller than the previous second argument (b). Since it is a non-negative
+#    integer that strictly decreases every call, it is guaranteed to hit 0.
+# 3. Before calling gcd(), main swaps a and b if a < b, but this only saves a
+#    step -- gcd() itself works in either order since a % b handles it.
+#
+# Worked example -- Enter Input : 48 18
+#   gcd(48, 18)
+#   +- gcd(18, 48 % 18 = 12)
+#      +- gcd(12, 18 % 12 = 6)
+#         +- gcd(6, 12 % 6 = 0)
+#            +- b == 0 -> base case, return abs(6) = 6
+#         => 6
+#      => 6
+#   => 6
+#   Output: The gcd of 48 and 18 is : 6
 # ================================================================================

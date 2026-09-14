@@ -93,11 +93,42 @@ if __name__ == "__main__":
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 3 Item 5 (26s1 Parking lot).
+# Models the single-lane alley as a Stack: the car parked last is always the
+# one nearest the street exit, so it is the only one that can move freely.
+#
+# Core idea:
+#   To depart a car buried under others, every car parked after it must
+#   first be pulled out into the street (a temporary stack `temp`), the
+#   target removed, and everyone else parked back in the same relative
+#   order. Popping into `temp` reverses the displaced cars once; pushing
+#   them back out of `temp` reverses them a second time, so the two
+#   reversals cancel out and the original order is restored.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. ParkingLot.__init__ pushes the initial `cars` list in order, so the
+#    LAST element given is the one nearest the exit (top of stack).
+# 2. arrive(num) refuses a duplicate (contains(num)) or a full alley
+#    (len(to_list()) >= max_cars); otherwise it pushes the new car on top,
+#    since a new arrival always waits at the street end.
+# 3. depart(num) first checks contains(num); if the car isn't there at all
+#    it fails immediately without touching the stack.
+# 4. Otherwise it pops cars into `temp` while stack.peek() != num -- every
+#    car parked after the target is temporarily moved out of the alley.
+# 5. Once stack.peek() == num, that single pop() removes the target car.
+# 6. "while not temp.is_empty(): stack.push(temp.pop())" then drives every
+#    displaced car back into the alley in its original relative order, with
+#    only the target car now missing.
+#
+# Worked example -- Enter max of car / car in soi / operation :
+#                    3 / 1,2,3 / depart 1
+#   Initial stack (bottom -> top): [1, 2, 3]
+#   step        | action                | stack   | temp
+#   ------------+-----------------------+---------+--------
+#   peek=3 != 1 | pop 3 -> temp         | [1, 2]  | [3]
+#   peek=2 != 1 | pop 2 -> temp         | [1]     | [3, 2]
+#   peek=1 == 1 | stop, pop() removes 1 | []      | [3, 2]
+#   restore     | push temp.pop()=2     | [2]     | [3]
+#   restore     | push temp.pop()=3     | [2, 3]  | []
+#   Printed: car 1 depart ! : Car 1 was remove
+#            [2, 3]
 # ================================================================================

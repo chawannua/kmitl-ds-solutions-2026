@@ -60,11 +60,34 @@ elif len(args) == 3:
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 2 Item 3 (New Range).
+# A float-capable reimplementation of range() that preserves the input's own
+# decimal precision instead of trusting Python's raw float representation.
+#
+# Core idea:
+#   RANGE receives the RAW STRINGS typed by the user (args are never
+#   pre-converted to float before the call), so decimals(s) can count digits
+#   after '.' in the original text. precision = max(decimals(start_str),
+#   decimals(step_str)) tells format_value exactly how many decimal places
+#   the output must show, avoiding float noise like "0.30000000000000004".
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. len(args) selects which of start_str/stop_str/step_str get real values,
+#    mirroring range(a) / range(a, b) / range(a, b, c) overload semantics.
+# 2. The while loop computes value = start + index*step and rounds it to
+#    precision + 5 BEFORE comparing to stop -- the extra 5 digits absorb
+#    binary float rounding error so a boundary case doesn't wrongly
+#    include/exclude a value due to noise past the visible precision.
+# 3. The stop test branches on the sign of step (step > 0 stops at
+#    value >= stop, step < 0 stops at value <= stop), which is what lets a
+#    single function support both ascending and descending sequences.
+# 4. format_value formats to `precision` decimals then strips trailing zeros
+#    and a trailing '.', re-adding ".0" only if precision > 0 -- this is why
+#    whole numbers in a float range still print as "1.0" not "1".
+#
+# Worked example -- Enter Input : 1 5 2   (3-argument form: start=1, end=5, step=2)
+#   start_str="1", step_str="2" -> precision = max(0, 0) = 0
+#   index 0: value = 1 + 0*2 = 1  (1 < 5)  -> "1"
+#   index 1: value = 1 + 1*2 = 3  (3 < 5)  -> "3"
+#   index 2: value = 1 + 2*2 = 5  (5 >= 5) -> loop stops
+#   Printed output: (1, 3)
 # ================================================================================

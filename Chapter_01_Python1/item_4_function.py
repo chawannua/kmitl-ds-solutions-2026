@@ -24,11 +24,29 @@ print("Output list : ", opls)
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 1 Item 4 (function).
+# A single list-comprehension filter isolates odd numbers by their
+# remainder when divided by 2.
+#
+# Core idea:
+#   odd_list(alist) is a pure filter function: it never mutates alist, it
+#   just builds and returns a brand-new list, so the caller can still print
+#   the original ls afterward and see it unchanged.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. def odd_list(alist): [x for x in alist if x % 2 != 0] iterates every
+#    element x and keeps it only when x % 2 != 0 -- the remainder of
+#    integer division by 2 is 1 for odd numbers and 0 for even ones, so
+#    "!= 0" is the direct test for "is odd".
+# 2. ls = [int(e) for e in input(...).split()] reads a space-separated line
+#    and converts every token e to int, building the input list to test.
+# 3. opls = odd_list(ls) calls the function once; the result is stored
+#    separately from ls rather than overwriting it, so both the original
+#    input list and the filtered output list can be printed afterward.
+# 4. The two print() calls show "Input list" and "Output list" side by
+#    side so the transformation is visible to whoever runs the program.
+#
+# Worked example -- Enter list numbers : 10 11 13 24 25
+#   ls   = [10, 11, 13, 24, 25]
+#   test : 10%2=0(even) 11%2=1(odd) 13%2=1(odd) 24%2=0(even) 25%2=1(odd)
+#   opls = [11, 13, 25]
 # ================================================================================

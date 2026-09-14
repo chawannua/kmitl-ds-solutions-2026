@@ -121,24 +121,55 @@ for cmd in data:
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 7 Item 4 (25s1 BST insert / delete).
+# Command-driven BST supporting insert (i) and all three classic BST
+# deletion cases (d), reprinting the sideways tree after every command.
+#
+# BST invariant: enforced by "val < curr.data -> left, else -> right" in
+# insert(), and mirrored by "data < r.data" / "data > r.data" in
+# delete()/_delete_node().
 #
 # Key Steps & Logic:
-# 1. Binary Search Tree (BST) Properties:
-#    - For any node, all values in the left subtree are smaller than the node's value.
-#    - All values in the right subtree are greater than or equal to the node's value.
-# 2. Node Insertion:
-#    - Starting at the root, compare the value to insert with current node data.
-#    - Traverse left if smaller, right if greater/equal, until an empty branch is found.
-#    - Create and link the new Node at that position.
-# 3. Node Deletion:
-#    - If target node is not found in the tree (reaching None), prints "Error! Not Found DATA".
-#    - Case 1 (Leaf node / 0 children): Remove the node directly (return None).
-#    - Case 2 (1 child): Bypass the node and return its non-empty child (left or right).
-#    - Case 3 (2 children): Find the in-order successor (the smallest value in the right
-#      subtree), replace the target node's data with successor's data, and remove the
-#      successor node from the right subtree using `_delete_node`.
-# 4. Tree Visualization:
-#    - Recursively traverses right subtree first, prints current node with level indentation
-#      (5 spaces per level), then traverses left subtree to display the BST rotated 90 degrees.
+# 1. Each comma-separated command ("i 3", "d 3", ...) is split into an
+#    operation letter (op) and an integer value (val).
+# 2. "i <val>" calls insert(val): walk down from the root comparing val to
+#    curr.data until an empty child slot is found, then attach a new leaf.
+# 3. "d <val>" calls delete(tree.root, val), which recurses down comparing
+#    data to r.data. Falling off the tree (r is None) prints
+#    "Error! Not Found DATA". Once the target node is found there are
+#    three cases, all decided by the same if/elif/else block:
+#      - Leaf / 0 children: r.left and r.right are both None, so
+#        "if r.left is None: return r.right" returns None, unlinking it.
+#      - 1 child: exactly one side is None, so "if r.left is None: return
+#        r.right" (or the mirrored elif) splices that single child up in
+#        place of the deleted node.
+#      - 2 children: neither branch fires, so the else-block walks
+#        curr = r.right, then curr = curr.left repeatedly until
+#        curr.left is None. That curr is the INORDER SUCCESSOR (the
+#        smallest value in the right subtree). Copying curr.data into
+#        r.data keeps r's right subtree still >= r.data and r's left
+#        subtree still < r.data, so the invariant survives. The now
+#        duplicate successor leaf is then removed from the right subtree
+#        via the helper _delete_node (same three cases, without the
+#        "Error! Not Found DATA" message).
+# 4. printTree90(tree.root) is called after every command to redraw the
+#    sideways tree (right, node, left) so each step's effect is visible.
+#
+# Worked example -- Enter Input : i 3,i 5,i 2,d 3
+#   insert 3 -> root:        3
+#   insert 5 (>=3, right):   3
+#                             \
+#                              5
+#   insert 2 (<3, left):     3
+#                           /  \
+#                          2    5
+#   delete 3: node 3 has two children. curr starts at r.right (node 5);
+#   curr.left is already None, so curr stops immediately at 5 -- the
+#   inorder successor is 5 itself. r.data becomes 5, then _delete_node
+#   removes the now-duplicate leaf 5 from the right subtree, leaving:
+#         5
+#        /
+#       2
+#   Program prints after "delete 3":
+#        5
+#   2
 # ================================================================================

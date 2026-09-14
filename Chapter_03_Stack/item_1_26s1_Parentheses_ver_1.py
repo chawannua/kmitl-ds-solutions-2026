@@ -60,11 +60,35 @@ if __name__ == "__main__":
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 3 Item 1 (26s1 Parentheses ver.1).
+# Single-pass bracket balancer that counts how many brackets are missing to
+# make the string a fully paired sequence of ( ) and [ ].
+#
+# Core idea:
+#   A closing bracket only pops the stack if it actually matches the type on
+#   top (via matching_open). If it does NOT match, it is not popped -- it is
+#   simply counted as an unmatched closer and the stack is left untouched.
+#   Whatever openers are still sitting on the stack after the scan are the
+#   unmatched openers.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. count_unmatched(s) walks the string once, character by character.
+# 2. An opener '(' or '[' is always pushed -- we don't know yet if it will
+#    find a partner later, so it must stay on the stack as a candidate.
+# 3. A closer ')' or ']' only pops when stack.peek() equals
+#    matching_open[ch]; otherwise unmatched_closers is incremented. This is
+#    why a closer that doesn't match the top (e.g. '(' then ']') counts as
+#    an error immediately, instead of searching deeper into the stack.
+# 4. After the loop, unmatched_openers = stack.size() -- every opener still
+#    on the stack never found a matching closer.
+# 5. total = unmatched_closers + unmatched_openers is the number of
+#    brackets that must be added to complete the pairing; 0 means "Perfect".
+#
+# Worked example -- Enter Input : ([)
+#   char | action                            | stack after
+#   -----+-----------------------------------+------------
+#    (   | opener -> push                    | (
+#    [   | opener -> push                    | (, [
+#    )   | closer, peek='[' != '(' -> mismatch, unmatched_closers=1 | (, [
+#   End of string: stack still holds 2 openers -> unmatched_openers = 2
+#   total = 1 (closer) + 2 (openers) = 3  ->  printed: 3
 # ================================================================================

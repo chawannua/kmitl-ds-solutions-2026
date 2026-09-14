@@ -62,11 +62,46 @@ if __name__ == "__main__":
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 3 Item 3 (26s1 Infix to Postfix).
+# Classic Shunting-Yard algorithm: an operator stack holds pending operators
+# while the output list is built directly in postfix order.
+#
+# Core idea:
+#   An operand goes straight to output. An operator is only pushed once
+#   every operator currently on top of the stack that binds AT LEAST as
+#   tightly as it (and isn't blocked by an unmatched '(') has been popped to
+#   output first -- that reordering is what turns infix into postfix.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. Operands (ch.isalnum()) are appended to output immediately -- they
+#    never wait on the stack.
+# 2. '(' is pushed as a barrier; every while-loop that pops operators checks
+#    "stack.peek() != '('", so none of them ever pop past an open paren.
+# 3. ')' pops and outputs everything back to the matching '(', then
+#    discards that '(' itself (it never reaches the output).
+# 4. For an operator ch, the while-condition pops the stack while:
+#      precedence[peek] > precedence[ch]        (strictly tighter operator)
+#      OR precedence[peek] == precedence[ch] and ch not in right_associative
+#      (equal precedence, popped only for LEFT-associative ch, so 'A-B+C'
+#       evaluates left to right: '-' is popped before '+' is pushed).
+#    '^' is right-associative, so it is excluded from that OR branch and
+#    stays stacked when another '^' arrives, giving 'A^B^C' -> 'ABC^^'
+#    instead of the wrong 'AB^C^'.
+# 5. After the scan, whatever operators remain on the stack (no more input
+#    and no ')' left to pop them) are appended to output via repeated
+#    stack.pop().
+#
+# Worked example -- Enter Infix : A+B*C-D
+#   char | action                                      | stack after
+#   -----+---------------------------------------------+------------
+#    A   | operand -> output=[A]                        | (empty)
+#    +   | stack empty -> push                          | +
+#    B   | operand -> output=[A,B]                      | +
+#    *   | prec(*)=2 > prec(+)=1 -> don't pop, push     | +, *
+#    C   | operand -> output=[A,B,C]                    | +, *
+#    -   | prec(*)=2>1 -> pop * (output+=*)              | +
+#        | prec(+)=1==1, '-' left-assoc -> pop + (output+=+) | (empty)
+#        | push '-'                                     | -
+#    D   | operand -> output=[A,B,C,*,+,D]               | -
+#   end  | flush stack -> pop '-'                        | (empty)
+#   Result: ABC*+D-   (matches printed "Postfix : ABC*+D-")
 # ================================================================================

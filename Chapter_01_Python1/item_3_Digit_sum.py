@@ -22,11 +22,31 @@ else:
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 1 Item 3 (Digit sum).
+# Treats the number as a string so each character can be summed as a digit,
+# avoiding integer overflow/precision issues for numbers up to 30 digits long.
+#
+# Core idea:
+#   num is deliberately kept as a str (never int(num)) because a 30-digit
+#   number is still safe to index character-by-character, and str.isdigit()
+#   gives a cheap, built-in way to validate every character is 0-9 without
+#   writing a manual loop with try/except.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. num = input(...) keeps the value as a string, not an int, so both its
+#    length and its individual characters can be inspected directly.
+# 2. len(num) > 30 enforces the "up to 30 digits" limit, and
+#    not num.isdigit() rejects negative signs, decimals, letters, or
+#    empty input -- isdigit() returns False for anything that is not a
+#    plain sequence of digit characters, which is exactly "invalid".
+#    Both checks are combined with "or" because either failure alone
+#    should reject the input.
+# 3. digit_sum = sum(int(ch) for ch in num) walks every character ch in the
+#    string, converts each single character back to int, and sums them --
+#    this is the actual digit-by-digit summation the problem asks for.
+# 4. The result is printed with a trailing "= " matching the exact wording
+#    used in the examples ("1+2+3=6" style, but as a labeled statement).
+#
+# Worked example -- Enter a positive number : 32189657
+#   digits: 3+2+1+8+9+6+5+7 = 41
+#   Printed output: "Summation of each digit =  41"
 # ================================================================================

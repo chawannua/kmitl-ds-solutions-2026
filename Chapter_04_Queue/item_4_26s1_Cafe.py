@@ -92,11 +92,45 @@ if __name__ == "__main__":
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 4 Item 4 (26s1 Cafe).
+# Event-driven simulation of a 2-barista coffee shop using a FIFO queue.
+#
+# Core idea:
+#   Instead of ticking the clock minute by minute, the simulation only tracks
+#   WHEN each barista becomes free (b1_free / b2_free). This lets it jump
+#   straight from one order to the next.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. Parse "arr,prep/arr,prep/..." into Customer objects (cid = 1-based index)
+#    and enqueue them in arrival order, so the queue enforces first-come,
+#    first-served ORDERING (not first-served delivery).
+#
+# 2. For each customer popped off the queue:
+#    a. Assign the barista who frees up earliest (b1_free <= b2_free).
+#    b. start  = max(arr, barista_free)
+#       The order starts only when BOTH conditions hold: the customer has
+#       arrived AND the barista is free -- so the later of the two wins.
+#       This single max() covers both cases (idle barista vs. waiting customer).
+#    c. wait   = start - arr      (0 if the barista was already idle)
+#       finish = start + prep
+#    d. Update that barista's free time to finish.
+#
+# 3. Scan all customers for the largest wait. Using '>' (not '>=') means ties
+#    resolve to the lowest customer id. max_wait staying 0 means nobody waited.
+#
+# 4. Sort by (finish, cid) before printing. This is required because the order
+#    customers ORDER is not the order they RECEIVE: a short drink placed later
+#    can overtake a long one (customer 3 finishes at t=6, customer 2 at t=7).
+#    The cid tiebreaker keeps output stable when two drinks finish together.
+#
+# 5. Print each delivery time, then either "No waiting" or the longest waiter.
+#
+# Worked example -- Log : 0,3/0,7/2,3/7,7/10,5/10,1
+#   cid  arr  prep  barista  start  wait  finish
+#    1    0    3      B1       0      0      3
+#    2    0    7      B2       0      0      7
+#    3    2    3      B1       3      1      6    <- both busy on arrival
+#    4    7    7      B1       7      0     14
+#    5   10    5      B2      10      0     15
+#    6   10    1      B1      14      4     15    <- longest wait
+#   Delivery order after sorting: 1(3), 3(6), 2(7), 4(14), 5(15), 6(15)
 # ================================================================================

@@ -99,11 +99,40 @@ if __name__ == "__main__":
 # ================================================================================
 # How it works:
 # --------------------------------------------------------------------------------
-# This Python script solves Chapter 4 Item 5 (26s1 Search Portal).
+# Breadth-First Search over a grid maze, using the FIFO Queue as the BFS frontier.
+#
+# Core idea:
+#   A FIFO queue makes BFS explore the maze in "rings" of increasing distance
+#   from the start: everything enqueued at the current distance is dequeued and
+#   expanded before anything at the next distance is even looked at, since new
+#   cells always join the REAR while dequeue() always takes the FRONT.
 #
 # Key Steps & Logic:
-# 1. Inputs are parsed from user input and converted to appropriate data types.
-# 2. The core data structure/algorithmic logic (e.g. math formula, stack operations, 
-#    queue handling, linked list pointers, or recursive subproblems) is evaluated.
-# 3. The final computed output is formatted and printed to match testcase specifications.
+# 1. The map string ("F__,##_,O__") is split on ',' into rows; room[y][x] indexes
+#    row y, column x. 'F' marks the start, scanned row-major and stored as (x, y).
+# 2. q.enqueue(start) seeds the frontier; the visited set is populated as soon as
+#    a cell is enqueued (not when it's dequeued) so the same cell can never be
+#    queued twice, which would otherwise loop forever between open cells.
+# 3. print(f"Queue: {q.items}") runs BEFORE q.dequeue(), so each printed line is
+#    a snapshot of the frontier the instant curr is about to be pulled from it.
+# 4. directions = [N, E, S, W] fixes the exact order neighbors are tried, per the
+#    problem statement -- it changes the trace but not whether 'O' is reachable.
+# 5. For each neighbor: an 'O' cell sets found = True and breaks immediately
+#    (the exit itself is never enqueued, since the search can stop there); a
+#    '_' cell not yet in visited is enqueued and marked visited in the same step
+#    to close the race between two directions reaching it at once.
+# 6. The `if found: break` after the neighbor loop exits the outer while too, so
+#    BFS stops the moment the exit is discovered rather than draining the queue.
+#
+# Worked example -- "3 3 F__,##_,O__" (grid: row0 "F__", row1 "##_", row2 "O__")
+#   op            | queue printed  | why
+#   --------------+----------------+---------------------------------------
+#   start=(0,0)   | [(0,0)]        | 'F' found at row 0, col 0
+#   dequeue (0,0) | [(1,0)]        | E=(1,0) '_' enqueued; S=(0,1) '#' blocked
+#   dequeue (1,0) | [(2,0)]        | E=(2,0) '_' enqueued; W=(0,0) visited
+#   dequeue (2,0) | [(2,1)]        | S=(2,1) '_' enqueued
+#   dequeue (2,1) | [(2,2)]        | S=(2,2) '_' enqueued; W=(1,1) '#' blocked
+#   dequeue (2,2) | [(1,2)]        | W=(1,2) '_' enqueued
+#   dequeue (1,2) | (none printed) | W=(0,2) is 'O' -> found = True, break
+#   -> "Found the exit portal."
 # ================================================================================
