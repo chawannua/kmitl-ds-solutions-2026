@@ -62,10 +62,18 @@
 * `item_4_25s1_Tree2_4_AVL_4.py` - Tree2-4 AVL-4
 * `item_5_25s1_Cut_The_Tree.py` - Cut The Tree
 
+
+### 🔹 Chapter 9: Sorting
+* `item_1_26s1_bubble_sort.py` - Bubble Sort (show every pass)
+* `item_2_26s1_Ascending_sort.py` - Ascending Sort (negatives stay in place)
+* `item_3_26s1_somethingDROME.py` - somethingDROME
+* `item_4_26s1_Find_the_Running_Median.py` - Find the Running Median
+* `item_5_26s1_Quick_sort.py` - Quick Sort (first / last / middle pivot)
+
 ---
 
 ## 🏆 Current Progress
-* **Chapters 1-8 Total Score**: 80 / 80 (100% Passed)
+* **Chapters 1-9 Total Score**: 90 / 90 (100% Passed)
 
 ---
 
