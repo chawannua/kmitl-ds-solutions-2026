@@ -2,6 +2,7 @@
 
 ## 1. Project Context
 - **Course**: KMITL Data Structure & Algorithms (01276122)
+
 ## 2. Portal & Data Import Workflow
 - **Authentication**: Authenticate to the KMITL portal `https://python.compro.kmitl.ac.th` via CodeIgniter session using a POST request for login.
 - **Session Maintenance**: Fetch exercises via a GET request to `/index.php/student/exercise_home` to maintain an active session.
