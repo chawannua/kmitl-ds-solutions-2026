@@ -70,6 +70,13 @@
 * `item_4_26s1_Find_the_Running_Median.py` - Find the Running Median
 * `item_5_26s1_Quick_sort.py` - Quick Sort (first / last / middle pivot)
 
+### 🔹 Chapter 10: Searching & Hashing
+* `item_1_Binary_Search.py` - Binary Search (recursive)
+* `item_2_First_Greater_Value.py` - First Greater Value
+* `item_3_Fun_with_hashing.py` - Fun with Hashing (quadratic probing)
+* `item_4_Rehashing.py` - Rehashing (threshold / max collision)
+* `item_5_goods_box.py` - Goods Box (binary search on answer)
+
 ---
 
 ## 🏆 Current Progress
