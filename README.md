@@ -48,7 +48,7 @@
 * `item_4_26s1_Tower_of_Hanoi.py` - Tower of Hanoi
 * `item_5_26s1_Draw_stair.py` - Draw Stair
 
-### 🔹 Chapter 7: Tree 1 (BST)
+### 🔹 Chapter 7: Tree 1 (Binary Search Tree)
 * `item_1_25s1_Binary_Search_Tree.py` - Binary Search Tree
 * `item_2_25s1_BST_height.py` - BST Height
 * `item_3_25s1_BST_search.py` - BST Search
@@ -70,7 +70,7 @@
 * `item_4_26s1_Find_the_Running_Median.py` - Find the Running Median
 * `item_5_26s1_Quick_sort.py` - Quick Sort (first / last / middle pivot)
 
-### 🔹 Chapter 10: Searching & Hashing
+### 🔹 Chapter 10: Searching
 * `item_1_Binary_Search.py` - Binary Search (recursive)
 * `item_2_First_Greater_Value.py` - First Greater Value
 * `item_3_Fun_with_hashing.py` - Fun with Hashing (quadratic probing)
@@ -80,20 +80,5 @@
 ---
 
 ## 🏆 Current Progress
-* **Chapters 1-9 Total Score**: 90 / 90 (100% Passed)
-
----
-
-## 🌟 Featured Interactive Tool
-
-* `2_QUIZ1_OFFLINE_APP.html` - An offline interactive exam application for self-assessment.
-
----
-
-## 🧪 Testing
-
-To run the full test suite, use pytest:
-
-```bash
-python -m pytest tests/
-```
+* **Chapters 1-10 Total Score**: 100 / 100 (100% Passed)
+* Chapters 11-13 (Graph, Python Best Practice 1 & 2) are not open yet.
