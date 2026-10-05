@@ -1,7 +1,7 @@
 # KMITL Data Structures & Algorithms — Solutions (2026/1)
 
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)
-![Progress](https://img.shields.io/badge/Chapters_1--10-100%2F100-brightgreen)
+![Progress](https://img.shields.io/badge/Chapters_1--11-110%2F110-brightgreen)
 ![Dependencies](https://img.shields.io/badge/dependencies-none-lightgrey)
 
 Worked solutions for the lab exercises of **01276122 Data Structures and Algorithms**,
@@ -22,6 +22,7 @@ Every solution is pure Python (standard library only) and has passed the course'
 | 8 | Tree 2 (AVL) | AVL rotations and balancing | [`Chapter_08_Tree2_AVL`](Chapter_08_Tree2_AVL) |
 | 9 | Sorting | Bubble, quick sort, running median | [`Chapter_09_Sorting`](Chapter_09_Sorting) |
 | 10 | Searching | Binary search, hashing, rehashing | [`Chapter_10_Searching_Hashing`](Chapter_10_Searching_Hashing) |
+| 11 | Graph | Adjacency matrix, DFS / BFS, Dijkstra, cycle detection | [`Chapter_11_Graph`](Chapter_11_Graph) |
 
 ## Exercises
 
@@ -145,6 +146,18 @@ Every solution is pure Python (standard library only) and has passed the course'
 | 5 | Goods Box (binary search on the answer) | `item_5_goods_box.py` |
 </details>
 
+<details>
+<summary><b>Chapter 11 — Graph</b></summary>
+
+| Item | Problem | File |
+|------|---------|------|
+| 1 | Graph-1A Directed Graph Adjacency Matrix | `item_1_Graph_1A_Adjacency_Matrix.py` |
+| 2 | Graph-2A Breadth / Depth First Search | `item_2_Graph_2A_Breadth_Depth_First_Search.py` |
+| 3 | Graph-3A Shortest Path (Dijkstra) | `item_3_Graph_3A_Shortest_Path.py` |
+| 4 | Loop Detection | `item_4_Loop_detection.py` |
+| 5 | Dijkstra's Algorithm (London Underground route) | `item_5_Dijkstra_algorithm_shortest_path.py` |
+</details>
+
 ## Usage
 
 Each file is a standalone program that reads one line from standard input, exactly like the grader.
@@ -167,8 +180,8 @@ Every solution follows the same structure:
 
 | Chapters | Score | Status |
 |----------|-------|--------|
-| 1–10 | 100 / 100 | ✅ Complete |
-| 11–13 (Graph, Python Best Practice 1 & 2) | — | Not yet released |
+| 1–11 | 110 / 110 | ✅ Complete |
+| 12–13 (Python Best Practice 1 & 2) | — | Not yet released |
 
 ## Academic integrity
 
